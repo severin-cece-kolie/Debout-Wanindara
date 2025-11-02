@@ -1,40 +1,25 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ONG Debout Wanindara — À propos</title>
+{% extends "layouts/base.html" %}
+{% load static %}
 
-  <!-- Tailwind via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Optionnel: légère personnalisation (rayon, ombres douces)
-    tailwind.config = {
-      theme: {
-        extend: {
-          borderRadius: { '2xl': '1rem' }
-        }
-      }
-    }
-  </script>
+{% block stylesheets %}
+<style>
+  @keyframes fadeIn { from {opacity:0; transform:translateY(16px)} to {opacity:1; transform:none} }
+  @keyframes slideInRight { from {opacity:0; transform:translateX(24px)} to {opacity:1; transform:none} }
+  @keyframes slideInLeft { from {opacity:0; transform:translateX(-24px)} to {opacity:1; transform:none} }
+  @keyframes scaleIn { from {opacity:0; transform:scale(.95)} to {opacity:1; transform:scale(1)} }
 
-  <!-- Petite base pour les animations (fade/slide/scale) -->
-  <style>
-    @keyframes fadeIn { from {opacity:0; transform:translateY(16px)} to {opacity:1; transform:none} }
-    @keyframes slideInRight { from {opacity:0; transform:translateX(24px)} to {opacity:1; transform:none} }
-    @keyframes slideInLeft { from {opacity:0; transform:translateX(-24px)} to {opacity:1; transform:none} }
-    @keyframes scaleIn { from {opacity:0; transform:scale(.95)} to {opacity:1; transform:scale(1)} }
+  .animate-fade-in{ animation: fadeIn .6s ease-out both; }
+  .animate-slide-in-right{ animation: slideInRight .6s ease-out both; }
+  .animate-slide-in-left{ animation: slideInLeft .6s ease-out both; }
+  .animate-scale-in{ animation: scaleIn .45s ease-out both; }
 
-    .animate-fade-in{ animation: fadeIn .6s ease-out both; }
-    .animate-slide-in-right{ animation: slideInRight .6s ease-out both; }
-    .animate-slide-in-left{ animation: slideInLeft .6s ease-out both; }
-    .animate-scale-in{ animation: scaleIn .45s ease-out both; }
+  .hover-lift{ transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s; }
+  .hover-lift:hover{ transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1); }
+</style>
+{% endblock stylesheets %}
 
-    .hover-lift{ transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s; }
-    .hover-lift:hover{ transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1); }
-  </style>
-</head>
-<body class="min-h-screen bg-white text-gray-900">
+{% block content %}
+<main class="min-h-screen bg-white text-gray-900 pt-14">
   <!-- Hero -->
   <section class="bg-gradient-to-r from-orange-600 via-orange-700 to-cyan-600 py-20 pt-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -269,101 +254,6 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div class="grid md:grid-cols-4 gap-8 mb-8">
-        <!-- Bloc 1 -->
-        <div>
-          <div class="flex items-center space-x-3 mb-4">
-            <img src="https://dummyimage.com/160x64/0b0b0b/ffffff&text=Debout+Wanindara" alt="Debout Wanindara" class="h-16 w-auto">
-          </div>
-          <p class="text-gray-400 mb-4">Agir ensemble pour le développement économique et socio-culturel.</p>
-          <div class="flex gap-3">
-            <a class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors" href="#" aria-label="Facebook">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-              </svg>
-            </a>
-            <a class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-colors" href="#" aria-label="Twitter">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-              </svg>
-            </a>
-            <a class="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors" href="#" aria-label="Instagram">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <path d="M17.5 6.5h.01"></path>
-              </svg>
-            </a>
-            <a class="w-10 h-10 bg-gray-800 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors" href="#" aria-label="LinkedIn">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                <rect width="4" height="12" x="2" y="9"></rect>
-                <circle cx="4" cy="4" r="2"></circle>
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Liens rapides -->
-        <div>
-          <h4 class="text-white mb-4">Liens Rapides</h4>
-          <ul class="space-y-2">
-            <li><a class="hover:text-orange-400 transition-colors" href="#">Accueil</a></li>
-            <li><a class="hover:text-orange-400 transition-colors" href="#">À Propos</a></li>
-            <li><a class="hover:text-orange-400 transition-colors" href="#">Nos Actions</a></li>
-            <li><a class="hover:text-orange-400 transition-colors" href="#">Actualités</a></li>
-          </ul>
-        </div>
-
-        <!-- Piliers -->
-        <div>
-          <h4 class="text-white mb-4">Nos Piliers</h4>
-          <ul class="space-y-2">
-            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Formation</li>
-            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Éducation</li>
-            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Sensibilisation</li>
-            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Assainissement</li>
-          </ul>
-        </div>
-
-        <!-- Participer -->
-        <div>
-          <h4 class="text-white mb-4">Participer</h4>
-          <ul class="space-y-2">
-            <li><a class="hover:text-cyan-400 transition-colors" href="#">Devenez Membre</a></li>
-            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Faire un Don</li>
-            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Bénévolat</li>
-            <li><a class="hover:text-cyan-400 transition-colors" href="#">Nous Contacter</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="h-px w-full bg-gray-800 mb-8"></div>
-
-      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-        <p class="text-gray-400 text-sm">© 2024 Debout Wanindara. Tous droits réservés.</p>
-        <div class="flex gap-6 text-sm">
-          <a class="hover:text-orange-400 transition-colors" href="#">Mentions Légales</a>
-          <a class="hover:text-orange-400 transition-colors" href="#">Politique de Confidentialité</a>
-          <a class="hover:text-orange-400 transition-colors" href="#">Conditions d'Utilisation</a>
-        </div>
-      </div>
-
-      <div class="text-center mt-8 pt-8 border-t border-gray-800">
-        <p class="text-gray-500 text-sm flex items-center justify-center gap-2">
-          Fait avec
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" fill="currentColor" stroke="currentColor"></path>
-          </svg>
-          pour le développement de notre pays
-        </p>
-      </div>
-    </div>
-  </footer>
-
   <!-- JS: Révélations au scroll + compteurs -->
   <script>
     // Révélations (fade/slide/scale) lorsqu’un élément entre dans le viewport
@@ -414,3 +304,5 @@
   </script>
 </body>
 </html>
+
+{% endblock content %}

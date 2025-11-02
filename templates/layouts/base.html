@@ -1,0 +1,51 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block meta %}
+        
+    {% endblock meta %}
+
+    <!-- Script tailwind css-->
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% comment %} <link rel="stylesheet" href="{% static 'front/output.css' %}"> {% endcomment %}
+
+    <!-- font-Awesome pour les icones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&amp;display=swap" rel="stylesheet">
+    <title>{% block title %}Debout Wanindara {% now "Y" %} {% endblock %}</title>
+
+    {% block stylesheets %}{% endblock stylesheets %}
+
+</head>
+<body>
+    {% include "layouts/_nav.html" %}
+    {% block content %}
+      
+    {% endblock content %}
+    {% include "layouts/_footer.html" %}
+
+    <script>
+      // Burger menu
+      const btnMenu = document.getElementById("btnMenu");
+      const mobileMenu = document.getElementById("mobileMenu");
+      btnMenu?.addEventListener("click", () => {
+        const isOpen = !mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        btnMenu.setAttribute("aria-expanded", String(!isOpen));
+      });
+      // Fermer le menu au clic sur un lien
+      mobileMenu?.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+          btnMenu.setAttribute("aria-expanded", "false");
+        });
+      });
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

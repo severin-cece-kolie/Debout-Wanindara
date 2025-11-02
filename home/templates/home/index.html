@@ -1,70 +1,22 @@
-<!doctype html>
-<html lang="fr" class="h-full scroll-smooth">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Site Web ONG Debout Wanindara</title>
+{% extends "layouts/base.html" %}
+{% load static %}
 
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+{% block title %} Debout Wanindara | Accueil{% endblock title %}
+
+{% block stylesheets %}
+<style>
+  @keyframes bounceY {0%,100%{transform:translateY(-25%)}50%{transform:translateY(0)}}
+  .animate-bounceY{animation:bounceY 1s infinite}
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+  <main class="min-h-full bg-white text-gray-900">
     
-
-    <style>
-      /* petites animations conservées */
-      @keyframes bounceY {0%,100%{transform:translateY(-25%)}50%{transform:translateY(0)}}
-      .animate-bounceY{animation:bounceY 1s infinite}
-    </style>
-  </head>
-
-  <body class="min-h-full bg-white text-gray-900">
-    <!-- Header -->
-    <header class="fixed inset-x-0 top-0 z-50 bg-white/100 backdrop-blur border-b">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex h-24 items-center justify-between">
-          <a href="#top" class="inline-flex items-center gap-3">
-            <img src="./medias/logo.png" alt="Debout Wanindara" class="h-14 w-auto" />
-          </a>
-
-          <!-- Nav desktop -->
-          <nav class="hidden md:flex items-center gap-6">
-            <a href="#accueil" class="text-orange-600 font-medium">Accueil</a>
-            <a href="#apropos" class="text-gray-700 hover:text-orange-600 transition-colors">À Propos</a>
-            <a href="#actions" class="text-gray-700 hover:text-orange-600 transition-colors">Nos Actions</a>
-            <a href="#rejoindre" class="text-gray-700 hover:text-orange-600 transition-colors">Rejoignez-Nous</a>
-            <a href="#actus" class="text-gray-700 hover:text-orange-600 transition-colors">Actualités</a>
-            <a href="#contact" class="text-gray-700 hover:text-orange-600 transition-colors">Contact</a>
-            <a href="#rejoindre" class="inline-flex items-center h-9 rounded-md bg-gradient-to-r from-orange-600 to-orange-700 px-4 text-white text-sm font-medium hover:from-orange-700 hover:to-orange-800 transition-colors">
-              Devenez Membre
-            </a>
-          </nav>
-
-          <!-- Burger -->
-          <button id="btnMenu" class="md:hidden p-2 rounded-lg hover:bg-gray-100" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Nav mobile -->
-      <div id="mobileMenu" class="md:hidden hidden border-t bg-white">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 grid gap-2">
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="#accueil">Accueil</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="#apropos">À Propos</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="#actions">Nos Actions</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="#rejoindre">Rejoignez-Nous</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="#actus">Actualités</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="#contact">Contact</a>
-          <a class="mt-2 inline-flex items-center justify-center h-10 rounded-md bg-gradient-to-r from-orange-600 to-orange-700 px-4 text-white font-medium hover:from-orange-700 hover:to-orange-800" href="#rejoindre">Devenez Membre</a>
-        </nav>
-      </div>
-    </header>
-
     <main id="top" class="pt-16">
       <!-- HERO -->
       <section id="accueil" class="relative min-h-[92vh] grid place-items-center">
-        <img src="./medias/hero.jpg" alt="Communauté Debout Wanindara" class="absolute inset-0 h-full w-full object-cover" />
+        <img src="{% static 'img/hero.jpg' %}" alt="Communauté Debout Wanindara" class="absolute inset-0 h-full w-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-r from-orange-900/90 via-orange-800/85 to-cyan-900/80"></div>
 
         <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -281,99 +233,9 @@
         </div>
       </section>
     </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300" id="footer">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid md:grid-cols-4 gap-8 mb-8">
-          <div class="md:col-span-1">
-            <div class="mb-4 inline-flex items-center gap-3">
-              <img src="./medias/logo.png" alt="Debout Wanindara" class="h-16 w-auto" />
-            </div>
-            <p class="text-gray-400 mb-4">Agir ensemble pour le développement économique et socio-culturel.</p>
-            <div class="flex gap-3">
-              <a aria-label="Facebook" href="#" class="grid h-10 w-10 place-items-center rounded-lg bg-gray-800 hover:bg-blue-600 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-              </a>
-              <a aria-label="Twitter" href="#" class="grid h-10 w-10 place-items-center rounded-lg bg-gray-800 hover:bg-blue-400 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
-              </a>
-              <a aria-label="Instagram" href="#" class="grid h-10 w-10 place-items-center rounded-lg bg-gray-800 hover:bg-pink-600 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-              </a>
-              <a aria-label="LinkedIn" href="#" class="grid h-10 w-10 place-items-center rounded-lg bg-gray-800 hover:bg-blue-700 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-              </a>
-            </div>
-          </div>
-
-          <div>
-            <h4 class="text-white mb-4 font-semibold">Liens Rapides</h4>
-            <ul class="space-y-2">
-              <li><a class="hover:text-orange-400 transition-colors" href="#accueil">Accueil</a></li>
-              <li><a class="hover:text-orange-400 transition-colors" href="#apropos">À Propos</a></li>
-              <li><a class="hover:text-orange-400 transition-colors" href="#actions">Nos Actions</a></li>
-              <li><a class="hover:text-orange-400 transition-colors" href="#actus">Actualités</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 class="text-white mb-4 font-semibold">Nos Piliers</h4>
-            <ul class="space-y-2">
-              <li class="hover:text-cyan-400 transition-colors cursor-pointer">Formation</li>
-              <li class="hover:text-cyan-400 transition-colors cursor-pointer">Éducation</li>
-              <li class="hover:text-cyan-400 transition-colors cursor-pointer">Sensibilisation</li>
-              <li class="hover:text-cyan-400 transition-colors cursor-pointer">Assainissement</li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 class="text-white mb-4 font-semibold">Participer</h4>
-            <ul class="space-y-2">
-              <li><a class="hover:text-cyan-400 transition-colors" href="#rejoindre">Devenez Membre</a></li>
-              <li><a class="hover:text-cyan-400 transition-colors" href="#">Faire un Don</a></li>
-              <li><a class="hover:text-cyan-400 transition-colors" href="#">Bénévolat</a></li>
-              <li><a class="hover:text-cyan-400 transition-colors" href="#contact">Nous Contacter</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="border-t border-gray-800 pt-8">
-          <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p class="text-gray-400 text-sm">© <span id="year"></span> Debout Wanindara. Tous droits réservés.</p>
-            <div class="flex gap-6 text-sm">
-              <a href="#" class="hover:text-orange-400 transition-colors">Mentions Légales</a>
-              <a href="#" class="hover:text-orange-400 transition-colors">Politique de Confidentialité</a>
-              <a href="#" class="hover:text-orange-400 transition-colors">Conditions d'Utilisation</a>
-            </div>
-          </div>
-          <p class="mt-8 text-center text-gray-500 text-sm flex items-center justify-center gap-2">
-            Fait avec
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-500 fill-current" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-            pour le développement de notre pays
-          </p>
-        </div>
-      </div>
-    </footer>
-
     <!-- JS minimal et fonctionnel -->
     <script>
-      // Burger menu
-      const btnMenu = document.getElementById("btnMenu");
-      const mobileMenu = document.getElementById("mobileMenu");
-      btnMenu?.addEventListener("click", () => {
-        const isOpen = !mobileMenu.classList.contains("hidden");
-        mobileMenu.classList.toggle("hidden");
-        btnMenu.setAttribute("aria-expanded", String(!isOpen));
-      });
-      // Fermer le menu au clic sur un lien
-      mobileMenu?.querySelectorAll("a").forEach(a => {
-        a.addEventListener("click", () => {
-          mobileMenu.classList.add("hidden");
-          btnMenu.setAttribute("aria-expanded", "false");
-        });
-      });
-
+      
       // Scroll cue → section suivante
       const scrollCue = document.getElementById("scrollCue");
       scrollCue?.addEventListener("click", () => {
@@ -382,7 +244,7 @@
       });
 
       // Année footer
-      document.getElementById("year").textContent = new Date().getFullYear();
     </script>
-  </body>
-</html>
+  </main>
+
+{% endblock content %}

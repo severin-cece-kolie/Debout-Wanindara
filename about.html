@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ONG Debout Wanindara — À propos</title>
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Optionnel: légère personnalisation (rayon, ombres douces)
+    tailwind.config = {
+      theme: {
+        extend: {
+          borderRadius: { '2xl': '1rem' }
+        }
+      }
+    }
+  </script>
+
+  <!-- Petite base pour les animations (fade/slide/scale) -->
+  <style>
+    @keyframes fadeIn { from {opacity:0; transform:translateY(16px)} to {opacity:1; transform:none} }
+    @keyframes slideInRight { from {opacity:0; transform:translateX(24px)} to {opacity:1; transform:none} }
+    @keyframes slideInLeft { from {opacity:0; transform:translateX(-24px)} to {opacity:1; transform:none} }
+    @keyframes scaleIn { from {opacity:0; transform:scale(.95)} to {opacity:1; transform:scale(1)} }
+
+    .animate-fade-in{ animation: fadeIn .6s ease-out both; }
+    .animate-slide-in-right{ animation: slideInRight .6s ease-out both; }
+    .animate-slide-in-left{ animation: slideInLeft .6s ease-out both; }
+    .animate-scale-in{ animation: scaleIn .45s ease-out both; }
+
+    .hover-lift{ transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s; }
+    .hover-lift:hover{ transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1); }
+  </style>
+</head>
+<body class="min-h-screen bg-white text-gray-900">
+  <!-- Hero -->
+  <section class="bg-gradient-to-r from-orange-600 via-orange-700 to-cyan-600 py-20 pt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl sm:text-5xl text-white mb-6 animate-fade-in">À Propos de Nous</h1>
+      <p class="text-xl text-orange-100 max-w-3xl mx-auto animate-fade-in" style="animation-delay:.1s">
+        Découvrez l'histoire, la vision et les valeurs qui animent Debout Wanindara
+      </p>
+    </div>
+  </section>
+
+  <!-- Notre histoire -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="animate-slide-in-left">
+          <h2 class="text-3xl font-medium text-orange-900 mb-6">Notre Histoire</h2>
+          <p class="text-lg text-gray-700 mb-4">
+            Debout Wanindara est une organisation non gouvernementale regroupant des jeunes diplômés, fonctionnaires,
+            commerçants, ouvriers et entrepreneurs unis par une vision commune : contribuer activement au développement
+            économique et socio-culturel de notre pays.
+          </p>
+          <p class="text-lg text-gray-700 mb-4">
+            Fondée sur les valeurs de solidarité, d'engagement et d'innovation, notre ONG intervient sur le terrain à
+            travers des actions concrètes et mesurables qui transforment durablement les communautés.
+          </p>
+          <p class="text-lg text-gray-700 mb-6">
+            Chaque jour, nos membres travaillent ensemble pour créer des opportunités, améliorer l'accès à l'éducation,
+            sensibiliser sur des enjeux cruciaux et préserver notre environnement.
+          </p>
+          <a href="#" class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium h-10 px-5 py-2
+                             bg-gradient-to-r from-orange-600 to-orange-700 text-white hover:from-orange-700 hover:to-orange-800 transition-colors">
+            <!-- icône download -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 -ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <path d="m7 10 5 5 5-5"></path><path d="M12 15V3"></path>
+            </svg>
+            Télécharger nos Statuts (PDF)
+          </a>
+        </div>
+
+        <div class="relative animate-slide-in-right">
+          <div class="rounded-2xl overflow-hidden shadow-2xl">
+            <img src="https://images.unsplash.com/photo-1625566215500-7169a58f9594?q=80&w=1600&auto=format&fit=crop"
+                 alt="Équipe Debout Wanindara" class="w-full h-96 object-cover">
+          </div>
+          <div class="absolute -bottom-6 -right-6 bg-orange-600 text-white p-6 rounded-lg shadow-xl">
+            <p class="text-4xl mb-1">2024</p>
+            <p class="text-sm opacity-90">Année de fondation</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision / Mission -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-8 mb-2">
+        <!-- Vision -->
+        <article class="bg-white rounded-xl border border-l-4 border-l-orange-600 p-8 hover:shadow-xl transition-shadow animate-scale-in">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+              <!-- eye -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2.06 12.35a1 1 0 0 1 0-.7A10.75 10.75 0 0 1 22 12a10.75 10.75 0 0 1-19.94.35z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+            <h3 class="text-2xl text-orange-900">Notre Vision</h3>
+          </div>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            Devenir un acteur de référence du développement local et national, reconnu pour son impact positif sur
+            l'économie, l'éducation, l'environnement et le bien-être des communautés.
+          </p>
+        </article>
+
+        <!-- Mission -->
+        <article class="bg-white rounded-xl border border-l-4 border-l-cyan-600 p-8 hover:shadow-xl transition-shadow animate-scale-in" style="animation-delay:.08s">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center mr-4">
+              <!-- target -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-cyan-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+            </div>
+            <h3 class="text-2xl text-cyan-900">Notre Mission</h3>
+          </div>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            Mobiliser les compétences et les ressources pour mener des actions concrètes dans la formation, l'éducation,
+            la sensibilisation et l'assainissement, au service d'un développement durable et inclusif.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Valeurs -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl text-orange-900 mb-4">Nos Valeurs</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Les principes fondamentaux qui guident chacune de nos actions</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Solidarité -->
+        <article class="bg-white rounded-xl border text-center p-8 hover-lift animate-fade-in">
+          <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center mx-auto mb-4">
+            <!-- heart -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium text-gray-900 mb-3">Solidarité</h3>
+          <p class="text-gray-600">Nous croyons en la force du collectif et en l'entraide mutuelle.</p>
+        </article>
+
+        <!-- Engagement -->
+        <article class="bg-white rounded-xl border text-center p-8 hover-lift animate-fade-in" style="animation-delay:.06s">
+          <div class="w-16 h-16 rounded-full bg-cyan-100 flex items-center justify-center mx-auto mb-4">
+            <!-- target -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-cyan-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="6"></circle>
+              <circle cx="12" cy="12" r="2"></circle>
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium text-gray-900 mb-3">Engagement</h3>
+          <p class="text-gray-600">Nous nous engageons pleinement dans chaque action entreprise.</p>
+        </article>
+
+        <!-- Innovation -->
+        <article class="bg-white rounded-xl border text-center p-8 hover-lift animate-fade-in" style="animation-delay:.12s">
+          <div class="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4">
+            <!-- sparkles -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9.94 15.5A2 2 0 0 0 8.5 14.06L2.36 12.48a.5.5 0 0 1 0-.96l6.14-1.52A2 2 0 0 0 9.94 8.5L11.52 2.36a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.52a.5.5 0 0 1 0 .96l-6.14 1.52A2 2 0 0 0 14.06 15.5l-1.52 6.14a.5.5 0 0 1-.96 0z"></path>
+              <path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium text-gray-900 mb-3">Innovation</h3>
+          <p class="text-gray-600">Nous adoptons des approches nouvelles et créatives pour résoudre les problèmes.</p>
+        </article>
+
+        <!-- Excellence -->
+        <article class="bg-white rounded-xl border text-center p-8 hover-lift animate-fade-in" style="animation-delay:.18s">
+          <div class="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center mx-auto mb-4">
+            <!-- award -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-teal-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m15.48 12.89 1.52 8.53a.5.5 0 0 1-.81.47l-3.58-2.69a1 1 0 0 0-1.2 0L7.73 21.9a.5.5 0 0 1-.81-.47l1.51-8.52"></path>
+              <circle cx="12" cy="8" r="6"></circle>
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium text-gray-900 mb-3">Excellence</h3>
+          <p class="text-gray-600">Nous visons la qualité et l'impact mesurable dans toutes nos initiatives.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats équipe -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-r from-orange-600 via-orange-700 to-cyan-600 rounded-2xl p-12 text-white">
+        <div class="flex items-center justify-center mb-8">
+          <!-- users -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <h2 class="text-3xl sm:text-4xl font-medium">Notre Équipe en Chiffres</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-12">
+          <!-- 1 -->
+          <div class="text-center group cursor-pointer">
+            <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/30 transition-colors">
+              <!-- award -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m15.48 12.89 1.52 8.53a.5.5 0 0 1-.81.47l-3.58-2.69a1 1 0 0 0-1.2 0L7.73 21.9a.5.5 0 0 1-.81-.47l1.51-8.52"></path>
+                <circle cx="12" cy="8" r="6"></circle>
+              </svg>
+            </div>
+            <p class="text-5xl mb-2 inline-block transform transition-transform group-hover:scale-110">
+              <span class="odometer" data-target="5">0</span>+
+            </p>
+            <p class="text-lg text-orange-100">Direction Générale</p>
+          </div>
+
+          <!-- 2 -->
+          <div class="text-center group cursor-pointer">
+            <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/30 transition-colors">
+              <!-- heart -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+              </svg>
+            </div>
+            <p class="text-5xl mb-2 inline-block transform transition-transform group-hover:scale-110">
+              <span class="odometer" data-target="150">0</span>+
+            </p>
+            <p class="text-lg text-orange-100">Bénévoles Actifs</p>
+          </div>
+
+          <!-- 3 -->
+          <div class="text-center group cursor-pointer">
+            <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/30 transition-colors">
+              <!-- sparkles -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9.94 15.5A2 2 0 0 0 8.5 14.06L2.36 12.48a.5.5 0 0 1 0-.96l6.14-1.52A2 2 0 0 0 9.94 8.5L11.52 2.36a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.52a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"></path>
+                <path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path>
+              </svg>
+            </div>
+            <p class="text-5xl mb-2 inline-block transform transition-transform group-hover:scale-110">
+              <span class="odometer" data-target="25">0</span>+
+            </p>
+            <p class="text-lg text-orange-100">Partenaires</p>
+          </div>
+        </div>
+
+        <div class="mt-12 text-center">
+          <p class="text-xl text-orange-100 mb-6">Rejoignez une équipe passionnée et engagée</p>
+          <a href="#"
+             class="inline-flex items-center justify-center rounded-md h-10 px-6 text-sm font-medium bg-white text-orange-600 hover:bg-gray-100 transition-colors">
+            Devenir Membre
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <!-- Bloc 1 -->
+        <div>
+          <div class="flex items-center space-x-3 mb-4">
+            <img src="https://dummyimage.com/160x64/0b0b0b/ffffff&text=Debout+Wanindara" alt="Debout Wanindara" class="h-16 w-auto">
+          </div>
+          <p class="text-gray-400 mb-4">Agir ensemble pour le développement économique et socio-culturel.</p>
+          <div class="flex gap-3">
+            <a class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors" href="#" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </a>
+            <a class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-colors" href="#" aria-label="Twitter">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+              </svg>
+            </a>
+            <a class="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors" href="#" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <path d="M17.5 6.5h.01"></path>
+              </svg>
+            </a>
+            <a class="w-10 h-10 bg-gray-800 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors" href="#" aria-label="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect width="4" height="12" x="2" y="9"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Liens rapides -->
+        <div>
+          <h4 class="text-white mb-4">Liens Rapides</h4>
+          <ul class="space-y-2">
+            <li><a class="hover:text-orange-400 transition-colors" href="#">Accueil</a></li>
+            <li><a class="hover:text-orange-400 transition-colors" href="#">À Propos</a></li>
+            <li><a class="hover:text-orange-400 transition-colors" href="#">Nos Actions</a></li>
+            <li><a class="hover:text-orange-400 transition-colors" href="#">Actualités</a></li>
+          </ul>
+        </div>
+
+        <!-- Piliers -->
+        <div>
+          <h4 class="text-white mb-4">Nos Piliers</h4>
+          <ul class="space-y-2">
+            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Formation</li>
+            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Éducation</li>
+            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Sensibilisation</li>
+            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Assainissement</li>
+          </ul>
+        </div>
+
+        <!-- Participer -->
+        <div>
+          <h4 class="text-white mb-4">Participer</h4>
+          <ul class="space-y-2">
+            <li><a class="hover:text-cyan-400 transition-colors" href="#">Devenez Membre</a></li>
+            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Faire un Don</li>
+            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Bénévolat</li>
+            <li><a class="hover:text-cyan-400 transition-colors" href="#">Nous Contacter</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="h-px w-full bg-gray-800 mb-8"></div>
+
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-gray-400 text-sm">© 2024 Debout Wanindara. Tous droits réservés.</p>
+        <div class="flex gap-6 text-sm">
+          <a class="hover:text-orange-400 transition-colors" href="#">Mentions Légales</a>
+          <a class="hover:text-orange-400 transition-colors" href="#">Politique de Confidentialité</a>
+          <a class="hover:text-orange-400 transition-colors" href="#">Conditions d'Utilisation</a>
+        </div>
+      </div>
+
+      <div class="text-center mt-8 pt-8 border-t border-gray-800">
+        <p class="text-gray-500 text-sm flex items-center justify-center gap-2">
+          Fait avec
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" fill="currentColor" stroke="currentColor"></path>
+          </svg>
+          pour le développement de notre pays
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS: Révélations au scroll + compteurs -->
+  <script>
+    // Révélations (fade/slide/scale) lorsqu’un élément entre dans le viewport
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          // si l'élément a une animation css prête, on la déclenche en retirant l'opacité
+          el.style.opacity = 1;
+          revealObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.animate-fade-in, .animate-slide-in-right, .animate-slide-in-left, .animate-scale-in')
+      .forEach((el) => {
+        el.style.opacity = 0;
+        revealObserver.observe(el);
+      });
+
+    // Compteurs (odometer-like)
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+    function animateCount(el, target, duration = 1200) {
+      const start = 0;
+      const startTime = performance.now();
+      function tick(now) {
+        const p = Math.min((now - startTime) / duration, 1);
+        const value = Math.round(start + (target - start) * easeOutCubic(p));
+        el.textContent = value.toString();
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.getAttribute('data-target') || '0', 10);
+          animateCount(el, target);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    document.querySelectorAll('.odometer').forEach((el) => counterObserver.observe(el));
+  </script>
+</body>
+</html>

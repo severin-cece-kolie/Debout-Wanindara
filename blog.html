@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Site Web ONG Debout Wanindara — Actualités</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+
+  <style>
+    /* Petites animations utilisées dans la maquette Figma */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .page-transition { animation: fadeIn .3s ease-in-out; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-white text-gray-900">
+
+  <main class="page-transition opacity-100">
+    <div class="min-h-screen">
+      <!-- Hero -->
+      <section class="bg-gradient-to-r from-orange-600 via-orange-700 to-cyan-600 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 class="text-4xl sm:text-5xl text-white mb-6">Actualités &amp; Blog</h1>
+          <p class="text-xl text-orange-100 max-w-3xl mx-auto">
+            Restez informé de nos dernières actions, événements et réalisations
+          </p>
+        </div>
+      </section>
+
+      <!-- Statistiques -->
+      <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            <!-- Stat 1 -->
+            <div class="bg-white flex flex-col gap-6 rounded-xl group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 text-center border-0">
+              <div class="p-8">
+                <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <!-- calendar icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 2v4"></path><path d="M16 2v4"></path>
+                    <rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
+                  </svg>
+                </div>
+                <p class="text-4xl text-gray-900 mb-2">150+</p>
+                <p class="text-gray-600">Articles Publiés</p>
+              </div>
+            </div>
+
+            <!-- Stat 2 -->
+            <div class="bg-white flex flex-col gap-6 rounded-xl group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 text-center border-0">
+              <div class="p-8">
+                <div class="w-16 h-16 rounded-full bg-cyan-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <!-- users icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-cyan-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                </div>
+                <p class="text-4xl text-gray-900 mb-2">3,000+</p>
+                <p class="text-gray-600">Abonnés Newsletter</p>
+              </div>
+            </div>
+
+            <!-- Stat 3 -->
+            <div class="bg-white flex flex-col gap-6 rounded-xl group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 text-center border-0">
+              <div class="p-8">
+                <div class="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <!-- trending-up -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                    <polyline points="16 7 22 7 22 13"></polyline>
+                  </svg>
+                </div>
+                <p class="text-4xl text-gray-900 mb-2">45+</p>
+                <p class="text-gray-600">Événements Organisés</p>
+              </div>
+            </div>
+
+            <!-- Stat 4 -->
+            <div class="bg-white flex flex-col gap-6 rounded-xl group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 text-center border-0">
+              <div class="p-8">
+                <div class="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <!-- award -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-teal-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path>
+                    <circle cx="12" cy="8" r="6"></circle>
+                  </svg>
+                </div>
+                <p class="text-4xl text-gray-900 mb-2">12</p>
+                <p class="text-gray-600">Prix &amp; Reconnaissances</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Catégories -->
+      <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2 class="text-orange-900 mb-4 text-3xl font-medium">Catégories d'Actualités</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Explorez nos contenus par thématique</p>
+          </div>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-2">
+            <!-- Catégorie 1 -->
+            <article class="bg-white rounded-xl group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer border-0">
+              <div class="h-2 bg-orange-500"></div>
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-3">
+                  <h3 class="text-gray-900 text-lg font-medium">Formation</h3>
+                  <span class="text-2xl text-orange-600 group-hover:scale-110 transition-transform inline-block">45</span>
+                </div>
+                <p class="text-sm text-gray-600">Ateliers, séminaires et programmes de renforcement des capacités</p>
+              </div>
+            </article>
+
+            <!-- Catégorie 2 -->
+            <article class="bg-white rounded-xl group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer border-0">
+              <div class="h-2 bg-cyan-500"></div>
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-3">
+                  <h3 class="text-gray-900 text-lg font-medium">Éducation</h3>
+                  <span class="text-2xl text-cyan-600 group-hover:scale-110 transition-transform inline-block">38</span>
+                </div>
+                <p class="text-sm text-gray-600">Programmes scolaires et initiatives éducatives</p>
+              </div>
+            </article>
+
+            <!-- Catégorie 3 -->
+            <article class="bg-white rounded-xl group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer border-0">
+              <div class="h-2 bg-amber-500"></div>
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-3">
+                  <h3 class="text-gray-900 text-lg font-medium">Sensibilisation</h3>
+                  <span class="text-2xl text-amber-600 group-hover:scale-110 transition-transform inline-block">42</span>
+                </div>
+                <p class="text-sm text-gray-600">Campagnes de sensibilisation et actions de mobilisation</p>
+              </div>
+            </article>
+
+            <!-- Catégorie 4 -->
+            <article class="bg-white rounded-xl group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer border-0">
+              <div class="h-2 bg-teal-500"></div>
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-3">
+                  <h3 class="text-gray-900 text-lg font-medium">Assainissement</h3>
+                  <span class="text-2xl text-teal-600 group-hover:scale-110 transition-transform inline-block">25</span>
+                </div>
+                <p class="text-sm text-gray-600">Actions environnementales et initiatives écologiques</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Actualités -->
+      <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2 class="text-blue-900 mb-4 text-3xl font-medium">Actualités</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Suivez nos dernières actions, événements et réalisations.</p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-8 mb-16">
+            <!-- Article 1 -->
+            <article class="bg-white rounded-xl border overflow-hidden hover:shadow-xl transition-shadow">
+              <div class="h-48 overflow-hidden">
+                <img src="assets/article-1.jpg" alt="Lancement du Programme de Formation Entrepreneuriale 2024"
+                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+              </div>
+
+              <div class="px-6 pt-6">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium bg-orange-100 text-orange-800">
+                    Formation
+                  </span>
+                  <div class="flex items-center text-sm text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M8 2v4"></path><path d="M16 2v4"></path>
+                      <rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
+                    </svg>
+                    15 Mars 2024
+                  </div>
+                </div>
+                <h3 class="text-xl font-medium">Lancement du Programme de Formation Entrepreneuriale 2024</h3>
+              </div>
+
+              <div class="px-6 pb-6 pt-2">
+                <p class="text-gray-600 mb-4">
+                  Plus de 100 jeunes entrepreneurs ont participé à notre premier atelier de l'année axé sur les stratégies de croissance durable.
+                </p>
+                <a href="#" class="inline-flex items-center text-blue-600 underline-offset-4 hover:underline">
+                  Lire la suite
+                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="bg-white rounded-xl border overflow-hidden hover:shadow-xl transition-shadow">
+              <div class="h-48 overflow-hidden">
+                <img src="assets/article-2.jpg" alt="Opération Ville Propre : Un Succès Collectif"
+                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+              </div>
+
+              <div class="px-6 pt-6">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium bg-teal-100 text-teal-800">
+                    Assainissement
+                  </span>
+                  <div class="flex items-center text-sm text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M8 2v4"></path><path d="M16 2v4"></path>
+                      <rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
+                    </svg>
+                    8 Mars 2024
+                  </div>
+                </div>
+                <h3 class="text-xl font-medium">Opération Ville Propre : Un Succès Collectif</h3>
+              </div>
+
+              <div class="px-6 pb-6 pt-2">
+                <p class="text-gray-600 mb-4">
+                  Notre grande opération de nettoyage a mobilisé plus de 200 bénévoles et permis de collecter 5 tonnes de déchets.
+                </p>
+                <a href="#" class="inline-flex items-center text-blue-600 underline-offset-4 hover:underline">
+                  Lire la suite
+                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Article 3 -->
+            <article class="bg-white rounded-xl border overflow-hidden hover:shadow-xl transition-shadow">
+              <div class="h-48 overflow-hidden">
+                <img src="assets/article-3.jpg" alt="Nouveau Partenariat avec l'École Primaire Centrale"
+                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+              </div>
+
+              <div class="px-6 pt-6">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium bg-cyan-100 text-cyan-800">
+                    Éducation
+                  </span>
+                  <div class="flex items-center text-sm text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M8 2v4"></path><path d="M16 2v4"></path>
+                      <rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
+                    </svg>
+                    1 Mars 2024
+                  </div>
+                </div>
+                <h3 class="text-xl font-medium">Nouveau Partenariat avec l'École Primaire Centrale</h3>
+              </div>
+
+              <div class="px-6 pb-6 pt-2">
+                <p class="text-gray-600 mb-4">
+                  Debout Wanindara s'engage à fournir un soutien scolaire gratuit à 200 élèves durant toute l'année académique.
+                </p>
+                <a href="#" class="inline-flex items-center text-blue-600 underline-offset-4 hover:underline">
+                  Lire la suite
+                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Article 4 -->
+            <article class="bg-white rounded-xl border overflow-hidden hover:shadow-xl transition-shadow">
+              <div class="h-48 overflow-hidden">
+                <img src="assets/article-4.jpg" alt="Conférence sur le Développement Durable"
+                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+              </div>
+
+              <div class="px-6 pt-6">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium bg-amber-100 text-amber-800">
+                    Sensibilisation
+                  </span>
+                  <div class="flex items-center text-sm text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M8 2v4"></path><path d="M16 2v4"></path>
+                      <rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
+                    </svg>
+                    22 Février 2024
+                  </div>
+                </div>
+                <h3 class="text-xl font-medium">Conférence sur le Développement Durable</h3>
+              </div>
+
+              <div class="px-6 pb-6 pt-2">
+                <p class="text-gray-600 mb-4">
+                  Plus de 300 participants ont assisté à notre conférence dédiée aux enjeux environnementaux et économiques.
+                </p>
+                <a href="#" class="inline-flex items-center text-blue-600 underline-offset-4 hover:underline">
+                  Lire la suite
+                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Newsletter CTA -->
+          <div class="max-w-2xl mx-auto bg-gradient-to-r from-orange-600 via-orange-700 to-cyan-600 text-white rounded-xl">
+            <div class="p-8">
+              <div class="flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+              </div>
+              <h3 class="text-center text-white text-2xl font-medium mb-2">Abonnez-vous à notre Newsletter</h3>
+              <p class="text-center text-orange-100 mb-6">Recevez nos actualités et événements directement dans votre boîte mail</p>
+
+              <form id="newsletterForm" class="flex gap-2">
+                <input id="emailInput" type="email" required
+                       class="flex h-10 w-full min-w-0 rounded-md border border-transparent bg-white px-3 py-2 text-base text-gray-900 outline-none focus:ring-2 focus:ring-white/60"
+                       placeholder="Votre adresse email" />
+                <button type="submit"
+                        class="inline-flex items-center justify-center rounded-md text-sm font-medium h-10 px-4 bg-white text-orange-600 hover:bg-gray-100">
+                  S'abonner
+                </button>
+              </form>
+              <p id="newsletterMsg" class="mt-3 text-sm text-white/90 hidden"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <!-- Brand -->
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-3 mb-4">
+            <img src="assets/logo.png" alt="Debout Wanindara" class="h-16 w-auto" />
+          </div>
+          <p class="text-gray-400 mb-4">Agir ensemble pour le développement économique et socio-culturel.</p>
+          <div class="flex gap-3">
+            <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </a>
+            <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-colors" aria-label="Twitter/X">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+              </svg>
+            </a>
+            <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors" aria-label="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect width="4" height="12" x="2" y="9"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Liens rapides -->
+        <div>
+          <h4 class="text-white mb-4 font-medium">Liens Rapides</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Accueil</a></li>
+            <li><a href="#" class="hover:text-orange-400 transition-colors">À Propos</a></li>
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Nos Actions</a></li>
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Actualités</a></li>
+          </ul>
+        </div>
+
+        <!-- Piliers -->
+        <div>
+          <h4 class="text-white mb-4 font-medium">Nos Piliers</h4>
+          <ul class="space-y-2">
+            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Formation</li>
+            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Éducation</li>
+            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Sensibilisation</li>
+            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Assainissement</li>
+          </ul>
+        </div>
+
+        <!-- Participer -->
+        <div>
+          <h4 class="text-white mb-4 font-medium">Participer</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-cyan-400 transition-colors">Devenez Membre</a></li>
+            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Faire un Don</li>
+            <li class="hover:text-cyan-400 transition-colors cursor-pointer">Bénévolat</li>
+            <li><a href="#" class="hover:text-cyan-400 transition-colors">Nous Contacter</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="h-px w-full bg-gray-800 mb-8"></div>
+
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-gray-400 text-sm">© 2024 Debout Wanindara. Tous droits réservés.</p>
+        <div class="flex gap-6 text-sm">
+          <a href="#" class="hover:text-orange-400 transition-colors">Mentions Légales</a>
+          <a href="#" class="hover:text-orange-400 transition-colors">Politique de Confidentialité</a>
+          <a href="#" class="hover:text-orange-400 transition-colors">Conditions d'Utilisation</a>
+        </div>
+      </div>
+
+      <div class="text-center mt-8 pt-8 border-t border-gray-800">
+        <p class="text-gray-500 text-sm flex items-center justify-center gap-2">
+          Fait avec
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-red-500 fill-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+          </svg>
+          pour le développement de notre pays
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS minimal : menu mobile + validation newsletter -->
+  <script>
+
+    const form = document.getElementById('newsletterForm');
+    const emailInput = document.getElementById('emailInput');
+    const msg = document.getElementById('newsletterMsg');
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!emailInput.checkValidity()) {
+        msg.textContent = "Veuillez entrer une adresse e-mail valide.";
+        msg.classList.remove('hidden');
+        msg.classList.add('text-white/90');
+        return;
+      }
+      msg.textContent = "Merci ! Vous êtes bien inscrit(e) à la newsletter.";
+      msg.classList.remove('hidden');
+      emailInput.value = "";
+    });
+  </script>
+</body>
+</html>

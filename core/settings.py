@@ -35,7 +35,9 @@ ALLOWED_HOSTS = []
 CUSTOM_APPS = [
     'home',
     'contact',
-    'action'
+    'action',
+    'join',
+    'blog'
 ]
 
 EXTERNAL_APPS = [

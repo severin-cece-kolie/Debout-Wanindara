@@ -24,4 +24,6 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('contact/', include('contact.urls')),
     path('actions/', include('action.urls')),
+    path('join-us/', include('join.urls')),
+    path('blog/', include('blog.urls')),
 ]

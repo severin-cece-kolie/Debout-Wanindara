@@ -3,4 +3,4 @@ from core.settings import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["https://bacdoor.pythonanywhere.com"]
+ALLOWED_HOSTS = ["bacdoor.pythonanywhere.com"]

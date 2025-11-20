@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-20 20:16+0000\n"
+"POT-Creation-Date: 2025-11-20 21:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,8 @@ msgid ""
 "de notre pays."
 msgstr ""
 
-#: home/templates/home/index.html:33 templates/layouts/_nav.html:19
+#: home/templates/home/index.html:33 home/templates/home/index.html:204
+#: templates/layouts/_footer.html:141 templates/layouts/_nav.html:19
 #: templates/layouts/_nav.html:41
 msgid "Devenez Membre"
 msgstr ""
@@ -54,24 +55,177 @@ msgstr ""
 msgid "Bénéficiaires"
 msgstr ""
 
-#: templates/layouts/_nav.html:12 templates/layouts/_nav.html:35
+#: home/templates/home/index.html:88
+msgid "Nos 4 Piliers d'Action"
+msgstr ""
+
+#: home/templates/home/index.html:89
+msgid ""
+"Notre engagement se structure autour de quatre domaines clés pour un "
+"développement durable et inclusif."
+msgstr ""
+
+#: home/templates/home/index.html:99 templates/layouts/_footer.html:122
+msgid "Formation"
+msgstr ""
+
+#: home/templates/home/index.html:100
+msgid "Développez vos compétences professionnelles"
+msgstr ""
+
+#: home/templates/home/index.html:102 home/templates/home/index.html:117
+#: home/templates/home/index.html:132 home/templates/home/index.html:147
+msgid "En savoir plus"
+msgstr ""
+
+#: home/templates/home/index.html:114 templates/layouts/_footer.html:125
+msgid "Éducation"
+msgstr ""
+
+#: home/templates/home/index.html:115
+msgid "Accès à l'éducation pour tous"
+msgstr ""
+
+#: home/templates/home/index.html:129 templates/layouts/_footer.html:128
+msgid "Sensibilisation"
+msgstr ""
+
+#: home/templates/home/index.html:130
+msgid "Mobiliser et éveiller les consciences"
+msgstr ""
+
+#: home/templates/home/index.html:144 templates/layouts/_footer.html:131
+msgid "Assainissement"
+msgstr ""
+
+#: home/templates/home/index.html:145
+msgid "Pour un environnement sain et durable"
+msgstr ""
+
+#: home/templates/home/index.html:160
+msgid "Pourquoi Nous Rejoindre ?"
+msgstr ""
+
+#: home/templates/home/index.html:161
+msgid "Ensemble, nous créons un impact réel et durable sur nos communautés."
+msgstr ""
+
+#: home/templates/home/index.html:172
+msgid "Une Communauté Engagée"
+msgstr ""
+
+#: home/templates/home/index.html:173
+msgid "Rejoignez plus de 500 membres actifs dédiés au développement"
+msgstr ""
+
+#: home/templates/home/index.html:175
+msgid "Découvrir notre histoire"
+msgstr ""
+
+#: home/templates/home/index.html:188
+msgid "Des Actions Concrètes"
+msgstr ""
+
+#: home/templates/home/index.html:189
+msgid "50+ projets réalisés qui transforment durablement les communautés"
+msgstr ""
+
+#: home/templates/home/index.html:191
+msgid "Voir nos réalisations"
+msgstr ""
+
+#: home/templates/home/index.html:205
+msgid "Participez activement au développement de notre pays"
+msgstr ""
+
+#: home/templates/home/index.html:207
+msgid "Rejoignez-nous maintenant"
+msgstr ""
+
+#: home/templates/home/index.html:220
+msgid "Prêt à Faire la Différence ?"
+msgstr ""
+
+#: home/templates/home/index.html:222
+msgid ""
+"Rejoignez notre communauté de changeurs et contribuez activement au "
+"développement économique et socio-culturel de notre pays."
+msgstr ""
+
+#: home/templates/home/index.html:226
+msgid "Devenir Membre"
+msgstr ""
+
+#: home/templates/home/index.html:230 templates/layouts/_footer.html:156
+msgid "Nous Contacter"
+msgstr ""
+
+#: templates/layouts/_footer.html:16
+msgid "Agir ensemble pour le développement économique et socio-culturel."
+msgstr ""
+
+#: templates/layouts/_footer.html:93
+msgid "Liens Rapides"
+msgstr ""
+
+#: templates/layouts/_footer.html:97 templates/layouts/_nav.html:12
+#: templates/layouts/_nav.html:35
 msgid "Accueil"
 msgstr ""
 
-#: templates/layouts/_nav.html:13 templates/layouts/_nav.html:36
+#: templates/layouts/_footer.html:102 templates/layouts/_nav.html:16
+#: templates/layouts/_nav.html:39
+msgid "À Propos"
+msgstr ""
+
+#: templates/layouts/_footer.html:107 templates/layouts/_nav.html:13
+#: templates/layouts/_nav.html:36
 msgid "Nos Actions"
+msgstr ""
+
+#: templates/layouts/_footer.html:112 templates/layouts/_nav.html:15
+#: templates/layouts/_nav.html:38
+msgid "Actualités"
+msgstr ""
+
+#: templates/layouts/_footer.html:119
+msgid "Nos Piliers"
+msgstr ""
+
+#: templates/layouts/_footer.html:137
+msgid "Participer"
+msgstr ""
+
+#: templates/layouts/_footer.html:146
+msgid "Faire un Don"
+msgstr ""
+
+#: templates/layouts/_footer.html:151
+msgid "Bénévolat"
+msgstr ""
+
+#: templates/layouts/_footer.html:166
+msgid "Debout Wanindara. Tous droits réservés."
+msgstr ""
+
+#: templates/layouts/_footer.html:170
+msgid "Mentions Légales"
+msgstr ""
+
+#: templates/layouts/_footer.html:173
+msgid "Politique de Confidentialité"
+msgstr ""
+
+#: templates/layouts/_footer.html:176
+msgid "Conditions d'Utilisation"
+msgstr ""
+
+#: templates/layouts/_footer.html:183
+msgid "Fait par optimus et diddy"
 msgstr ""
 
 #: templates/layouts/_nav.html:14 templates/layouts/_nav.html:37
 msgid "Rejoignez-Nous"
-msgstr ""
-
-#: templates/layouts/_nav.html:15 templates/layouts/_nav.html:38
-msgid "Actualités"
-msgstr ""
-
-#: templates/layouts/_nav.html:16 templates/layouts/_nav.html:39
-msgid "À Propos"
 msgstr ""
 
 #: templates/layouts/_nav.html:17 templates/layouts/_nav.html:40

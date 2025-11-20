@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!-- Footer -->
 <footer class="bg-slate-950 text-slate-300" id="footer">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -12,7 +13,7 @@
           />
         </div>
         <p class="text-slate-400 mb-4">
-          Agir ensemble pour le développement économique et socio-culturel.
+          {% trans "Agir ensemble pour le développement économique et socio-culturel." %}
         </p>
         <div class="flex gap-3">
           <a
@@ -89,70 +90,70 @@
       </div>
 
       <div>
-        <h4 class="text-white mb-4 font-semibold">Liens Rapides</h4>
+        <h4 class="text-white mb-4 font-semibold">{% trans "Liens Rapides" %}</h4>
         <ul class="space-y-2">
           <li>
             <a class="hover:text-orange-300 transition-colors" href="#accueil"
-              >Accueil</a
+              >{% trans "Accueil" %}</a
             >
           </li>
           <li>
             <a class="hover:text-orange-300 transition-colors" href="#apropos"
-              >À Propos</a
+              >{% trans "À Propos" %}</a
             >
           </li>
           <li>
             <a class="hover:text-orange-300 transition-colors" href="#actions"
-              >Nos Actions</a
+              >{% trans "Nos Actions" %}</a
             >
           </li>
           <li>
             <a class="hover:text-orange-300 transition-colors" href="#actus"
-              >Actualités</a
+              >{% trans "Actualités" %}</a
             >
           </li>
         </ul>
       </div>
 
       <div>
-        <h4 class="text-white mb-4 font-semibold">Nos Piliers</h4>
+        <h4 class="text-white mb-4 font-semibold">{% trans "Nos Piliers" %}</h4>
         <ul class="space-y-2">
           <li class="hover:text-cyan-300 transition-colors cursor-pointer">
-            Formation
+            {% trans "Formation" %}
           </li>
           <li class="hover:text-cyan-300 transition-colors cursor-pointer">
-            Éducation
+            {% trans "Éducation" %}
           </li>
           <li class="hover:text-cyan-300 transition-colors cursor-pointer">
-            Sensibilisation
+            {% trans "Sensibilisation" %}
           </li>
           <li class="hover:text-cyan-300 transition-colors cursor-pointer">
-            Assainissement
+            {% trans "Assainissement" %}
           </li>
         </ul>
       </div>
 
       <div>
-        <h4 class="text-white mb-4 font-semibold">Participer</h4>
+        <h4 class="text-white mb-4 font-semibold">{% trans "Participer" %}</h4>
         <ul class="space-y-2">
           <li>
             <a class="hover:text-cyan-300 transition-colors" href="#rejoindre"
-              >Devenez Membre</a
+              >{% trans "Devenez Membre" %}</a
             >
           </li>
           <li>
             <a class="hover:text-cyan-300 transition-colors" href="#"
-              >Faire un Don</a
+              >{% trans "Faire un Don" %}</a
             >
           </li>
           <li>
             <a class="hover:text-cyan-300 transition-colors" href="#"
-              >Bénévolat</a
+              >{% trans "Bénévolat" %}</a
             >
           </li>
           <li>
             <a class="hover:text-cyan-300 transition-colors" href="#contact"
-              >Nous Contacter</a
+              >{% trans "Nous Contacter" %}</a
             >
           </li>
         </ul>
@@ -162,24 +163,24 @@
     <div class="border-t border-white/5 pt-8">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4">
         <p class="text-slate-400 text-sm">
-          © <span id="year"></span> Debout Wanindara. Tous droits réservés.
+          © <span id="year"></span> {% trans "Debout Wanindara. Tous droits réservés." %}
         </p>
         <div class="flex gap-6 text-sm">
           <a href="#" class="hover:text-orange-300 transition-colors"
-            >Mentions Légales</a
+            >{% trans "Mentions Légales" %}</a
           >
           <a href="#" class="hover:text-orange-300 transition-colors"
-            >Politique de Confidentialité</a
+            >{% trans "Politique de Confidentialité" %}</a
           >
           <a href="#" class="hover:text-orange-300 transition-colors"
-            >Conditions d'Utilisation</a
+            >{% trans "Conditions d'Utilisation" %}</a
           >
         </div>
       </div>
       <p
         class="mt-8 text-center text-slate-500 text-sm flex items-center justify-center gap-2"
       >
-        Fait par optimus et diddy
+        {% trans "Fait par optimus et diddy" %}
       </p>
     </div>
   </div>

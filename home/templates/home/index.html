@@ -1,4 +1,5 @@
 {% extends "layouts/base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %} Debout Wanindara | Accueil{% endblock title %}
@@ -21,22 +22,21 @@
 
         <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div class="max-w-3xl">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl text-white mb-6">Debout Wanindara</h1>
-            <p class="text-2xl sm:text-3xl text-orange-100 mb-6">Agir ensemble pour le développement</p>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl text-white mb-6">{% trans "Debout Wanindara" %}</h1>
+            <p class="text-2xl sm:text-3xl text-orange-100 mb-6">{% trans "Agir ensemble pour le développement" %}</p>
             <p class="text-xl text-gray-100 mb-8 max-w-2xl">
-              Une organisation de jeunes diplômés, fonctionnaires, commerçants, ouvriers et entrepreneurs engagés pour le
-              développement économique et socio-culturel de notre pays.
+              {% blocktrans %}Une organisation de jeunes diplômés, fonctionnaires, commerçants, ouvriers et entrepreneurs engagés pour le développement économique et socio-culturel de notre pays.{% endblocktrans %}
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 mb-12">
               <a href="#rejoindre" class="inline-flex items-center h-10 rounded-md bg-gradient-to-r from-orange-600 to-orange-700 px-6 text-white text-lg font-medium hover:from-orange-700 hover:to-orange-800 group">
-                Devenez Membre
+                {% trans "Devenez Membre" %}
                 <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
                 </svg>
               </a>
               <a href="#actions" class="inline-flex items-center h-10 rounded-md border border-white/70 bg-white/10 px-6 text-white text-lg hover:bg-white/20">
-                Voir Nos Actions
+                {% trans "Voir Nos Actions" %}
               </a>
             </div>
 
@@ -49,7 +49,7 @@
                   </svg>
                 </div>
                 <p class="text-3xl text-white">500+</p>
-                <p class="text-sm text-gray-200">Membres Actifs</p>
+                <p class="text-sm text-gray-200">{% trans "Membres Actifs" %}</p>
               </div>
               <div class="rounded-lg bg-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/20 transition-colors">
                 <div class="mb-2 flex justify-center">
@@ -58,7 +58,7 @@
                   </svg>
                 </div>
                 <p class="text-3xl text-white">50+</p>
-                <p class="text-sm text-gray-200">Projets Réalisés</p>
+                <p class="text-sm text-gray-200">{% trans "Projets Réalisés" %}</p>
               </div>
               <div class="rounded-lg bg-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/20 transition-colors">
                 <div class="mb-2 flex justify-center">
@@ -67,7 +67,7 @@
                   </svg>
                 </div>
                 <p class="text-3xl text-white">10K+</p>
-                <p class="text-sm text-gray-200">Bénéficiaires</p>
+                <p class="text-sm text-gray-200">{% trans "Bénéficiaires" %}</p>
               </div>
             </div>
           </div>

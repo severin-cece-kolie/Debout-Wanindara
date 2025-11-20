@@ -26,6 +26,7 @@ media/
 
 # Virtual Environment
 env/
+env_wsl/
 venv/
 ENV/
 .env

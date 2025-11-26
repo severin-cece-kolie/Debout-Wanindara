@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Badge - {{ membre.nom_complet }}</title>
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: white;
+        }
+        
+        .badge-page {
+            width: 297mm;
+            height: 210mm;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20mm;
+            padding: 20mm;
+            page-break-after: always;
+        }
+        
+        .badge-recto {
+            width: 85.6mm;
+            height: 53.98mm;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 6mm;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .badge-recto::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .badge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 4mm;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .badge-org-name {
+            font-size: 8pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+        
+        .badge-logo {
+            width: 18mm;
+            height: 18mm;
+            background: white;
+            border-radius: 4px;
+            padding: 2mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .badge-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .badge-content {
+            display: flex;
+            gap: 4mm;
+            position: relative;
+            z-index: 1;
+            align-items: center;
+        }
+        
+        .badge-photo-container {
+            flex-shrink: 0;
+        }
+        
+        .badge-photo {
+            width: 28mm;
+            height: 28mm;
+            border-radius: 6px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .badge-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .badge-name {
+            font-size: 11pt;
+            font-weight: 700;
+            margin-bottom: 2mm;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+        
+        .badge-position {
+            font-size: 8pt;
+            opacity: 0.9;
+            margin-bottom: 2mm;
+            font-weight: 400;
+        }
+        
+        .badge-id {
+            font-size: 7pt;
+            opacity: 0.8;
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2mm 4mm;
+            border-radius: 3px;
+            display: inline-block;
+            margin-top: 2mm;
+        }
+        
+        .badge-footer {
+            margin-top: 4mm;
+            padding-top: 3mm;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 7pt;
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .badge-verso {
+            width: 85.6mm;
+            height: 53.98mm;
+            background: white;
+            border-radius: 12px;
+            padding: 6mm;
+            color: #333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: relative;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .badge-verso-header {
+            text-align: center;
+            margin-bottom: 4mm;
+            padding-bottom: 3mm;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .badge-verso-title {
+            font-size: 9pt;
+            font-weight: 700;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2mm;
+        }
+        
+        .badge-conditions {
+            font-size: 6.5pt;
+            line-height: 1.4;
+            color: #555;
+            margin-bottom: 4mm;
+            text-align: justify;
+        }
+        
+        .badge-conditions ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .badge-conditions li {
+            margin-bottom: 2mm;
+            padding-left: 4mm;
+            position: relative;
+        }
+        
+        .badge-conditions li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .badge-signature-zone {
+            border-top: 1px dashed #ccc;
+            padding-top: 3mm;
+            margin-top: 3mm;
+        }
+        
+        .badge-signature-label {
+            font-size: 6.5pt;
+            color: #666;
+            margin-bottom: 2mm;
+            font-weight: 600;
+        }
+        
+        .badge-signature-line {
+            border-bottom: 1px solid #333;
+            height: 12mm;
+            margin-bottom: 1mm;
+        }
+        
+        .badge-signature-date {
+            font-size: 6pt;
+            color: #999;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="badge-page">
+        <!-- Badge Recto -->
+        <div class="badge-recto">
+            <div class="badge-header">
+                <div>
+                    <div class="badge-org-name">Debout Wanindara</div>
+                </div>
+                {% if logo_url %}
+                <div class="badge-logo">
+                    <img src="{{ logo_url }}" alt="Logo">
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="badge-content">
+                {% if photo_url %}
+                <div class="badge-photo-container">
+                    <img src="{{ photo_url }}" alt="{{ membre.nom_complet }}" class="badge-photo">
+                </div>
+                {% endif %}
+                
+                <div class="badge-info">
+                    <div class="badge-name">{{ membre.nom_complet }}</div>
+                    {% if membre.position %}
+                    <div class="badge-position">{{ membre.position }}</div>
+                    {% endif %}
+                    <div class="badge-id">ID: {{ membre.numero_id }}</div>
+                </div>
+            </div>
+            
+            <div class="badge-footer">
+                <div>Membre depuis {{ date_emission }}</div>
+                <div>Valide</div>
+            </div>
+        </div>
+        
+        <!-- Badge Verso -->
+        <div class="badge-verso">
+            <div class="badge-verso-header">
+                <div class="badge-verso-title">Conditions d'utilisation</div>
+            </div>
+            
+            <div class="badge-conditions">
+                <ul>
+                    <li>Ce badge est personnel et non transférable.</li>
+                    <li>Il doit être présenté lors des événements et activités de l'organisation.</li>
+                    <li>En cas de perte, veuillez contacter immédiatement l'administration.</li>
+                    <li>Le badge reste la propriété de Debout Wanindara.</li>
+                    <li>Toute utilisation frauduleuse est passible de sanctions.</li>
+                </ul>
+            </div>
+            
+            <div class="badge-signature-zone">
+                <div class="badge-signature-label">Signature du membre</div>
+                <div class="badge-signature-line"></div>
+                <div class="badge-signature-date">Date: _______________</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

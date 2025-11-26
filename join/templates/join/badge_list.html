@@ -1,0 +1,212 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %}Liste des Badges - Debout Wanindara{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .badge-list-container {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f5f5;
+            padding: 2rem;
+            min-height: 100vh;
+            padding-top: 8rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .member-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .member-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .member-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .member-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #667eea;
+        }
+        
+        .member-info h3 {
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .member-id {
+            font-size: 0.85rem;
+            color: #666;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .member-position {
+            color: #667eea;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .member-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-view {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-view:hover {
+            background: #5568d3;
+        }
+        
+        .btn-pdf {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-pdf:hover {
+            background: #dc2626;
+        }
+        
+        .btn-png {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-png:hover {
+            background: #059669;
+        }
+        
+        .no-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="badge-list-container">
+        <div class="container">
+        <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; margin-bottom: 2rem; border-radius: 4px;">
+            <p style="margin: 0; color: #92400e;"><strong>⚠️ Zone Admin :</strong> Cette page est réservée aux administrateurs. Les membres peuvent accéder à leur badge individuel après soumission du formulaire.</p>
+        </div>
+        <h1><i class="fas fa-id-card"></i> Liste des Membres - Badges</h1>
+        
+        {% if membres %}
+        <div class="members-grid">
+            {% for membre in membres %}
+            <div class="member-card">
+                <div class="member-header">
+                    {% if membre.photo %}
+                    <img src="{{ membre.photo.url }}" alt="{{ membre.nom_complet }}" class="member-photo">
+                    {% else %}
+                    <div class="no-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    {% endif %}
+                    <div class="member-info">
+                        <h3>{{ membre.nom_complet }}</h3>
+                        <div class="member-id">{{ membre.numero_id }}</div>
+                    </div>
+                </div>
+                
+                {% if membre.position %}
+                <div class="member-position">
+                    <i class="fas fa-briefcase"></i> {{ membre.position }}
+                </div>
+                {% endif %}
+                
+                <div class="member-actions">
+                    <a href="{% url 'join:badge_view' membre.id %}" class="btn btn-view">
+                        <i class="fas fa-eye"></i>
+                        Voir
+                    </a>
+                    <a href="{% url 'join:badge_pdf' membre.id %}" class="btn btn-pdf">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF
+                    </a>
+                    <a href="{% url 'join:badge_png' membre.id %}" class="btn btn-png">
+                        <i class="fas fa-image"></i>
+                        PNG
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p style="text-align: center; color: #666; padding: 2rem;">Aucun membre trouvé.</p>
+        {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+

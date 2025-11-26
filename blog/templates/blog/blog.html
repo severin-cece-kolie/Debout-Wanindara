@@ -108,53 +108,20 @@
           </div>
 
           <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-2">
-            <!-- Catégorie 1 -->
+            {% for category in categories %}
             <article class="bg-white rounded-xl group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer border-0">
-              <div class="h-2 bg-orange-500"></div>
+              <div class="h-2 {% cycle 'bg-orange-500' 'bg-cyan-500' 'bg-amber-500' 'bg-teal-500' %}"></div>
               <div class="p-6">
                 <div class="flex items-center justify-between mb-3">
-                  <h3 class="text-gray-900 text-lg font-medium">Formation</h3>
-                  <span class="text-2xl text-orange-600 group-hover:scale-110 transition-transform inline-block">45</span>
+                  <h3 class="text-gray-900 text-lg font-medium">{{ category.name }}</h3>
+                  <span class="text-2xl {% cycle 'text-orange-600' 'text-cyan-600' 'text-amber-600' 'text-teal-600' %} group-hover:scale-110 transition-transform inline-block">
+                    {{ category.blogpost_set.count }}
+                  </span>
                 </div>
-                <p class="text-sm text-gray-600">Ateliers, séminaires et programmes de renforcement des capacités</p>
+                <p class="text-sm text-gray-600">{{ category.description }}</p>
               </div>
             </article>
-
-            <!-- Catégorie 2 -->
-            <article class="bg-white rounded-xl group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer border-0">
-              <div class="h-2 bg-cyan-500"></div>
-              <div class="p-6">
-                <div class="flex items-center justify-between mb-3">
-                  <h3 class="text-gray-900 text-lg font-medium">Éducation</h3>
-                  <span class="text-2xl text-cyan-600 group-hover:scale-110 transition-transform inline-block">38</span>
-                </div>
-                <p class="text-sm text-gray-600">Programmes scolaires et initiatives éducatives</p>
-              </div>
-            </article>
-
-            <!-- Catégorie 3 -->
-            <article class="bg-white rounded-xl group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer border-0">
-              <div class="h-2 bg-amber-500"></div>
-              <div class="p-6">
-                <div class="flex items-center justify-between mb-3">
-                  <h3 class="text-gray-900 text-lg font-medium">Sensibilisation</h3>
-                  <span class="text-2xl text-amber-600 group-hover:scale-110 transition-transform inline-block">42</span>
-                </div>
-                <p class="text-sm text-gray-600">Campagnes de sensibilisation et actions de mobilisation</p>
-              </div>
-            </article>
-
-            <!-- Catégorie 4 -->
-            <article class="bg-white rounded-xl group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer border-0">
-              <div class="h-2 bg-teal-500"></div>
-              <div class="p-6">
-                <div class="flex items-center justify-between mb-3">
-                  <h3 class="text-gray-900 text-lg font-medium">Assainissement</h3>
-                  <span class="text-2xl text-teal-600 group-hover:scale-110 transition-transform inline-block">25</span>
-                </div>
-                <p class="text-sm text-gray-600">Actions environnementales et initiatives écologiques</p>
-              </div>
-            </article>
+            {% endfor %}
           </div>
         </div>
       </section>
@@ -168,34 +135,48 @@
           </div>
 
           <div class="grid md:grid-cols-2 gap-8 mb-16">
-            <!-- Article 1 -->
+            {% for post in posts %}
             <article class="bg-white rounded-xl border overflow-hidden hover:shadow-xl transition-shadow">
               <div class="h-48 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=1400&auto=format&fit=crop" alt="Lancement du Programme de Formation Entrepreneuriale 2024"
+                {% if post.featured_image %}
+                <img src="{{ post.featured_image.url }}" alt="{{ post.title }}"
                      class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                {% else %}
+                <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                  <span class="text-gray-400">Aucune image</span>
+                </div>
+                {% endif %}
               </div>
 
               <div class="px-6 pt-6">
                 <div class="flex items-center justify-between mb-3">
-                  <span class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium bg-orange-100 text-orange-800">
-                    Formation
+                  <span class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium 
+                    {% if post.category %}
+                      {% with forloop.counter0|divisibleby:4 as remainder %}
+                        {% if remainder == 0 %}bg-orange-100 text-orange-800
+                        {% elif remainder == 1 %}bg-cyan-100 text-cyan-800
+                        {% elif remainder == 2 %}bg-amber-100 text-amber-800
+                        {% else %}bg-teal-100 text-teal-800{% endif %}
+                      {% endwith %}
+                    {% endif %}">
+                    {{ post.category.name|default:"Non catégorisé" }}
                   </span>
                   <div class="flex items-center text-sm text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M8 2v4"></path><path d="M16 2v4"></path>
                       <rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
                     </svg>
-                    15 Mars 2024
+                    {{ post.created_at|date:"d F Y" }}
                   </div>
                 </div>
-                <h3 class="text-xl font-medium">Lancement du Programme de Formation Entrepreneuriale 2024</h3>
+                <h3 class="text-xl font-medium">{{ post.title }}</h3>
               </div>
 
               <div class="px-6 pb-6 pt-2">
                 <p class="text-gray-600 mb-4">
-                  Plus de 100 jeunes entrepreneurs ont participé à notre premier atelier de l'année axé sur les stratégies de croissance durable.
+                  {{ post.content|truncatewords:30 }}
                 </p>
-                <a href="#" class="inline-flex items-center text-blue-600 underline-offset-4 hover:underline">
+                <a href="{% url 'blog:post_detail' slug=post.slug %}" class="inline-flex items-center text-blue-600 underline-offset-4 hover:underline">
                   Lire la suite
                   <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
@@ -203,114 +184,11 @@
                 </a>
               </div>
             </article>
-
-            <!-- Article 2 -->
-            <article class="bg-white rounded-xl border overflow-hidden hover:shadow-xl transition-shadow">
-              <div class="h-48 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=1400&auto=format&fit=crop" alt="Opération Ville Propre : Un Succès Collectif"
-                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-              </div>
-
-              <div class="px-6 pt-6">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium bg-teal-100 text-teal-800">
-                    Assainissement
-                  </span>
-                  <div class="flex items-center text-sm text-gray-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M8 2v4"></path><path d="M16 2v4"></path>
-                      <rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
-                    </svg>
-                    8 Mars 2024
-                  </div>
-                </div>
-                <h3 class="text-xl font-medium">Opération Ville Propre : Un Succès Collectif</h3>
-              </div>
-
-              <div class="px-6 pb-6 pt-2">
-                <p class="text-gray-600 mb-4">
-                  Notre grande opération de nettoyage a mobilisé plus de 200 bénévoles et permis de collecter 5 tonnes de déchets.
-                </p>
-                <a href="#" class="inline-flex items-center text-blue-600 underline-offset-4 hover:underline">
-                  Lire la suite
-                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
-                  </svg>
-                </a>
-              </div>
-            </article>
-
-            <!-- Article 3 -->
-            <article class="bg-white rounded-xl border overflow-hidden hover:shadow-xl transition-shadow">
-              <div class="h-48 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=1400&auto=format&fit=crop" alt="Nouveau Partenariat avec l'École Primaire Centrale"
-                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-              </div>
-
-              <div class="px-6 pt-6">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium bg-cyan-100 text-cyan-800">
-                    Éducation
-                  </span>
-                  <div class="flex items-center text-sm text-gray-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M8 2v4"></path><path d="M16 2v4"></path>
-                      <rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
-                    </svg>
-                    1 Mars 2024
-                  </div>
-                </div>
-                <h3 class="text-xl font-medium">Nouveau Partenariat avec l'École Primaire Centrale</h3>
-              </div>
-
-              <div class="px-6 pb-6 pt-2">
-                <p class="text-gray-600 mb-4">
-                  Debout Wanindara s'engage à fournir un soutien scolaire gratuit à 200 élèves durant toute l'année académique.
-                </p>
-                <a href="#" class="inline-flex items-center text-blue-600 underline-offset-4 hover:underline">
-                  Lire la suite
-                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
-                  </svg>
-                </a>
-              </div>
-            </article>
-
-            <!-- Article 4 -->
-            <article class="bg-white rounded-xl border overflow-hidden hover:shadow-xl transition-shadow">
-              <div class="h-48 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=1400&auto=format&fit=crop" alt="Conférence sur le Développement Durable"
-                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-              </div>
-
-              <div class="px-6 pt-6">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium bg-amber-100 text-amber-800">
-                    Sensibilisation
-                  </span>
-                  <div class="flex items-center text-sm text-gray-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M8 2v4"></path><path d="M16 2v4"></path>
-                      <rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
-                    </svg>
-                    22 Février 2024
-                  </div>
-                </div>
-                <h3 class="text-xl font-medium">Conférence sur le Développement Durable</h3>
-              </div>
-
-              <div class="px-6 pb-6 pt-2">
-                <p class="text-gray-600 mb-4">
-                  Plus de 300 participants ont assisté à notre conférence dédiée aux enjeux environnementaux et économiques.
-                </p>
-                <a href="#" class="inline-flex items-center text-blue-600 underline-offset-4 hover:underline">
-                  Lire la suite
-                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
-                  </svg>
-                </a>
-              </div>
-            </article>
+            {% empty %}
+            <div class="col-span-2 text-center py-8">
+              <p class="text-gray-600">Aucun article n'a encore été publié.</p>
+            </div>
+            {% endfor %}
           </div>
 
           <!-- Newsletter CTA -->

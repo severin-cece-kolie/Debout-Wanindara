@@ -15,8 +15,8 @@
     
     <main id="top" class="pt-16">
       <!-- HERO -->
-      <section id="accueil" class="relative min-h-[92vh] grid place-items-center">
-        <img src="{% static 'img/hero.jpg' %}" alt="Communauté Debout Wanindara" class="absolute inset-0 h-full w-full object-cover" />
+      <section id="accueil" class="relative min-h-[92vh] grid place-items-center overflow-hidden">
+        <img src="{% static 'img/hero.jpg' %}" alt="Communauté Debout Wanindara" class="absolute inset-0 h-full w-full object-cover object-center" loading="eager" />
         <div class="absolute inset-0 bg-gradient-to-r from-orange-900/90 via-orange-800/85 to-cyan-900/80"></div>
 
         <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -29,13 +29,13 @@
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 mb-12">
-              <a href="#rejoindre" class="inline-flex items-center h-10 rounded-md bg-gradient-to-r from-orange-600 to-orange-700 px-6 text-white text-lg font-medium hover:from-orange-700 hover:to-orange-800 group">
+              <a href="{% url 'join:join' %}" class="inline-flex items-center h-10 rounded-md bg-gradient-to-r from-orange-600 to-orange-700 px-6 text-white text-lg font-medium hover:from-orange-700 hover:to-orange-800 group">
                 Devenez Membre
                 <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
                 </svg>
               </a>
-              <a href="#actions" class="inline-flex items-center h-10 rounded-md border border-white/70 bg-white/10 px-6 text-white text-lg hover:bg-white/20">
+              <a href="{% url 'action:action' %}" class="inline-flex items-center h-10 rounded-md border border-white/70 bg-white/10 px-6 text-white text-lg hover:bg-white/20">
                 Voir Nos Actions
               </a>
             </div>
@@ -57,7 +57,7 @@
                     <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
                   </svg>
                 </div>
-                <p class="text-3xl text-white">50+</p>
+                <p class="text-3xl text-white">10+</p>
                 <p class="text-sm text-gray-200">Projets Réalisés</p>
               </div>
               <div class="rounded-lg bg-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/20 transition-colors">
@@ -66,7 +66,7 @@
                     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
                   </svg>
                 </div>
-                <p class="text-3xl text-white">10K+</p>
+                <p class="text-3xl text-white">350+</p>
                 <p class="text-sm text-gray-200">Bénéficiaires</p>
               </div>
             </div>
@@ -98,7 +98,7 @@
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-2">Formation</h3>
                 <p class="text-gray-600 mb-3">Développez vos compétences professionnelles</p>
-                <a href="#apropos" class="inline-flex items-center text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                <a href="{% url 'action:action' %}#formation" class="inline-flex items-center text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
                   <span class="text-sm">En savoir plus</span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
@@ -113,7 +113,7 @@
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-2">Éducation</h3>
                 <p class="text-gray-600 mb-3">Accès à l'éducation pour tous</p>
-                <a href="#apropos" class="inline-flex items-center text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                <a href="{% url 'action:action' %}#education" class="inline-flex items-center text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
                   <span class="text-sm">En savoir plus</span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
@@ -128,7 +128,7 @@
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-2">Sensibilisation</h3>
                 <p class="text-gray-600 mb-3">Mobiliser et éveiller les consciences</p>
-                <a href="#apropos" class="inline-flex items-center text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                <a href="{% url 'action:action' %}#sensibilisation" class="inline-flex items-center text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
                   <span class="text-sm">En savoir plus</span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
@@ -143,7 +143,7 @@
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-2">Assainissement</h3>
                 <p class="text-gray-600 mb-3">Pour un environnement sain et durable</p>
-                <a href="#apropos" class="inline-flex items-center text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                <a href="{% url 'action:action' %}#assainissement" class="inline-flex items-center text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
                   <span class="text-sm">En savoir plus</span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
@@ -171,7 +171,7 @@
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Une Communauté Engagée</h3>
                 <p class="text-gray-600 mb-6">Rejoignez plus de 500 membres actifs dédiés au développement</p>
-                <a href="#apropos" class="inline-flex items-center text-orange-600 hover:text-orange-700 transition-colors">
+                <a href="{% url 'about' %}" class="inline-flex items-center text-orange-600 hover:text-orange-700 transition-colors">
                   Découvrir notre histoire
                   <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
@@ -186,8 +186,8 @@
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Des Actions Concrètes</h3>
-                <p class="text-gray-600 mb-6">50+ projets réalisés qui transforment durablement les communautés</p>
-                <a href="#actions" class="inline-flex items-center text-orange-600 hover:text-orange-700 transition-colors">
+                <p class="text-gray-600 mb-6">10+ projets réalisés qui transforment durablement les communautés</p>
+                <a href="{% url 'action:action' %}" class="inline-flex items-center text-orange-600 hover:text-orange-700 transition-colors">
                   Voir nos réalisations
                   <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
@@ -203,7 +203,7 @@
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Devenez Membre</h3>
                 <p class="text-gray-600 mb-6">Participez activement au développement de notre pays</p>
-                <a href="#rejoindre" class="inline-flex items-center text-orange-600 hover:text-orange-700 transition-colors">
+                <a href="{% url 'join:join' %}" class="inline-flex items-center text-orange-600 hover:text-orange-700 transition-colors">
                   Rejoignez-nous maintenant
                   <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
@@ -222,11 +222,11 @@
             Rejoignez notre communauté de changeurs et contribuez activement au développement économique et socio-culturel de notre pays.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#rejoindre" class="inline-flex items-center h-10 rounded-md bg-white px-6 text-orange-600 text-lg font-medium hover:bg-gray-100 group">
+            <a href="{% url 'join:join' %}" class="inline-flex items-center h-10 rounded-md bg-white px-6 text-orange-600 text-lg font-medium hover:bg-gray-100 group">
               Devenir Membre
               <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
-            <a href="#contact" class="inline-flex items-center h-10 rounded-md border border-white/80 bg-white/10 px-6 text-white text-lg hover:bg-white/20">
+            <a href="{% url 'contact:contact' %}" class="inline-flex items-center h-10 rounded-md border border-white/80 bg-white/10 px-6 text-white text-lg hover:bg-white/20">
               Nous Contacter
             </a>
           </div>

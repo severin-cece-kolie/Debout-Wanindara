@@ -17,7 +17,7 @@
         <div class="flex gap-3">
           <a
             aria-label="Facebook"
-            href="#"
+            href="https://www.facebook.com/share/1G7xz31P88/?mibextid=wwXIfr"
             class="grid h-10 w-10 place-items-center rounded-lg bg-gray-800 hover:bg-blue-600 transition-colors"
           >
             <svg
@@ -34,7 +34,7 @@
           </a>
           <a
             aria-label="Twitter"
-            href="#"
+            href="https://x.com/dwanindara?s=11"
             class="grid h-10 w-10 place-items-center rounded-lg bg-gray-800 hover:bg-blue-400 transition-colors"
           >
             <svg
@@ -50,25 +50,15 @@
             </svg>
           </a>
           <a
-            aria-label="Instagram"
-            href="#"
+            aria-label="whatsapp"
+            href="http://wa.me/224628408340"
             class="grid h-10 w-10 place-items-center rounded-lg bg-gray-800 hover:bg-pink-600 transition-colors"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-            </svg>
+            <i class="fab fa-whatsapp"></i>
           </a>
           <a
             aria-label="LinkedIn"
-            href="#"
+            href="https://www.linkedin.com/in/debout-wanindara-b2338839a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
             class="grid h-10 w-10 place-items-center rounded-lg bg-gray-800 hover:bg-blue-700 transition-colors"
           >
             <svg
@@ -92,24 +82,16 @@
         <h4 class="text-white mb-4 font-semibold">Liens Rapides</h4>
         <ul class="space-y-2">
           <li>
-            <a class="hover:text-orange-400 transition-colors" href="#accueil"
-              >Accueil</a
-            >
+            <a class="hover:text-orange-400 transition-colors" href="{% url 'index' %}#accueil">Accueil</a>
           </li>
           <li>
-            <a class="hover:text-orange-400 transition-colors" href="#apropos"
-              >À Propos</a
-            >
+            <a class="hover:text-orange-400 transition-colors" href="{% url 'about' %}">À Propos</a>
           </li>
           <li>
-            <a class="hover:text-orange-400 transition-colors" href="#actions"
-              >Nos Actions</a
-            >
+            <a class="hover:text-orange-400 transition-colors" href="{% url 'action:action' %}">Nos Actions</a>
           </li>
           <li>
-            <a class="hover:text-orange-400 transition-colors" href="#actus"
-              >Actualités</a
-            >
+            <a class="hover:text-orange-400 transition-colors" href="{% url 'blog:blog' %}">Actualités</a>
           </li>
         </ul>
       </div>
@@ -117,17 +99,17 @@
       <div>
         <h4 class="text-white mb-4 font-semibold">Nos Piliers</h4>
         <ul class="space-y-2">
-          <li class="hover:text-cyan-400 transition-colors cursor-pointer">
-            Formation
+          <li>
+            <a class="hover:text-cyan-400 transition-colors" href="{% url 'action:action' %}#formation">Formation</a>
           </li>
-          <li class="hover:text-cyan-400 transition-colors cursor-pointer">
-            Éducation
+          <li>
+            <a class="hover:text-cyan-400 transition-colors" href="{% url 'action:action' %}#education">Éducation</a>
           </li>
-          <li class="hover:text-cyan-400 transition-colors cursor-pointer">
-            Sensibilisation
+          <li>
+            <a class="hover:text-cyan-400 transition-colors" href="{% url 'action:action' %}#sensibilisation">Sensibilisation</a>
           </li>
-          <li class="hover:text-cyan-400 transition-colors cursor-pointer">
-            Assainissement
+          <li>
+            <a class="hover:text-cyan-400 transition-colors" href="{% url 'action:action' %}#assainissement">Assainissement</a>
           </li>
         </ul>
       </div>
@@ -136,46 +118,27 @@
         <h4 class="text-white mb-4 font-semibold">Participer</h4>
         <ul class="space-y-2">
           <li>
-            <a class="hover:text-cyan-400 transition-colors" href="#rejoindre"
-              >Devenez Membre</a
-            >
+            <a class="hover:text-cyan-400 transition-colors" href="{% url 'join:join' %}#rejoindre">Devenez Membre</a>
           </li>
           <li>
-            <a class="hover:text-cyan-400 transition-colors" href="#"
-              >Faire un Don</a
-            >
+            <a class="hover:text-cyan-400 transition-colors" href="{% url 'contact:donate' %}">Faire un Don</a>
           </li>
           <li>
-            <a class="hover:text-cyan-400 transition-colors" href="#"
-              >Bénévolat</a
-            >
+            <a class="hover:text-cyan-400 transition-colors" href="{% url 'join:volunteer' %}">Bénévolat</a>
           </li>
           <li>
-            <a class="hover:text-cyan-400 transition-colors" href="#contact"
-              >Nous Contacter</a
-            >
+            <a class="hover:text-cyan-400 transition-colors" href="{% url 'contact:contact' %}#contactForm">Nous Contacter</a>
           </li>
         </ul>
       </div>
     </div>
 
     <div class="border-t border-gray-800 pt-8">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-        <p class="text-gray-400 text-sm">
+      <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+        <p class="text-gray-400 text-sm text-center flex items-center justify-center gap-2">
           © <span id="year"></span> Debout Wanindara. Tous droits réservés.
         </p>
-        <div class="flex gap-6 text-sm">
-          <a href="#" class="hover:text-orange-400 transition-colors"
-            >Mentions Légales</a
-          >
-          <a href="#" class="hover:text-orange-400 transition-colors"
-            >Politique de Confidentialité</a
-          >
-          <a href="#" class="hover:text-orange-400 transition-colors"
-            >Conditions d'Utilisation</a
-          >
-        </div>
-      </div>
+      </div>      
       <p
         class="mt-8 text-center text-gray-500 text-sm flex items-center justify-center gap-2"
       >

@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badge - {{ membre.nom_complet }}</title>
+    <link rel="stylesheet" href="{% static 'css/badge.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="badge-container">
+        {% if messages %}
+        <div style="max-width: 1200px; margin: 2rem auto; padding: 0 2rem;">
+            {% for message in messages %}
+            <div style="padding: 1rem; background: {% if message.tags == 'success' %}#10b981{% else %}#ef4444{% endif %}; color: white; border-radius: 8px; margin-bottom: 1rem; text-align: center; font-weight: 600;">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="badge-preview">
+            <h1 style="text-align: center; margin-bottom: 2rem; color: #333;">Badge Membre - Debout Wanindara</h1>
+            
+            <!-- Badge Recto -->
+            <div class="badge-recto">
+                <div class="badge-header">
+                    <div>
+                        <div class="badge-org-name">Debout Wanindara</div>
+                    </div>
+                    <div class="badge-logo">
+                        <img src="{% static 'img/logo.png' %}" alt="Logo" onerror="this.style.display='none'">
+                    </div>
+                </div>
+                
+                <div class="badge-content">
+                    {% if membre.photo %}
+                    <div class="badge-photo-container">
+                        <img src="{{ membre.photo.url }}" alt="{{ membre.nom_complet }}" class="badge-photo" onerror="this.src='{% static 'img/logo.png' %}'">
+                    </div>
+                    {% endif %}
+                    
+                    <div class="badge-info">
+                        <div class="badge-name">{{ membre.nom_complet }}</div>
+                        {% if membre.position %}
+                        <div class="badge-position">{{ membre.position }}</div>
+                        {% endif %}
+                        <div class="badge-id">ID: {{ membre.numero_id }}</div>
+                    </div>
+                    
+                    <!-- QR Code pour authentification -->
+                    <div class="badge-qr">
+                        <img src="{% url 'join:badge_qr' membre.id %}" alt="QR Code Authentification">
+                    </div>
+                </div>
+                
+                <div class="badge-footer">
+                    <div>Membre depuis {{ date_emission }}</div>
+                    <div>Valide</div>
+                </div>
+            </div>
+            
+            <!-- Badge Verso -->
+            <div class="badge-verso">
+                <div class="badge-verso-header">
+                    <div class="badge-verso-title">Conditions d'utilisation</div>
+                </div>
+                
+                <div class="badge-conditions">
+                    <ul>
+                        <li>Ce badge est personnel et non transférable.</li>
+                        <li>Il doit être présenté lors des événements et activités de l'organisation.</li>
+                        <li>En cas de perte, veuillez contacter immédiatement l'administration.</li>
+                        <li>Le badge reste la propriété de Debout Wanindara.</li>
+                        <li>Toute utilisation frauduleuse est passible de sanctions.</li>
+                    </ul>
+                </div>
+                
+                <div class="badge-signature-zone">
+                    <div class="badge-signature-label">Signature du membre</div>
+                    <div class="badge-signature-line"></div>
+                    <div class="badge-signature-date">Date: _______________</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="badge-actions">
+            <a href="{% url 'join:badge_pdf' membre.id %}" class="btn-download">
+                <i class="fas fa-file-pdf"></i>
+                Télécharger en PDF
+            </a>
+            <a href="{% url 'join:badge_png' membre.id %}" class="btn-download secondary">
+                <i class="fas fa-image"></i>
+                Télécharger en PNG
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+

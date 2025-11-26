@@ -1,0 +1,25 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Faire un Don — Debout Wanindara{% endblock title %}
+
+{% block content %}
+<main class="min-h-screen bg-white text-gray-900">
+  <section class="py-24 bg-gradient-to-r from-orange-600 via-orange-700 to-cyan-600 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-3xl sm:text-4xl font-semibold mb-4">Faire un Don</h1>
+      <p class="mb-8">Soutenez nos projets et aidez-nous à amplifier notre impact sur le terrain.</p>
+      <div class="bg-white rounded-xl p-8 text-gray-900">
+        <h2 class="text-xl font-medium mb-4">Dons sécurisés</h2>
+        <p class="mb-4">Vous pouvez faire un don ponctuel ou devenir donateur régulier. Choisissez le mode qui vous convient :</p>
+        <ul class="space-y-3 text-sm text-gray-700 mb-6">
+          <li>• Virement bancaire (coordonnées disponibles sur demande)</li>
+          <li>• Paiement mobile / Mobile money</li>
+          <li>• Don en nature (matériel scolaire, fournitures, etc.)</li>
+        </ul>
+        <a href="{% url 'contact:contact' %}#contactForm" class="inline-flex items-center px-6 py-2 rounded-md bg-orange-600 text-white">Nous contacter pour un don</a>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock content %}

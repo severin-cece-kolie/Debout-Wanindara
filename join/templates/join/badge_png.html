@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Badge PNG - {{ membre.nom_complet }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: transparent;
+            width: 85.6mm;
+            height: 53.98mm;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .badge-recto {
+            width: 85.6mm;
+            height: 53.98mm;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 6mm;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .badge-recto::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .badge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 4mm;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .badge-org-name {
+            font-size: 8pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+        
+        .badge-logo {
+            width: 18mm;
+            height: 18mm;
+            background: white;
+            border-radius: 4px;
+            padding: 2mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .badge-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .badge-content {
+            display: flex;
+            gap: 4mm;
+            position: relative;
+            z-index: 1;
+            align-items: center;
+        }
+        
+        .badge-photo-container {
+            flex-shrink: 0;
+        }
+        
+        .badge-photo {
+            width: 28mm;
+            height: 28mm;
+            border-radius: 6px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .badge-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .badge-name {
+            font-size: 11pt;
+            font-weight: 700;
+            margin-bottom: 2mm;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+        
+        .badge-position {
+            font-size: 8pt;
+            opacity: 0.9;
+            margin-bottom: 2mm;
+            font-weight: 400;
+        }
+        
+        .badge-id {
+            font-size: 7pt;
+            opacity: 0.8;
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2mm 4mm;
+            border-radius: 3px;
+            display: inline-block;
+            margin-top: 2mm;
+        }
+        
+        .badge-footer {
+            margin-top: 4mm;
+            padding-top: 3mm;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 7pt;
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="badge-recto">
+        <div class="badge-header">
+            <div>
+                <div class="badge-org-name">Debout Wanindara</div>
+            </div>
+            {% if logo_url %}
+            <div class="badge-logo">
+                <img src="{{ logo_url }}" alt="Logo">
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="badge-content">
+            {% if photo_url %}
+            <div class="badge-photo-container">
+                <img src="{{ photo_url }}" alt="{{ membre.nom_complet }}" class="badge-photo">
+            </div>
+            {% endif %}
+            
+            <div class="badge-info">
+                <div class="badge-name">{{ membre.nom_complet }}</div>
+                {% if membre.position %}
+                <div class="badge-position">{{ membre.position }}</div>
+                {% endif %}
+                <div class="badge-id">ID: {{ membre.numero_id }}</div>
+            </div>
+        </div>
+        
+        <div class="badge-footer">
+            <div>Membre depuis {{ date_emission }}</div>
+            <div>Valide</div>
+        </div>
+    </div>
+</body>
+</html>
+

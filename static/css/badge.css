@@ -1,0 +1,354 @@
+/* Styles pour le badge professionnel */
+.badge-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #f5f5f5;
+    min-height: 100vh;
+}
+
+.badge-preview {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.badge-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+}
+
+.btn-download:hover {
+    background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(234, 88, 12, 0.4);
+}
+
+.btn-download.secondary {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}
+
+.btn-download.secondary:hover {
+    background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+    box-shadow: 0 6px 16px rgba(6, 182, 212, 0.4);
+}
+
+/* Badge recto - Design professionnel avec couleurs orange/cyan - MODE PORTRAIT */
+.badge-recto {
+    width: 53.98mm; /* Format portrait (inversé) */
+    height: 85.6mm;
+    background: linear-gradient(180deg, #ea580c 0%, #f97316 50%, #06b6d4 100%);
+    border-radius: 12px;
+    padding: 1.2rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.badge-recto::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.badge-recto::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.badge-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.8rem;
+    position: relative;
+    z-index: 1;
+}
+
+.badge-logo {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.badge-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.badge-org-name {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+.badge-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    position: relative;
+    z-index: 1;
+    align-items: center;
+    flex: 1;
+}
+
+.badge-photo-container {
+    flex-shrink: 0;
+}
+
+.badge-photo {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    object-fit: cover;
+    background: rgba(255, 255, 255, 0.1);
+    display: block;
+    margin: 0 auto;
+}
+
+.badge-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 0;
+}
+
+.badge-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.badge-position {
+    font-size: 0.75rem;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+.badge-id {
+    font-size: 0.65rem;
+    opacity: 0.8;
+    font-family: 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 0.3rem;
+}
+
+.badge-qr {
+    margin: 0.5rem auto;
+    background: white;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+}
+
+.badge-qr img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.badge-footer {
+    margin-top: auto;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.6rem;
+    opacity: 0.85;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+/* Badge verso - Conditions d'utilisation */
+.badge-verso {
+    width: 53.98mm;
+    height: 85.6mm;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    color: #333;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    margin: 2rem auto 0;
+    position: relative;
+    border: 2px solid #e5e7eb;
+}
+
+.badge-verso-header {
+    text-align: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #ea580c;
+}
+
+.badge-verso-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ea580c;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.badge-conditions {
+    font-size: 0.6rem;
+    line-height: 1.4;
+    color: #555;
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
+.badge-conditions ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.badge-conditions li {
+    margin-bottom: 0.4rem;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.badge-conditions li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #ea580c;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.badge-signature-zone {
+    border-top: 1px dashed #ccc;
+    padding-top: 0.8rem;
+    margin-top: 0.8rem;
+}
+
+.badge-signature-label {
+    font-size: 0.6rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.badge-signature-line {
+    border-bottom: 1px solid #333;
+    height: 30px;
+    margin-bottom: 0.3rem;
+}
+
+.badge-signature-date {
+    font-size: 0.55rem;
+    color: #999;
+    text-align: right;
+}
+
+/* Pour l'impression PDF */
+@media print {
+    .badge-container {
+        background: white;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .badge-actions {
+        display: none;
+    }
+    
+    .badge-preview {
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    .badge-recto,
+    .badge-verso {
+        page-break-inside: avoid;
+        margin: 0;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .badge-container {
+        padding: 1rem;
+    }
+    
+    .badge-recto,
+    .badge-verso {
+        width: 100%;
+        max-width: 85.6mm;
+    }
+    
+    .badge-actions {
+        flex-direction: column;
+    }
+    
+    .btn-download {
+        width: 100%;
+        justify-content: center;
+    }
+}
+

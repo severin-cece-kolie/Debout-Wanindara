@@ -1,0 +1,405 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Galerie Photos - Debout Wanindara{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: white;
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .gallery-item img {
+        transition: transform 0.3s ease;
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.05);
+    }
+
+    .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        color: white;
+        padding: 2rem 1.5rem 1.5rem;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+        transform: translateY(0);
+    }
+
+    .category-filter {
+        transition: all 0.3s ease;
+    }
+
+    .category-filter.active {
+        background: linear-gradient(135deg, #ea580c, #06b6d4);
+        color: white;
+        transform: scale(1.05);
+    }
+
+    .featured-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: linear-gradient(135deg, #ea580c, #dc2626);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        z-index: 10;
+    }
+
+    .lightbox-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .lightbox-overlay.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .lightbox-content {
+        max-width: 90%;
+        max-height: 90%;
+        margin: auto;
+        position: relative;
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+    }
+
+    .lightbox-overlay.active .lightbox-content {
+        transform: scale(1);
+    }
+
+    .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+
+    .lightbox-nav:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .lightbox-prev {
+        left: 20px;
+    }
+
+    .lightbox-next {
+        right: 20px;
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+
+    .lightbox-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .gallery-item {
+        animation: fadeInUp 0.6s ease-out;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="min-h-screen bg-gray-50">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-orange-600 via-orange-700 to-cyan-600 py-20 pt-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl sm:text-5xl text-white mb-6 font-bold">Galerie Photos</h1>
+            <p class="text-xl text-orange-100 max-w-3xl mx-auto">
+                Découvrez les moments forts de Debout Wanindara à travers nos photos
+            </p>
+        </div>
+    </section>
+
+    <!-- Filtres par Catégorie -->
+    <section class="py-12 bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Explorez Notre Galerie</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Parcourez nos différentes catégories de photos et revivez les moments marquants de notre ONG
+                </p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button class="category-filter px-6 py-3 rounded-full border-2 border-orange-500 text-orange-600 font-semibold hover:bg-orange-500 hover:text-white transition-all duration-300 {% if selected_category == 'all' %}active{% endif %}"
+                        data-category="all">
+                    Toutes les photos
+                </button>
+                {% for value, label in categories %}
+                <button class="category-filter px-6 py-3 rounded-full border-2 border-gray-300 text-gray-700 font-semibold hover:border-orange-500 hover:text-orange-600 transition-all duration-300 {% if selected_category == value %}active{% endif %}"
+                        data-category="{{ value }}">
+                    {{ label }}
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Dans la section Photos à la Une -->
+{% for photo in featured_photos %}
+<div class="gallery-item cursor-pointer">
+    <div class="featured-badge">À la une</div>
+    <img src="{{ photo.image.url }}" 
+         alt="{{ photo.title }}"
+         class="w-full h-64 object-cover"
+         data-title="{{ photo.title }}"
+         data-description="{{ photo.description }}"
+         data-category="{{ photo.get_category_display }}"
+         data-date="{{ photo.date_taken|date:'d/m/Y' }}"
+         data-image="{{ photo.image.url }}">
+    <div class="gallery-overlay">
+        <h3 class="font-bold text-lg mb-2">{{ photo.title }}</h3>
+        <p class="text-orange-200 text-sm mb-2">{{ photo.get_category_display }} • {{ photo.date_taken|date:"d/m/Y" }}</p>
+        <p class="text-gray-200 text-sm">{{ photo.description }}</p>
+    </div>
+</div>
+{% endfor %}
+
+<!-- Dans la galerie principale -->
+{% for photo in photos %}
+<div class="gallery-item cursor-pointer">
+    {% if photo.featured %}
+    <div class="featured-badge">À la une</div>
+    {% endif %}
+    <img src="{{ photo.image.url }}" 
+         alt="{{ photo.title }}"
+         class="w-full h-64 object-cover"
+         data-title="{{ photo.title }}"
+         data-description="{{ photo.description }}"
+         data-category="{{ photo.get_category_display }}"
+         data-date="{{ photo.date_taken|date:'d/m/Y' }}"
+         data-image="{{ photo.image.url }}">
+    <div class="gallery-overlay">
+        <h3 class="font-bold text-lg mb-2">{{ photo.title }}</h3>
+        <p class="text-orange-200 text-sm mb-2">{{ photo.get_category_display }} • {{ photo.date_taken|date:"d/m/Y" }}</p>
+        <p class="text-gray-200 text-sm">{{ photo.description }}</p>
+    </div>
+</div>
+{% endfor %}
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-gradient-to-r from-orange-600 to-cyan-600">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Vous souhaitez partager vos photos ?</h2>
+            <p class="text-orange-100 text-lg mb-8">
+                Rejoignez-nous et contribuez à enrichir notre galerie avec vos plus beaux clichés
+            </p>
+            <a href="{% url 'join:join' %}" 
+               class="inline-flex items-center px-8 py-4 bg-white text-orange-600 font-bold rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                </svg>
+                Devenir Membre
+            </a>
+        </div>
+    </section>
+</main>
+
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+    </button>
+    
+    <button class="lightbox-nav lightbox-prev" id="lightbox-prev">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+    </button>
+    
+    <button class="lightbox-nav lightbox-next" id="lightbox-next">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+    </button>
+    
+    <div class="lightbox-content">
+        <img id="lightbox-image" class="max-w-full max-h-full object-contain rounded-lg">
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6 text-white">
+            <h3 id="lightbox-title" class="text-xl font-bold mb-2"></h3>
+            <div class="flex items-center justify-between text-sm">
+                <span id="lightbox-category" class="bg-orange-500 px-3 py-1 rounded-full"></span>
+                <span id="lightbox-date" class="text-gray-300"></span>
+            </div>
+            <p id="lightbox-description" class="mt-2 text-gray-200"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Filtrage par catégorie
+    const filterButtons = document.querySelectorAll('.category-filter');
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const category = this.getAttribute('data-category');
+            window.location.href = `?category=${category}`;
+        });
+    });
+
+    // Lightbox functionality
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxDescription = document.getElementById('lightbox-description');
+    const lightboxCategory = document.getElementById('lightbox-category');
+    const lightboxDate = document.getElementById('lightbox-date');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+
+    let currentImages = [];
+    let currentIndex = 0;
+
+    // Ouvrir la lightbox
+    function openLightbox(images, index) {
+        currentImages = images;
+        currentIndex = index;
+        updateLightbox();
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Fermer la lightbox
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Mettre à jour le contenu de la lightbox
+    function updateLightbox() {
+        if (currentImages.length === 0) return;
+        
+        const currentImage = currentImages[currentIndex];
+        lightboxImage.src = currentImage.getAttribute('data-image');
+        lightboxTitle.textContent = currentImage.getAttribute('data-title');
+        lightboxDescription.textContent = currentImage.getAttribute('data-description');
+        lightboxCategory.textContent = currentImage.getAttribute('data-category');
+        lightboxDate.textContent = currentImage.getAttribute('data-date');
+    }
+
+    // Navigation
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % currentImages.length;
+        updateLightbox();
+    }
+
+    function prevImage() {
+        currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+        updateLightbox();
+    }
+
+    // Événements
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    galleryItems.forEach((item, index) => {
+        item.addEventListener('click', function() {
+            const images = Array.from(document.querySelectorAll('.gallery-item img'));
+            openLightbox(images, index);
+        });
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxNext.addEventListener('click', nextImage);
+    lightboxPrev.addEventListener('click', prevImage);
+
+    // Navigation au clavier
+    document.addEventListener('keydown', function(e) {
+        if (!lightbox.classList.contains('active')) return;
+        
+        switch(e.key) {
+            case 'Escape':
+                closeLightbox();
+                break;
+            case 'ArrowRight':
+                nextImage();
+                break;
+            case 'ArrowLeft':
+                prevImage();
+                break;
+        }
+    });
+
+    // Fermer en cliquant sur l'overlay
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    });
+});
+</script>
+{% endblock %}

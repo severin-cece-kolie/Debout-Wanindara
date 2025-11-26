@@ -54,3 +54,6 @@ Thumbs.db
 core/static/img/uploads/
 staticfiles/
 local_settings.py
+
+# email_config.py (fichier de configuration sensible)
+core/email_config.py

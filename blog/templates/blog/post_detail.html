@@ -1,0 +1,87 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title }} - Blog{% endblock %}
+
+{% block content %}
+<main class="min-h-screen bg-white">
+    <!-- Article Header -->
+    <section class="bg-gradient-to-r from-orange-600 via-orange-700 to-cyan-600 py-16 pt-36">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            {% if post.category %}
+            <div class="mb-4">
+                <span class="inline-flex items-center justify-center rounded-md border px-3 py-1 text-sm font-medium bg-white/10 text-white">
+                    {{ post.category.name }}
+                </span>
+            </div>
+            {% endif %}
+            <h1 class="text-3xl md:text-4xl lg:text-5xl text-white font-bold mb-4">{{ post.title }}</h1>
+            <div class="flex items-center text-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 2v4"></path><path d="M16 2v4"></path>
+                    <rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
+                </svg>
+                <time datetime="{{ post.created_at|date:'Y-m-d' }}">{{ post.created_at|date:"d F Y" }}</time>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {% if post.featured_image %}
+        <div class="mb-8 rounded-xl overflow-hidden">
+            <img src="{{ post.featured_image.url }}" 
+                 alt="{{ post.title }}"
+                 class="w-full h-auto">
+        </div>
+        {% endif %}
+
+        <div class="prose prose-lg max-w-none">
+            {{ post.content|linebreaks }}
+        </div>
+    </article>
+
+    <!-- Related Articles -->
+    {% if related_posts %}
+    <section class="bg-gray-50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">Articles similaires</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                {% for related in related_posts %}
+                <article class="bg-white rounded-xl border overflow-hidden hover:shadow-xl transition-shadow">
+                    {% if related.featured_image %}
+                    <div class="h-48 overflow-hidden">
+                        <img src="{{ related.featured_image.url }}" 
+                             alt="{{ related.title }}"
+                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                    </div>
+                    {% endif %}
+                    
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 2v4"></path><path d="M16 2v4"></path>
+                                <rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
+                            </svg>
+                            {{ related.created_at|date:"d F Y" }}
+                        </div>
+                        <h3 class="font-bold text-xl mb-2">{{ related.title }}</h3>
+                        <p class="text-gray-600 mb-4">{{ related.content|truncatewords:20 }}</p>
+                        <a href="{% url 'blog:post_detail' slug=related.slug %}" 
+                           class="inline-flex items-center text-blue-600 hover:underline">
+                            Lire la suite
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14"></path>
+                                <path d="m12 5 7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+</main>
+{% endblock %}

@@ -9,11 +9,14 @@
           <!-- Nav desktop -->
           <nav class="hidden md:flex items-center gap-6">
             <a href="{% url 'index' %}" class="{% if request.path == '/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Accueil</a>
-            <a href="{% url 'action' %}" class="{% if request.path == '/actions/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Nos Actions</a>
-            <a href="{% url 'join' %}" class="{% if request.path == '/join-us/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Rejoignez-Nous</a>
-            <a href="{% url 'blog' %}" class="{% if request.path == '/blog/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Actualités</a>
+            <a href="{% url 'action:action' %}" class="{% if request.path == '/actions/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Nos Actions</a>
+            <a href="{% url 'join:join' %}" class="{% if request.path == '/join-us/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Rejoignez-Nous</a>
+            {% if user.is_authenticated and user.is_staff %}
+            <a href="{% url 'join:badge_list' %}" class="{% if request.path == '/join-us/badges/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Badges</a>
+            {% endif %}
+            <a href="{% url 'blog:blog' %}" class="{% if request.path == '/blog/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Actualités</a>
             <a href="{% url 'about' %}" class="{% if request.path == '/about/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">À Propos</a>
-            <a href="{% url 'contact' %}" class="{% if request.path == '/contact/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Contact</a>
+            <a href="{% url 'contact:contact' %}" class="{% if request.path == '/contact/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Contact</a>
             <a href="#rejoindre" class="inline-flex items-center h-9 rounded-md bg-gradient-to-r from-orange-600 to-orange-700 px-4 text-white text-sm font-medium hover:from-orange-700 hover:to-orange-800 transition-colors">
               Devenez Membre
             </a>
@@ -32,11 +35,14 @@
       <div id="mobileMenu" class="md:hidden hidden border-t bg-white">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 grid gap-2">
           <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'index' %}">Accueil</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'action' %}">Nos Actions</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'join' %}">Rejoignez-Nous</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="#actus">Actualités</a>
+          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'action:action' %}">Nos Actions</a>
+          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'join:join' %}">Rejoignez-Nous</a>
+          {% if user.is_authenticated and user.is_staff %}
+          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'join:badge_list' %}">Badges</a>
+          {% endif %}
+          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'blog:blog' %}">Actualités</a>
           <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'about' %}">À Propos</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'contact' %}">Contact</a>
+          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'contact:contact' %}">Contact</a>
           <a class="mt-2 inline-flex items-center justify-center h-10 rounded-md bg-gradient-to-r from-orange-600 to-orange-700 px-4 text-white font-medium hover:from-orange-700 hover:to-orange-800" href="#rejoindre">Devenez Membre</a>
         </nav>
       </div>

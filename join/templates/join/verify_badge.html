@@ -1,0 +1,56 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Vérification du Badge{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            {% if valid %}
+            <div class="text-center">
+                <div class="mb-6">
+                    <svg class="mx-auto h-16 w-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold text-green-600 mb-4">Badge Authentique</h1>
+                <p class="text-lg text-gray-700 mb-6">{{ message }}</p>
+                
+                {% if membre %}
+                <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Informations du Membre</h2>
+                    <div class="space-y-2 text-left">
+                        <p><span class="font-semibold">Nom complet:</span> {{ membre.nom_complet }}</p>
+                        {% if membre.position %}
+                        <p><span class="font-semibold">Poste:</span> {{ membre.position }}</p>
+                        {% endif %}
+                        <p><span class="font-semibold">Numéro ID:</span> {{ membre.numero_id }}</p>
+                        <p><span class="font-semibold">Membre depuis:</span> {{ membre.created_at|date:"d/m/Y" }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="text-center">
+                <div class="mb-6">
+                    <svg class="mx-auto h-16 w-16 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold text-red-600 mb-4">Badge Non Valide</h1>
+                <p class="text-lg text-gray-700 mb-6">{{ message }}</p>
+                <p class="text-sm text-gray-500">Veuillez contacter l'administration si vous pensez qu'il s'agit d'une erreur.</p>
+            </div>
+            {% endif %}
+            
+            <div class="mt-8 text-center">
+                <a href="{% url 'join:join' %}" class="inline-block bg-gradient-to-r from-orange-600 to-cyan-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-orange-700 hover:to-cyan-700 transition">
+                    Retour à l'accueil
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

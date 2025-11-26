@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-gbrng&khmt)48ht5+b40%p*h#n0j2r-7jp9=2+%(jj$no0x049
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -51,6 +51,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + EXTERNAL_APPS + CUSTOM_APPS
@@ -138,7 +139,91 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
 ]
 
+# Media files (User uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# ==============================================================================
+# CONFIGURATION EMAIL INTELLIGENTE - FONCTIONNE EN DEV ET PROD
+# ==============================================================================
+
+import os
+from django.core.exceptions import ImproperlyConfigured
+
+import os
+
+# Backend SMTP standard - fonctionne avec SendGrid et Gmail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_TIMEOUT = 30
+DEFAULT_FROM_EMAIL = 'deboutwanindara@gmail.com'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+def get_email_config():
+    """
+    Récupère la configuration email - Supporte SendGrid (recommandé) et Gmail
+    """
+    # 1. Vérifier SendGrid en premier (recommandé pour étudiants - gratuit)
+    try:
+        from .email_config import SENDGRID_API_KEY
+        if SENDGRID_API_KEY:
+            # Configuration SendGrid
+            return {
+                'host': 'smtp.sendgrid.net',
+                'port': 587,
+                'use_tls': True,
+                'use_ssl': False,
+                'user': 'apikey',
+                'password': SENDGRID_API_KEY,
+                'provider': 'SendGrid'
+            }
+    except ImportError:
+        pass
+    
+    # 2. Essayer Gmail avec App Password
+    env_password = os.getenv('EMAIL_PASSWORD')
+    if not env_password:
+        try:
+            from .email_config import EMAIL_PASSWORD
+            env_password = EMAIL_PASSWORD
+        except ImportError:
+            pass
+    
+    if env_password:
+        # Configuration Gmail
+        return {
+            'host': 'smtp.gmail.com',
+            'port': 587,
+            'use_tls': True,
+            'use_ssl': False,
+            'user': EMAIL_HOST_USER,
+            'password': env_password,
+            'provider': 'Gmail'
+        }
+    
+    return None
+
+email_config = get_email_config()
+
+if email_config:
+    # Appliquer la configuration
+    EMAIL_HOST = email_config['host']
+    EMAIL_PORT = email_config['port']
+    EMAIL_USE_TLS = email_config['use_tls']
+    EMAIL_USE_SSL = email_config['use_ssl']
+    EMAIL_HOST_USER = email_config['user']
+    EMAIL_HOST_PASSWORD = email_config['password']
+    
+    print(f"✅ Configuration email activée - {email_config['provider']}")
+    print(f"✅ Serveur SMTP: {EMAIL_HOST}:{EMAIL_PORT}")
+    if email_config['provider'] == 'SendGrid':
+        print("✅ SendGrid détecté - Gratuit jusqu'à 100 emails/jour")
+else:
+    print("⚠️ ATTENTION: Aucune configuration email trouvée")
+    print("⚠️ Configurez SendGrid (gratuit) ou Gmail dans core/email_config.py")
+    print("📖 Consultez SETUP_SENDGRID_SIMPLE.md pour les instructions")

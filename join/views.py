@@ -5,10 +5,9 @@ from django.conf import settings
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib import messages
+from django.core.mail import EmailMessage, send_mail
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
-from django.core.mail import send_mail
-from core.email_utils import send_email_robust
 from .models import Membre, Applicant, GalleryPhoto
 import os
 from io import BytesIO
@@ -626,8 +625,9 @@ def submit_application(request):
                 settings.EMAIL_BACKEND == 'django.core.mail.backends.smtp.EmailBackend'
             )
 
-            # Envoi des emails - TOUJOURS EN RÉEL SI CONFIGURÉ
+            # Envoi des emails - via EmailJS (fallback SMTP si besoin)
             email_results = {'admin': False, 'user': False}
+            email_channels = {'admin': None, 'user': None}
             email_errors = []
 
             # Email à Debout Wanindara
@@ -651,16 +651,35 @@ Numéro de badge: {numero_id}
 ID Membre: #{membre.id}
 Debout Wanindara - Système de badges"""
 
-            success, error_msg = send_email_robust(
+            admin_template_params = {
+                'to_email': 'deboutwanindara@gmail.com',
+                'applicant_name': nom_complet,
+                'applicant_email': email,
+                'applicant_phone': phone or 'Non renseigné',
+                'applicant_position': position,
+                'applicant_diploma': diploma,
+                'applicant_skills': skills,
+                'applicant_languages': languages,
+                'applicant_country': country,
+                'applicant_city': city,
+                'applicant_district': district,
+                'badge_number': numero_id,
+                'membre_id': membre.id,
+                'submitted_at': timezone.now().strftime('%d/%m/%Y à %H:%M'),
+            }
+
+            success, error_msg, channel = dispatch_email_notification(
+                'application_admin',
+                admin_template_params,
                 admin_subject,
                 admin_body.strip(),
                 ['deboutwanindara@gmail.com'],
-                max_retries=2
             )
             
             if success:
                 email_results['admin'] = True
-                print(f"✅ Email ADMIN envoyé avec succès à deboutwanindara@gmail.com")
+                email_channels['admin'] = channel
+                print(f"✅ Email ADMIN envoyé via {channel} à deboutwanindara@gmail.com")
             else:
                 print(f"❌ Erreur envoi email admin: {error_msg}")
                 logger.error(f"Erreur envoi email admin: {error_msg}")
@@ -699,16 +718,31 @@ L'équipe Debout Wanindara
 ---
 Ceci est un message automatique, merci de ne pas y répondre."""
 
-            success, error_msg = send_email_robust(
+            user_template_params = {
+                'to_email': email,
+                'to_name': nom_complet,
+                'badge_number': numero_id,
+                'position': position,
+                'submitted_at': timezone.now().strftime('%d/%m/%Y à %H:%M'),
+                'badge_url': badge_url,
+                'badge_pdf_url': badge_pdf_url,
+                'badge_png_url': badge_png_url,
+                'support_email': 'deboutwanindara@gmail.com',
+                'support_phone': '+224 629829087',
+            }
+
+            success, error_msg, channel = dispatch_email_notification(
+                'application_user',
+                user_template_params,
                 user_subject,
                 user_body.strip(),
                 [email],
-                max_retries=2
             )
             
             if success:
                 email_results['user'] = True
-                print(f"✅ Email CONFIRMATION envoyé avec succès à {email}")
+                email_channels['user'] = channel
+                print(f"✅ Email CONFIRMATION envoyé via {channel} à {email}")
             else:
                 print(f"❌ Erreur envoi email confirmation: {error_msg}")
                 logger.error(f"Erreur envoi email confirmation: {error_msg}")
@@ -735,7 +769,8 @@ Ceci est un message automatique, merci de ne pas y répondre."""
                 'mode': 'production' if email_configured else 'development',
                 'emails_sent': {
                     'admin': email_results['admin'],
-                    'user': email_results['user']
+                    'user': email_results['user'],
+                    'channels': email_channels,
                 }
             })
 

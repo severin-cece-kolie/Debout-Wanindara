@@ -10,17 +10,23 @@ urlpatterns = [
     # Soumission du formulaire
     path('submit/', views.submit_application, name='submit'),
     
-    # Bénévolat
+    # Page bénévolat
     path('volunteer/', views.volunteer_view, name='volunteer'),
     
     # Liste des badges
     path('badges/', views.badge_list, name='badge_list'),
     
-    # Vues pour les badges
+    # Badge individuel
     path('badge/<int:membre_id>/', views.badge_view, name='badge_view'),
+
+    # Formats du badge
     path('badge/<int:membre_id>/pdf/', views.badge_pdf_view, name='badge_pdf'),
     path('badge/<int:membre_id>/png/', views.badge_png_view, name='badge_png'),
     path('badge/<int:membre_id>/qr/', views.badge_qr_view, name='badge_qr'),
+
+    # Galerie
     path('gallery/', views.gallery_view, name='gallery'),
+
+    # Vérification de badge
     path('verify/<int:membre_id>/<str:signature>/', views.verify_badge, name='verify_badge'),
 ]

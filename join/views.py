@@ -30,6 +30,26 @@ def permission_denied_view(request, exception=None):
     return render(request, '403.html', status=403)
 
 
+def send_email_notification(template_name, template_params, subject, body, recipients):
+    """
+    Envoi email unifié (SMTP uniquement).
+    Retourne (success, error_message, channel)
+    """
+
+    try:
+        email = EmailMessage(
+            subject,
+            body,
+            settings.DEFAULT_FROM_EMAIL,
+            recipients
+        )
+        email.send(fail_silently=False)
+
+        return True, None, "smtp"
+
+    except Exception as e:
+        return False, str(e), None
+
 # ----------------------------------------------------------------------
 #  UTILITAIRES
 # ----------------------------------------------------------------------
@@ -668,7 +688,7 @@ Debout Wanindara - Système de badges"""
                 'submitted_at': timezone.now().strftime('%d/%m/%Y à %H:%M'),
             }
 
-            success, error_msg, channel = dispatch_email_notification(
+            success, error_msg, channel = send_email_notification(
                 'application_admin',
                 admin_template_params,
                 admin_subject,
@@ -731,7 +751,7 @@ Ceci est un message automatique, merci de ne pas y répondre."""
                 'support_phone': '+224 629829087',
             }
 
-            success, error_msg, channel = dispatch_email_notification(
+            success, error_msg, channel = send_email_notification(
                 'application_user',
                 user_template_params,
                 user_subject,

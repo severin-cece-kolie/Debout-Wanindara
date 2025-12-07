@@ -47,5 +47,32 @@
 
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+      
+          const html = document.documentElement;
+          const toggle = document.getElementById("theme-toggle");
+      
+          // Charger le thème sauvegardé
+          const savedTheme = localStorage.getItem("theme");
+          if (savedTheme === "dark") {
+              html.classList.add("dark");
+          }
+      
+          if (!toggle) return;
+      
+          toggle.addEventListener("click", function () {
+              html.classList.toggle("dark");
+      
+              // Sauvegarde
+              if (html.classList.contains("dark")) {
+                  localStorage.setItem("theme", "dark");
+              } else {
+                  localStorage.setItem("theme", "light");
+              }
+          });
+      });
+    </script>
+      
 </body>
 </html>

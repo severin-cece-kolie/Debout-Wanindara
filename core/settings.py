@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -156,3 +157,21 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=True)
 EMAIL_TIMEOUT = 30
 
 DEFAULT_FROM_EMAIL = f"Debout Wanindara <{EMAIL_HOST_USER}>"
+
+# ==============================================================================
+# CONFIGURATION LANGUES
+# ==============================================================================
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGES = [
+    ('fr', ('Français')),
+    ('en', ('English')),
+]
+
+LANGUAGE_CODE = 'fr'
+
+USE_I18N = True
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]

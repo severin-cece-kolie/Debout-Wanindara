@@ -11,13 +11,13 @@ from django.core.exceptions import PermissionDenied
 from .models import Membre, Applicant, GalleryPhoto
 import os
 from io import BytesIO
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.units import mm
-from reportlab.pdfgen import canvas
-from reportlab.lib.utils import ImageReader
-from PIL import Image, ImageDraw, ImageFont
+from reportlab.lib.pagesizes import A4  # pyright: ignore[reportMissingModuleSource]
+from reportlab.lib.units import mm  # pyright: ignore[reportMissingModuleSource]
+from reportlab.pdfgen import canvas  # pyright: ignore[reportMissingModuleSource]
+from reportlab.lib.utils import ImageReader  # pyright: ignore[reportMissingModuleSource]
+from PIL import Image, ImageDraw, ImageFont  # pyright: ignore[reportMissingModuleSource]
 import textwrap
-import qrcode
+import qrcode  # pyright: ignore[reportMissingModuleSource]
 import hashlib
 import logging
 

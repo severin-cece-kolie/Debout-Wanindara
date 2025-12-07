@@ -8,6 +8,8 @@ from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 
+from join.views import send_email_notification
+
 from .models import BlogPost, Category, NewsletterSubscriber
 
 logger = logging.getLogger(__name__)
@@ -103,7 +105,7 @@ L'équipe Debout Wanindara
             'subscription_date': timestamp,
         }
 
-        success, error_msg, channel = dispatch_email_notification(
+        success, error_msg, channel = send_email_notification(
             'newsletter_user',
             user_template_params,
             user_subject,
@@ -127,7 +129,7 @@ L'équipe Debout Wanindara
             'subscription_date': timestamp,
         }
 
-        success, error_msg, channel = dispatch_email_notification(
+        success, error_msg, channel = send_email_notification(
             'newsletter_admin',
             admin_template_params,
             admin_subject,

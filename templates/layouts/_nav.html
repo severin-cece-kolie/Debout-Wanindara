@@ -5,6 +5,14 @@
           <a href="#top" class="inline-flex items-center gap-3">
             <img src="{% static 'img/logo.png' %}" alt="Debout Wanindara" class="h-14 w-auto" />
           </a>
+          <form action="/i18n/setlang/" method="post">
+            {% csrf_token %}
+            <select name="language" onchange="this.form.submit()">
+                <option value="fr" {% if LANGUAGE_CODE == 'fr' %}selected{% endif %}>FR</option>
+                <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>EN</option>
+            </select>
+          </form>
+        <button id="theme-toggle" class="p-2 rounded bg-gray-200 dark:bg-gray-700"></button>
 
           <!-- Nav desktop -->
           <nav class="hidden md:flex items-center gap-6">

@@ -1,0 +1,284 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badge Généré avec Succès - Debout Wanindara</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .animate-slide-down {
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .success-checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+        }
+        
+        .success-checkmark .check-icon {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            border-radius: 50%;
+            box-sizing: content-box;
+            border: 4px solid #10b981;
+            background-color: #ecfdf5;
+        }
+        
+        .success-checkmark .check-icon::before {
+            top: 3px;
+            left: -2px;
+            width: 30px;
+            transform-origin: 100% 50%;
+            border-radius: 100px 0 0 100px;
+        }
+        
+        .success-checkmark .check-icon::after {
+            top: 0;
+            left: 30px;
+            width: 60px;
+            transform-origin: 0 50%;
+            border-radius: 0 100px 100px 0;
+            animation: rotate-circle 4.25s ease-in;
+        }
+        
+        .success-checkmark .icon-line {
+            height: 5px;
+            background-color: #10b981;
+            display: block;
+            border-radius: 2px;
+            position: absolute;
+            z-index: 10;
+        }
+        
+        .success-checkmark .icon-line.line-tip {
+            top: 46px;
+            left: 14px;
+            width: 25px;
+            transform: rotate(45deg);
+            animation: icon-line-tip 0.75s;
+        }
+        
+        .success-checkmark .icon-line.line-long {
+            top: 38px;
+            right: 8px;
+            width: 47px;
+            transform: rotate(-45deg);
+            animation: icon-line-long 0.75s;
+        }
+        
+        @keyframes icon-line-tip {
+            0% { width: 0; left: 1px; top: 19px; }
+            54% { width: 0; left: 1px; top: 19px; }
+            70% { width: 50px; left: -8px; top: 37px; }
+            84% { width: 17px; left: 21px; top: 48px; }
+            100% { width: 25px; left: 14px; top: 45px; }
+        }
+        
+        @keyframes icon-line-long {
+            0% { width: 0; right: 46px; top: 54px; }
+            65% { width: 0; right: 46px; top: 54px; }
+            84% { width: 55px; right: 0px; top: 35px; }
+            100% { width: 47px; right: 8px; top: 38px; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 to-cyan-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <!-- Header avec logo -->
+            <div class="text-center mb-8 animate-fade-in">
+                <img src="{% static 'img/logo.png' %}" alt="Debout Wanindara" class="w-24 h-24 mx-auto mb-4">
+                <h1 class="text-3xl font-bold text-gray-800">Debout Wanindara</h1>
+            </div>
+
+            <!-- Carte de succès -->
+            <div class="bg-white rounded-2xl shadow-2xl p-8 mb-6 animate-slide-down">
+                <!-- Icône de succès -->
+                <div class="success-checkmark mb-6">
+                    <div class="check-icon">
+                        <span class="icon-line line-tip"></span>
+                        <span class="icon-line line-long"></span>
+                    </div>
+                </div>
+
+                <!-- Message de succès -->
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-green-600 mb-3">Badge Généré avec Succès !</h2>
+                    <p class="text-gray-600 text-lg">{{ message }}</p>
+                </div>
+
+                <!-- Informations du badge -->
+                <div class="bg-gradient-to-r from-orange-500 to-cyan-500 rounded-xl p-6 text-white mb-6">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-orange-100 text-sm mb-1">Numéro de Badge</p>
+                            <p class="text-2xl font-bold">{{ badge_id }}</p>
+                        </div>
+                        <div>
+                            <p class="text-cyan-100 text-sm mb-1">Référence Membre</p>
+                            <p class="text-2xl font-bold">#{{ membre_id }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email envoyé -->
+                {% if emails_sent.user %}
+                <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
+                    <div class="flex items-start">
+                        <i class="fas fa-envelope text-green-500 mt-1 mr-3"></i>
+                        <div>
+                            <p class="font-semibold text-green-800">Email envoyé !</p>
+                            <p class="text-green-700 text-sm">Votre badge a été envoyé par email avec tous les liens de téléchargement.</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Actions -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-gray-800 text-lg mb-4 flex items-center">
+                        <i class="fas fa-download mr-2 text-orange-500"></i>
+                        Télécharger votre badge
+                    </h3>
+
+                    <!-- Bouton Voir le badge -->
+                    <a href="{{ badge_url }}" target="_blank" 
+                       class="block w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-4 px-6 rounded-xl transition duration-300 shadow-lg hover:shadow-xl text-center">
+                        <i class="fas fa-eye mr-2"></i>
+                        Voir mon Badge
+                    </a>
+
+                    <!-- Grille de téléchargement -->
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <!-- PDF -->
+                        <a href="{{ badge_pdf_url }}" download 
+                           class="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-xl transition duration-300 shadow-md hover:shadow-lg">
+                            <i class="fas fa-file-pdf mr-2 text-xl"></i>
+                            <span>Télécharger PDF</span>
+                        </a>
+
+                        <!-- PNG -->
+                        <a href="{{ badge_png_url }}" download 
+                           class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition duration-300 shadow-md hover:shadow-lg">
+                            <i class="fas fa-file-image mr-2 text-xl"></i>
+                            <span>Télécharger PNG</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Instructions -->
+                <div class="mt-8 border-t pt-6">
+                    <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                        <i class="fas fa-info-circle mr-2 text-cyan-500"></i>
+                        Prochaines étapes
+                    </h4>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                            <span>Imprimez votre badge ou gardez-le sur votre téléphone</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                            <span>Présentez votre badge lors des événements Debout Wanindara</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                            <span>Consultez vos emails pour tous les détails</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Informations de contact -->
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center animate-fade-in">
+                <h3 class="font-bold text-gray-800 mb-4">Besoin d'aide ?</h3>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 text-gray-600">
+                    <a href="tel:+224629829087" class="flex items-center hover:text-orange-500 transition">
+                        <i class="fas fa-phone mr-2"></i>
+                        +224 629 829 087
+                    </a>
+                    <a href="mailto:deboutwanindara@gmail.com" class="flex items-center hover:text-cyan-500 transition">
+                        <i class="fas fa-envelope mr-2"></i>
+                        deboutwanindara@gmail.com
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bouton retour à l'accueil -->
+            <div class="text-center mt-8">
+                <a href="/" class="inline-flex items-center text-gray-600 hover:text-gray-800 font-semibold transition">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Retour à l'accueil
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti effect (optionnel) -->
+    <script>
+        // Animation de confettis au chargement
+        function createConfetti() {
+            const colors = ['#f97316', '#06b6d4', '#10b981', '#f59e0b'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.cssText = `
+                        position: fixed;
+                        width: 10px;
+                        height: 10px;
+                        background: ${colors[Math.floor(Math.random() * colors.length)]};
+                        top: -10px;
+                        left: ${Math.random() * 100}%;
+                        opacity: ${Math.random()};
+                        transform: rotate(${Math.random() * 360}deg);
+                        animation: fall ${2 + Math.random() * 3}s linear;
+                        pointer-events: none;
+                        z-index: 9999;
+                    `;
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 30);
+            }
+        }
+
+        // Ajouter l'animation CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh) rotate(720deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Lancer les confettis au chargement
+        window.addEventListener('load', createConfetti);
+    </script>
+</body>
+</html>

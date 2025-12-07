@@ -30,12 +30,11 @@ def permission_denied_view(request, exception=None):
     return render(request, '403.html', status=403)
 
 
-def send_email_notification(template_name, template_params, subject, body, recipients):
+def send_email_notification(template_name, template_params, subject, body, recipients, attachment_buffer=None, attachment_filename=None):
     """
-    Envoi email unifié (SMTP uniquement).
+    Envoi email unifié (SMTP uniquement) avec support des pièces jointes.
     Retourne (success, error_message, channel)
     """
-
     try:
         email = EmailMessage(
             subject,
@@ -43,12 +42,18 @@ def send_email_notification(template_name, template_params, subject, body, recip
             settings.DEFAULT_FROM_EMAIL,
             recipients
         )
+        
+        # Ajouter la pièce jointe si fournie
+        if attachment_buffer and attachment_filename:
+            email.attach(attachment_filename, attachment_buffer.getvalue(), 'application/pdf')
+        
         email.send(fail_silently=False)
-
         return True, None, "smtp"
 
     except Exception as e:
+        logger.error(f"Erreur envoi email: {e}")
         return False, str(e), None
+
 
 # ----------------------------------------------------------------------
 #  UTILITAIRES
@@ -91,6 +96,33 @@ def generate_qr_code_image(membre, request):
         return qr.make_image(fill_color="black", back_color="white")
     except:
         return Image.new('RGB', (60, 60), color='white')
+
+
+def generate_badge_pdf_buffer(membre, request):
+    """
+    Génère le PDF du badge et retourne un buffer BytesIO
+    """
+    date_emission = timezone.now().strftime("%d/%m/%Y")
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer, pagesize=A4)
+
+    badge_width = 53.98 * mm
+    badge_height = 85.6 * mm
+    spacing = 20 * mm
+
+    page_width, page_height = A4
+    total_width = badge_width * 2 + spacing
+    start_x = (page_width - total_width) / 2
+    start_y = (page_height - badge_height) / 2
+
+    draw_badge_recto(c, membre, date_emission, start_x, start_y, badge_width, badge_height, request)
+    draw_badge_verso(c, start_x + badge_width + spacing, start_y, badge_width, badge_height)
+
+    c.showPage()
+    c.save()
+    buffer.seek(0)
+    
+    return buffer
 
 
 # ----------------------------------------------------------------------
@@ -216,7 +248,7 @@ def draw_badge_recto(c, membre, date_emission, x, y, width, height, request=None
 
     # ---------- TITRE DEBOUT WANINDARA EN HAUT ----------
     c.setFont("Helvetica-Bold", 10)
-    c.setFillColorRGB(1, 1, 1)  # Blanc pour contraster avec le dégradé
+    c.setFillColorRGB(1, 1, 1)
     org_text = "DEBOUT WANINDARA"
     textw = c.stringWidth(org_text, "Helvetica-Bold", 10)
     org_y = y + badge_height - 12*mm
@@ -237,13 +269,12 @@ def draw_badge_recto(c, membre, date_emission, x, y, width, height, request=None
         try:
             c.drawImage(membre.photo.path, photo_x, photo_y, photo_size_mm, photo_size_mm, mask='auto')
         except:
-            # Placeholder si photo non disponible
             c.setFillColorRGB(0.9, 0.9, 0.9)
             c.roundRect(photo_x, photo_y, photo_size_mm, photo_size_mm, 5, fill=1, stroke=0)
 
     # ---------- NOM COMPLET ----------
     c.setFont("Helvetica-Bold", 11)
-    c.setFillColorRGB(1, 1, 1)  # Blanc
+    c.setFillColorRGB(1, 1, 1)
     name_text = (membre.nom_complet or "").upper()
     namew = c.stringWidth(name_text, "Helvetica-Bold", 11)
     name_y = photo_y - 8*mm
@@ -252,14 +283,14 @@ def draw_badge_recto(c, membre, date_emission, x, y, width, height, request=None
     # ---------- POSTE/POSITION ----------
     if membre.position:
         c.setFont("Helvetica", 9)
-        c.setFillColorRGB(1, 1, 1)  # Blanc
+        c.setFillColorRGB(1, 1, 1)
         posw = c.stringWidth(membre.position, "Helvetica", 9)
         pos_y = name_y - 5*mm
         c.drawString(x + (badge_width - posw) / 2, pos_y, membre.position)
 
     # ---------- ID ----------
     c.setFont("Helvetica", 8)
-    c.setFillColorRGB(1, 1, 1)  # Blanc
+    c.setFillColorRGB(1, 1, 1)
     id_text = f"ID: {membre.numero_id}"
     idw = c.stringWidth(id_text, "Helvetica", 8)
     id_y = pos_y - 7*mm if membre.position else name_y - 12*mm
@@ -334,14 +365,14 @@ def draw_badge_verso(c, x, y, width, height):
                 8, fill=1, stroke=0)
 
     # ---------- TITRE CONDITIONS ----------
-    c.setFont("Helvetica-Bold", 9)  # Taille réduite
+    c.setFont("Helvetica-Bold", 9)
     c.setFillColorRGB(0, 0, 0)
     title = "CONDITIONS D'UTILISATION"
     w = c.stringWidth(title, "Helvetica-Bold", 9)
     c.drawString(x + (badge_width - w)/2, y + badge_height - 18*mm, title)
 
     # ---------- LISTE DES CONDITIONS ----------
-    c.setFont("Helvetica", 6)  # Taille réduite pour éviter le chevauchement
+    c.setFont("Helvetica", 6)
     c.setFillColorRGB(0.2, 0.2, 0.2)
     
     conditions = [
@@ -352,32 +383,27 @@ def draw_badge_verso(c, x, y, width, height):
         "Toute utilisation frauduleuse est interdite."
     ]
 
-    # Position de départ ajustée
     line_y = y + badge_height - 26*mm
     
     for cond in conditions:
-        # Gestion du texte avec largeur réduite
-        lines = textwrap.wrap(cond, width=38)  # Largeur réduite
+        lines = textwrap.wrap(cond, width=38)
         for line in lines:
-            if line_y > y + 30*mm:  # Vérifier qu'on ne dépasse pas la zone signature
+            if line_y > y + 30*mm:
                 c.drawString(x + 6*mm, line_y, f"• {line}")
-            line_y -= 3.2*mm  # Espacement réduit
-        line_y -= 0.5*mm  # Petit espace entre conditions
+            line_y -= 3.2*mm
+        line_y -= 0.5*mm
 
     # ---------- ZONE SIGNATURE ----------
-    # S'assurer que la zone signature est bien en bas
     signature_y = y + 20*mm
     
     c.setFont("Helvetica-Bold", 7)
     c.setFillColorRGB(0, 0, 0)
     c.drawString(x + 6*mm, signature_y, "Signature du membre")
     
-    # Ligne de signature
     c.setStrokeColorRGB(0, 0, 0)
     c.setLineWidth(0.5)
     c.line(x + 6*mm, signature_y - 2*mm, x + badge_width - 6*mm, signature_y - 2*mm)
 
-    # ---------- DATE ----------
     c.setFont("Helvetica", 7)
     c.drawString(x + 6*mm, signature_y - 6*mm, "Date:")
 
@@ -389,30 +415,13 @@ def draw_badge_verso(c, x, y, width, height):
 def badge_pdf_view(request, membre_id):
     """Génère le PDF du badge - Accès public."""
     membre = get_object_or_404(Membre, id=membre_id)
-    date_emission = timezone.now().strftime("%d/%m/%Y")
-
-    buffer = BytesIO()
-    c = canvas.Canvas(buffer, pagesize=A4)
-
-    badge_width = 53.98 * mm
-    badge_height = 85.6 * mm
-    spacing = 20 * mm
-
-    page_width, page_height = A4
-    total_width = badge_width * 2 + spacing
-    start_x = (page_width - total_width) / 2
-    start_y = (page_height - badge_height) / 2
-
-    draw_badge_recto(c, membre, date_emission, start_x, start_y, badge_width, badge_height, request)
-    draw_badge_verso(c, start_x + badge_width + spacing, start_y, badge_width, badge_height)
-
-    c.showPage()
-    c.save()
-
-    buffer.seek(0)
+    
+    buffer = generate_badge_pdf_buffer(membre, request)
     filename = f"badge_{membre.nom_complet.replace(' ', '_')}.pdf"
 
-    return HttpResponse(buffer.getvalue(), content_type="application/pdf")
+    response = HttpResponse(buffer.getvalue(), content_type="application/pdf")
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    return response
 
 
 # ----------------------------------------------------------------------
@@ -480,7 +489,6 @@ def badge_png_view(request, membre_id):
             photo = photo.resize((photo_size, photo_size))
             img.paste(photo, (photo_x, photo_y), photo)
         except:
-            # Placeholder si photo non disponible
             draw.rectangle([photo_x, photo_y, photo_x + photo_size, photo_y + photo_size], 
                           fill=(240,240,240), outline=None)
 
@@ -543,7 +551,9 @@ def badge_png_view(request, membre_id):
 
     filename = f"badge_{membre.nom_complet.replace(' ', '_')}.png"
 
-    return HttpResponse(buffer.getvalue(), content_type="image/png")
+    response = HttpResponse(buffer.getvalue(), content_type="image/png")
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    return response
 
 
 # ----------------------------------------------------------------------
@@ -638,6 +648,10 @@ def submit_application(request):
             )
             print("✅ Badge sauvegardé en base de données")
 
+            # GÉNÉRATION DU PDF DU BADGE
+            pdf_buffer = generate_badge_pdf_buffer(membre, request)
+            pdf_filename = f"badge_{nom_complet.replace(' ', '_')}.pdf"
+
             # Vérifier la configuration email
             email_configured = (
                 hasattr(settings, 'EMAIL_HOST_PASSWORD') and 
@@ -645,12 +659,12 @@ def submit_application(request):
                 settings.EMAIL_BACKEND == 'django.core.mail.backends.smtp.EmailBackend'
             )
 
-            # Envoi des emails - via EmailJS (fallback SMTP si besoin)
+            # Envoi des emails avec le badge en pièce jointe
             email_results = {'admin': False, 'user': False}
             email_channels = {'admin': None, 'user': None}
             email_errors = []
 
-            # Email à Debout Wanindara
+            # Email à Debout Wanindara AVEC le badge PDF
             admin_subject = f"🆔 Nouveau badge généré: {nom_complet}"
             admin_body = f"""Nouveau badge généré pour un nouveau membre :
 
@@ -669,48 +683,40 @@ def submit_application(request):
 ---
 Numéro de badge: {numero_id}
 ID Membre: #{membre.id}
+
+Le badge est joint à cet email.
+
 Debout Wanindara - Système de badges"""
 
-            admin_template_params = {
-                'to_email': 'deboutwanindara@gmail.com',
-                'applicant_name': nom_complet,
-                'applicant_email': email,
-                'applicant_phone': phone or 'Non renseigné',
-                'applicant_position': position,
-                'applicant_diploma': diploma,
-                'applicant_skills': skills,
-                'applicant_languages': languages,
-                'applicant_country': country,
-                'applicant_city': city,
-                'applicant_district': district,
-                'badge_number': numero_id,
-                'membre_id': membre.id,
-                'submitted_at': timezone.now().strftime('%d/%m/%Y à %H:%M'),
-            }
+            # Créer une nouvelle copie du buffer pour l'admin
+            admin_pdf_buffer = BytesIO(pdf_buffer.getvalue())
+            pdf_buffer.seek(0)
 
             success, error_msg, channel = send_email_notification(
                 'application_admin',
-                admin_template_params,
+                {},
                 admin_subject,
                 admin_body.strip(),
                 ['deboutwanindara@gmail.com'],
+                attachment_buffer=admin_pdf_buffer,
+                attachment_filename=pdf_filename
             )
             
             if success:
                 email_results['admin'] = True
                 email_channels['admin'] = channel
-                print(f"✅ Email ADMIN envoyé via {channel} à deboutwanindara@gmail.com")
+                print(f"✅ Email ADMIN envoyé via {channel} avec badge PDF")
             else:
                 print(f"❌ Erreur envoi email admin: {error_msg}")
                 logger.error(f"Erreur envoi email admin: {error_msg}")
                 email_errors.append("admin")
 
-            # Email de confirmation au membre
-            user_subject = "✅ Confirmation de génération de badge - Debout Wanindara"
+            # Email de confirmation au membre AVEC le badge PDF
             badge_url = request.build_absolute_uri(reverse('join:badge_view', args=[membre.id]))
             badge_pdf_url = request.build_absolute_uri(reverse('join:badge_pdf', args=[membre.id]))
             badge_png_url = request.build_absolute_uri(reverse('join:badge_png', args=[membre.id]))
             
+            user_subject = "✅ Votre badge Debout Wanindara est prêt !"
             user_body = f"""Bonjour {nom_complet},
 
 Félicitations ! Votre badge a été généré avec succès.
@@ -721,10 +727,14 @@ Félicitations ! Votre badge a été généré avec succès.
 • Date d'inscription: {timezone.now().strftime('%d/%m/%Y à %H:%M')}
 • Référence membre: #{membre.id}
 
-Votre badge est maintenant actif et vous pouvez :
-• Le consulter en ligne: {badge_url}
+📎 Votre badge est joint à cet email au format PDF.
+
+Vous pouvez également :
+• Consulter votre badge en ligne: {badge_url}
 • Le télécharger en PDF: {badge_pdf_url}
 • Le télécharger en PNG: {badge_png_url}
+
+💡 Conseil: Imprimez votre badge ou gardez une copie sur votre téléphone pour le présenter lors des événements.
 
 Pour toute question, contactez-nous :
 📞 +224 629829087
@@ -738,31 +748,23 @@ L'équipe Debout Wanindara
 ---
 Ceci est un message automatique, merci de ne pas y répondre."""
 
-            user_template_params = {
-                'to_email': email,
-                'to_name': nom_complet,
-                'badge_number': numero_id,
-                'position': position,
-                'submitted_at': timezone.now().strftime('%d/%m/%Y à %H:%M'),
-                'badge_url': badge_url,
-                'badge_pdf_url': badge_pdf_url,
-                'badge_png_url': badge_png_url,
-                'support_email': 'deboutwanindara@gmail.com',
-                'support_phone': '+224 629829087',
-            }
+            # Créer une nouvelle copie du buffer pour l'utilisateur
+            user_pdf_buffer = BytesIO(pdf_buffer.getvalue())
 
             success, error_msg, channel = send_email_notification(
                 'application_user',
-                user_template_params,
+                {},
                 user_subject,
                 user_body.strip(),
                 [email],
+                attachment_buffer=user_pdf_buffer,
+                attachment_filename=pdf_filename
             )
             
             if success:
                 email_results['user'] = True
                 email_channels['user'] = channel
-                print(f"✅ Email CONFIRMATION envoyé via {channel} à {email}")
+                print(f"✅ Email CONFIRMATION envoyé via {channel} avec badge PDF à {email}")
             else:
                 print(f"❌ Erreur envoi email confirmation: {error_msg}")
                 logger.error(f"Erreur envoi email confirmation: {error_msg}")
@@ -770,13 +772,11 @@ Ceci est un message automatique, merci de ne pas y répondre."""
 
             # Message de succès
             if email_results['admin'] and email_results['user']:
-                success_message = f'✅ Votre badge a été généré avec succès! Numéro : {numero_id}. Vous recevrez une confirmation par email.'
-            elif email_results['admin']:
-                success_message = f'✅ Votre badge a été généré! Numéro : {numero_id}. Notre équipe vous contactera rapidement.'
+                success_message = f'✅ Badge généré! Numéro: {numero_id}. Vous avez reçu votre badge par email avec les liens de téléchargement.'
             elif email_results['user']:
-                success_message = f'✅ Votre badge a été généré! Numéro : {numero_id}. Vous avez reçu une confirmation par email.'
+                success_message = f'✅ Badge généré! Numéro: {numero_id}. Vous avez reçu votre badge par email.'
             else:
-                success_message = f'⚠️ Votre badge a été enregistré. Numéro : {numero_id}. Erreur lors de l\'envoi des emails - nous vous contacterons.'
+                success_message = f'⚠️ Badge enregistré. Numéro: {numero_id}. Téléchargez-le via les liens ci-dessous.'
                 
             if email_errors and email_configured:
                 logger.warning(f"Emails non envoyés malgré la configuration: {email_errors}")
@@ -786,6 +786,9 @@ Ceci est un message automatique, merci de ne pas y répondre."""
                 'message': success_message,
                 'badge_id': numero_id,
                 'membre_id': membre.id,
+                'badge_url': badge_url,
+                'badge_pdf_url': badge_pdf_url,
+                'badge_png_url': badge_png_url,
                 'mode': 'production' if email_configured else 'development',
                 'emails_sent': {
                     'admin': email_results['admin'],
@@ -796,7 +799,7 @@ Ceci est un message automatique, merci de ne pas y répondre."""
 
         except Exception as e:
             print(f"❌ Erreur générale badge: {e}")
-            logger.error(f"Erreur générale badge: {e}")
+            logger.error(f"Erreur générale badge: {e}", exc_info=True)
             return JsonResponse({
                 'success': False,
                 'message': 'Une erreur est survenue lors de la génération du badge. Veuillez réessayer.'
@@ -807,16 +810,14 @@ Ceci est un message automatique, merci de ne pas y répondre."""
         'message': 'Méthode non autorisée.'
     })
 
+
 # ----------------------------------------------------------------------
 #  GALERIE PHOTOS 
 # ----------------------------------------------------------------------
 
 def gallery_view(request):
-    """
-    Affiche la galerie photos de l'ONG avec les VRAIES données
-    """
+    """Affiche la galerie photos de l'ONG"""
     try:
-        # UTILISEZ LES VRAIES DONNÉES DE LA BASE
         photos = GalleryPhoto.objects.all()
         featured_photos = GalleryPhoto.objects.filter(featured=True)[:6]
         
@@ -830,7 +831,6 @@ def gallery_view(request):
         
         selected_category = request.GET.get('category', 'all')
         
-        # Filtrer par catégorie si sélectionnée
         if selected_category != 'all':
             photos = photos.filter(category=selected_category)
         
@@ -843,7 +843,6 @@ def gallery_view(request):
         }
         
     except Exception as e:
-        # En cas d'erreur
         print(f"Erreur dans gallery_view: {e}")
         context = {
             'photos': [],

@@ -16,7 +16,20 @@
     <main id="top" class="pt-16">
       <!-- HERO -->
       <section id="accueil" class="relative min-h-[92vh] grid place-items-center overflow-hidden">
-        <img src="{% static 'img/hero.jpg' %}" alt="Communauté Debout Wanindara" class="absolute inset-0 h-full w-full object-cover object-center" loading="eager" />
+        <img 
+  src="{% static 'img/hero.png' %}" 
+  alt="Communauté Debout Wanindara"
+  class="
+    absolute inset-0 h-full w-full 
+    object-cover object-center           <!-- mobile -->
+    sm:object-cover
+    md:object-cover
+    lg:object-fill                       <!-- desktop -->
+    xl:object-fill
+  " 
+  loading="eager" 
+/>
+
         <div class="absolute inset-0 bg-gradient-to-r from-orange-900/90 via-orange-800/85 to-cyan-900/80"></div>
 
         <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

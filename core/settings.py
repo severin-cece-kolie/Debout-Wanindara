@@ -130,7 +130,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -191,7 +191,6 @@ TIME_ZONE = 'Africa/Conakry'  # Ajustez selon votre localisation
 USE_TZ = True
 
 # Jazzmin configuration
-
 JAZZMIN_SETTINGS = {
     "site_title": "Administration - Debout Wanindara",
     "site_header": "Debout Wanindara",
@@ -201,33 +200,66 @@ JAZZMIN_SETTINGS = {
     "site_icon": "img/favicon.png",
     "welcome_sign": "Bienvenue dans l'administration de Debout Wanindara",
     "copyright": "© Debout Wanindara",
+    
+    # TOP MENU - Simplifiez-le
     "topmenu_links": [
-        {"name": "Accueil", "url": "admin:index"},
-        {"name": "Site public", "url": "https://deboutwanindara.pythonanywhere.com", "new_window": True},
-        {"app": "members"},
-        {"app": "projects"},
+        {"name": "Accueil", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Voir le site", "url": "https://deboutwanindara.pythonanywhere.com", "new_window": True},
     ],
+    
+    # USER MENU
     "usermenu_links": [
-        {"name": "Documentation", "url": "https://docs.djangoproject.com", "new_window": True},
-        {"model": "auth.user"},
+        {"model": "auth.user"}
     ],
+    
+    # SIDEBAR CONFIGURATION
     "show_sidebar": True,
-    "navigation_expanded": True,
-    "order_with_respect_to": ["members", "projects", "events", "partners", "donations"],
+    "navigation_expanded": False,  # CHANGEZ À False POUR RÉDUIRE LE DÉBORDEMENT
+    "hide_apps": [],  # Apps à cacher si nécessaire
+    "hide_models": [],  # Modèles à cacher
+    
+    # ICONS
     "icons": {
-        "members": "fas fa-users",
-        "projects": "fas fa-tasks",
-        "events": "fas fa-calendar-alt",
-        "partners": "fas fa-handshake",
-        "donations": "fas fa-donate",
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
+        "home": "fas fa-home",  # Ajoutez vos apps ici
+        "contact": "fas fa-envelope",
+        "action": "fas fa-hands-helping",
+        "join": "fas fa-user-plus",
+        "blog": "fas fa-blog",
     },
+    
+    # DEFAULTS
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
+    
+    # CSS PERSONNALISÉ - CRÉEZ CE FICHIER
     "custom_css": "css/admin_custom.css",
+    "custom_js": None,
+    
+    # GOOGLE FONTS
     "use_google_fonts_cdn": True,
+    
+    # FORMAT DES FORMULAIRES
     "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {
+        "auth.user": "collapsible",
+        "auth.group": "vertical_tabs",
+    },
+    
+    # CHOIX DE LANGUE
     "language_chooser": True,
+    
+    # RESPONSIVE
+    "sidebar_width": "230px",  # Réduisez la largeur
+    
+    # THÈME - Essayez un thème plus léger
+    "theme": "default",  # Ou "flatly", "cosmo"
+    
+    # DARK MODE
+    "theme_dark": False,
+    
+    # BOUTONS D'ACTION
+    "actions_sticky_top": True,
 }

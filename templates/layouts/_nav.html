@@ -1,5 +1,285 @@
 {% load static i18n %}
-<header class="fixed inset-x-0 top-0 z-50 bg-white/10 dark:bg-gray-900/10 backdrop-blur-2xl border-b border-white/5 dark:border-gray-700/10">
+
+<style>
+  /* Header avec effet flou très transparent */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.4) !important; /* Plus transparent */
+    backdrop-filter: blur(20px) saturate(200%) !important; /* Plus flou */
+    -webkit-backdrop-filter: blur(20px) saturate(200%) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.2) !important; /* Bordure plus subtile */
+  }
+  
+  .dark header {
+    background: rgba(17, 24, 39, 0.4) !important; /* Plus transparent aussi */
+    border-bottom: 1px solid rgba(55, 65, 81, 0.2) !important;
+  }
+  
+  /* Navigation desktop avec transparence */
+  @media (min-width: 768px) {
+    #mobile-menu {
+      display: none !important;
+    }
+    
+    nav a {
+      background: rgba(255, 255, 255, 0.3) !important; /* Liens transparents */
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.5) !important;
+    }
+    
+    .dark nav a {
+      background: rgba(31, 41, 55, 0.3) !important;
+      border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+    
+    .dark nav a:hover {
+      background: rgba(31, 41, 55, 0.5) !important;
+    }
+    
+    /* Style actif plus transparent */
+    nav a.text-orange-600,
+    nav a.dark\\:text-orange-400 {
+      background: rgba(249, 115, 22, 0.2) !important;
+      backdrop-filter: blur(10px) !important;
+    }
+  }
+  
+  /* Menu mobile - design ultra transparent */
+  #mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background: linear-gradient(135deg, 
+                rgba(249, 115, 22, 0.95) 0%, 
+                rgba(251, 146, 60, 0.95) 50%, 
+                rgba(6, 182, 212, 0.95) 100%);
+    backdrop-filter: blur(30px); /* Flou très prononcé */
+    -webkit-backdrop-filter: blur(30px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  #mobile-menu.menu-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  #mobile-menu.menu-hidden {
+    display: block !important;
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  /* Contenu du menu mobile */
+  #mobile-menu-content {
+    margin-top: 100px;
+    padding: 1.5rem;
+    padding-bottom: 120px;
+  }
+  
+  /* Animation d'entrée des liens */
+  .mobile-link {
+    display: flex !important;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    color: white !important;
+    background: rgba(255, 255, 255, 0.1) !important; /* Très transparent */
+    border-radius: 1rem;
+    margin-bottom: 0.75rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    transform: translateY(20px);
+    opacity: 0;
+    border: 1px solid rgba(255, 255, 255, 0.05); /* Bordure très subtile */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+  
+  #mobile-menu.menu-visible .mobile-link {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  /* Animation décalée pour chaque lien */
+  #mobile-menu.menu-visible .mobile-link:nth-child(1) { transition-delay: 0.1s; }
+  #mobile-menu.menu-visible .mobile-link:nth-child(2) { transition-delay: 0.15s; }
+  #mobile-menu.menu-visible .mobile-link:nth-child(3) { transition-delay: 0.2s; }
+  #mobile-menu.menu-visible .mobile-link:nth-child(4) { transition-delay: 0.25s; }
+  #mobile-menu.menu-visible .mobile-link:nth-child(5) { transition-delay: 0.3s; }
+  #mobile-menu.menu-visible .mobile-link:nth-child(6) { transition-delay: 0.35s; }
+  #mobile-menu.menu-visible .mobile-link:nth-child(7) { transition-delay: 0.4s; }
+  
+  .mobile-link:hover {
+    background: rgba(255, 255, 255, 0.2) !important; /* Un peu moins transparent au survol */
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .mobile-link span {
+    color: white !important;
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Icônes ultra transparentes */
+  .icon-wrapper {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.15) !important; /* Très transparent */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Bouton CTA mobile transparent */
+  .mobile-cta-button {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding: 1.5rem 2rem;
+    background: rgba(255, 255, 255, 0.85) !important; /* Semi-transparent */
+    color: #ea580c !important;
+    font-weight: 700;
+    border-radius: 1rem;
+    text-decoration: none;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    transform: translateY(20px);
+    opacity: 0;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+  
+  #mobile-menu.menu-visible .mobile-cta-button {
+    transform: translateY(0);
+    opacity: 1;
+    transition-delay: 0.5s;
+  }
+  
+  .mobile-cta-button:hover {
+    background: rgba(255, 255, 255, 0.95) !important;
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.4);
+  }
+  
+  .mobile-cta-button span {
+    font-size: 1.25rem;
+    color: #ea580c !important;
+    font-weight: 700;
+  }
+  
+  .mobile-cta-button svg {
+    width: 28px;
+    height: 28px;
+  }
+  
+  /* Animation du bouton burger transparent */
+  #burger-btn {
+    transition: all 0.3s ease;
+    background: rgba(249, 115, 22, 0.9) !important; /* Burger transparent */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  #burger-btn:hover {
+    transform: rotate(90deg);
+    background: rgba(249, 115, 22, 1) !important;
+  }
+  
+  /* Boutons theme toggle transparents */
+  #theme-toggle,
+  #theme-toggle-mobile {
+    background: rgba(229, 231, 235, 0.6) !important; /* Très transparent */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .dark #theme-toggle,
+  .dark #theme-toggle-mobile {
+    background: rgba(55, 65, 81, 0.6) !important;
+  }
+  
+  /* CTA button desktop transparent */
+  a[href*="#rejoindre"]:not(.mobile-cta-button) {
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    background: linear-gradient(
+      to right,
+      rgba(249, 115, 22, 0.9),
+      rgba(249, 115, 22, 0.8)
+    ) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .dark a[href*="#rejoindre"]:not(.mobile-cta-button) {
+    background: linear-gradient(
+      to right,
+      rgba(251, 146, 60, 0.9),
+      rgba(251, 146, 60, 0.8)
+    ) !important;
+  }
+  
+  /* Scroll bar transparente pour le menu mobile */
+  #mobile-menu::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  #mobile-menu::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  #mobile-menu::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+  }
+  
+  #mobile-menu::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Effet de transparence sur les éléments enfants du header */
+  header > div {
+    background: transparent !important;
+  }
+  
+  /* Logo avec léger effet de transparence */
+  header img {
+    opacity: 0.95;
+    transition: opacity 0.3s ease;
+  }
+  
+  header a:hover img {
+    opacity: 1;
+  }
+</style>
+
+<header class="fixed inset-x-0 top-0 z-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex h-20 items-center justify-between">
       <!-- Logo -->
@@ -10,33 +290,33 @@
       <!-- Nav desktop -->
       <nav class="hidden md:flex items-center gap-1 flex-1 justify-center">
         <a href="{% url 'index' %}" 
-           class="{% if request.path == '/' %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+           class="{% if request.path == '/' %}text-orange-600 dark:text-orange-400{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-orange-600 dark:hover:text-orange-400 transition-all duration-200 px-5 py-2.5 rounded-full font-medium text-sm">
           {% trans "Accueil" %}
         </a>
         <a href="{% url 'action:action' %}" 
-           class="{% if '/actions/' in request.path %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+           class="{% if '/actions/' in request.path %}text-orange-600 dark:text-orange-400{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-orange-600 dark:hover:text-orange-400 transition-all duration-200 px-5 py-2.5 rounded-full font-medium text-sm">
           {% trans "Nos Actions" %}
         </a>
         <a href="{% url 'join:join' %}" 
-           class="{% if '/join-us/' in request.path %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+           class="{% if '/join-us/' in request.path %}text-orange-600 dark:text-orange-400{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-orange-600 dark:hover:text-orange-400 transition-all duration-200 px-5 py-2.5 rounded-full font-medium text-sm">
           {% trans "Rejoignez-Nous" %}
         </a>
         {% if user.is_authenticated and user.is_staff %}
         <a href="{% url 'join:badge_list' %}" 
-           class="{% if '/badges/' in request.path %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+           class="{% if '/badges/' in request.path %}text-orange-600 dark:text-orange-400{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-orange-600 dark:hover:text-orange-400 transition-all duration-200 px-5 py-2.5 rounded-full font-medium text-sm">
           {% trans "Badges" %}
         </a>
         {% endif %}
         <a href="{% url 'blog:blog' %}" 
-           class="{% if '/blog/' in request.path %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+           class="{% if '/blog/' in request.path %}text-orange-600 dark:text-orange-400{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-orange-600 dark:hover:text-orange-400 transition-all duration-200 px-5 py-2.5 rounded-full font-medium text-sm">
           {% trans "Actualités" %}
         </a>
         <a href="{% url 'about' %}" 
-           class="{% if '/about/' in request.path %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+           class="{% if '/about/' in request.path %}text-orange-600 dark:text-orange-400{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-orange-600 dark:hover:text-orange-400 transition-all duration-200 px-5 py-2.5 rounded-full font-medium text-sm">
           {% trans "À Propos" %}
         </a>
         <a href="{% url 'contact:contact' %}" 
-           class="{% if '/contact/' in request.path %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+           class="{% if '/contact/' in request.path %}text-orange-600 dark:text-orange-400{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-orange-600 dark:hover:text-orange-400 transition-all duration-200 px-5 py-2.5 rounded-full font-medium text-sm">
           {% trans "Contact" %}
         </a>
       </nav>
@@ -45,7 +325,7 @@
       <div class="hidden md:flex items-center gap-4 flex-shrink-0">
         <!-- Theme Toggle -->
         <button id="theme-toggle" 
-                class="relative w-12 h-6 bg-white/20 dark:bg-gray-800/20 backdrop-blur-lg rounded-full transition-all hover:bg-white/30 dark:hover:bg-gray-800/30 border border-white/20 dark:border-gray-700/20 shadow-sm"
+                class="relative w-12 h-6 rounded-full transition-all"
                 aria-label="{% trans 'Changer le thème' %}">
           <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white dark:bg-gray-900 rounded-full shadow-lg transform transition-transform dark:translate-x-6 flex items-center justify-center">
             <svg class="w-3 h-3 text-gray-700 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
@@ -57,16 +337,16 @@
 
         <!-- CTA Button -->
         <a href="{% url 'join:join' %}#rejoindre" 
-           class="inline-flex items-center h-10 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 dark:from-orange-400 dark:to-orange-500 px-6 text-white text-sm font-semibold hover:from-orange-600 hover:to-orange-700 dark:hover:from-orange-500 dark:hover:to-orange-600 transition-all shadow-lg hover:shadow-xl hover:scale-105 border border-orange-400/30 backdrop-blur-sm">
+           class="inline-flex items-center h-10 rounded-full px-6 text-white text-sm font-semibold hover:scale-105 transition-all shadow-lg hover:shadow-xl">
           {% trans "Devenez Membre" %}
         </a>
       </div>
 
       <!-- Mobile Right Side -->
-      <div class="flex md:hidden items-center gap-4">
+      <div class="flex md:hidden items-center gap-3">
         <!-- Theme Toggle Mobile -->
         <button id="theme-toggle-mobile" 
-                class="relative w-12 h-6 bg-white/20 dark:bg-gray-800/20 backdrop-blur-lg rounded-full transition-all hover:bg-white/30 dark:hover:bg-gray-800/30 border border-white/20 dark:border-gray-700/20 shadow-sm"
+                class="relative w-12 h-6 rounded-full transition-all"
                 aria-label="{% trans 'Changer le thème' %}">
           <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white dark:bg-gray-900 rounded-full shadow-lg transform transition-transform dark:translate-x-6 flex items-center justify-center">
             <svg class="w-3 h-3 text-gray-700 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
@@ -79,130 +359,120 @@
         <!-- Burger Button -->
         <button id="burger-btn" 
                 type="button"
-                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/20 dark:bg-gray-800/20 backdrop-blur-lg hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all border border-white/20 dark:border-gray-700/20 shadow-sm" 
+                class="inline-flex items-center justify-center w-10 h-10 rounded-lg transition-all shadow-lg" 
                 aria-label="{% trans 'Menu de navigation' %}" 
                 aria-expanded="false">
           <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" 
-               class="h-5 w-5 text-gray-800 dark:text-gray-200" 
+               class="h-6 w-6 text-white" 
                fill="none" 
                viewBox="0 0 24 24" 
                stroke="currentColor">
             <path stroke-linecap="round" 
                   stroke-linejoin="round" 
-                  stroke-width="2.5" 
+                  stroke-width="2" 
                   d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
           <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" 
-               class="h-5 w-5 text-gray-800 dark:text-gray-200 hidden" 
+               class="h-6 w-6 text-white hidden" 
                fill="none" 
                viewBox="0 0 24 24" 
                stroke="currentColor">
             <path stroke-linecap="round" 
                   stroke-linejoin="round" 
-                  stroke-width="2.5" 
+                  stroke-width="2" 
                   d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
       </div>
     </div>
   </div>
-
-  <!-- Nav mobile -->
-  <div id="mobile-menu" 
-       style="display: none; position: fixed; top: 80px; left: 0; right: 0; bottom: 0; z-index: 9999; background: linear-gradient(135deg, rgba(234, 88, 12, 0.98) 0%, rgba(249, 115, 22, 0.98) 50%, rgba(6, 182, 212, 0.98) 100%);"
-       class="md:hidden overflow-y-auto">
-    <nav class="w-full px-6 py-8 space-y-4">
-      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
-         href="{% url 'index' %}" style="display: flex !important;">
-        <div class="w-12 h-12 rounded-full bg-orange-300/40 flex items-center justify-center" style="background-color: rgba(251, 146, 60, 0.4) !important;">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-          </svg>
-        </div>
-        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "Accueil" %}</span>
-      </a>
-      
-      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
-         href="{% url 'action:action' %}" style="display: flex !important;">
-        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(59, 130, 246, 0.4) !important;">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
-          </svg>
-        </div>
-        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "Nos Actions" %}</span>
-      </a>
-      
-      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
-         href="{% url 'join:join' %}" style="display: flex !important;">
-        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(34, 197, 94, 0.4) !important;">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-          </svg>
-        </div>
-        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "Rejoignez-Nous" %}</span>
-      </a>
-      
-      {% if user.is_authenticated and user.is_staff %}
-      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
-         href="{% url 'join:badge_list' %}" style="display: flex !important;">
-        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(168, 85, 247, 0.4) !important;">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
-          </svg>
-        </div>
-        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "Badges" %}</span>
-      </a>
-      {% endif %}
-      
-      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
-         href="{% url 'blog:blog' %}" style="display: flex !important;">
-        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(234, 179, 8, 0.4) !important;">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
-          </svg>
-        </div>
-        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "Actualités" %}</span>
-      </a>
-      
-      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
-         href="{% url 'about' %}" style="display: flex !important;">
-        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(6, 182, 212, 0.4) !important;">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-        </div>
-        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "À Propos" %}</span>
-      </a>
-      
-      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
-         href="{% url 'contact:contact' %}" style="display: flex !important;">
-        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(236, 72, 153, 0.4) !important;">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-          </svg>
-        </div>
-        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "Contact" %}</span>
-      </a>
-      
-      <!-- CTA Mobile -->
-      <a class="flex items-center justify-center gap-4 mt-8 py-5 px-6 bg-white text-orange-600 font-bold rounded-2xl hover:bg-gray-50 transition-all duration-200 shadow-2xl" 
-         href="{% url 'join:join' %}#rejoindre" style="display: flex !important; background-color: white !important; color: #ea580c !important;">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #ea580c !important;">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
-        </svg>
-        <span class="text-xl" style="color: #ea580c !important;">{% trans "Devenez Membre" %}</span>
-      </a>
-    </nav>
-  </div>
 </header>
+
+<!-- Nav mobile -->
+<div id="mobile-menu" class="menu-hidden">
+  <div id="mobile-menu-content">
+    <a class="mobile-link" href="{% url 'index' %}">
+      <div class="icon-wrapper">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+      </div>
+      <span>{% trans "Accueil" %}</span>
+    </a>
+    
+    <a class="mobile-link" href="{% url 'action:action' %}">
+      <div class="icon-wrapper">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
+        </svg>
+      </div>
+      <span>{% trans "Nos Actions" %}</span>
+    </a>
+    
+    <a class="mobile-link" href="{% url 'join:join' %}">
+      <div class="icon-wrapper">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+      </div>
+      <span>{% trans "Rejoignez-Nous" %}</span>
+    </a>
+    
+    {% if user.is_authenticated and user.is_staff %}
+    <a class="mobile-link" href="{% url 'join:badge_list' %}">
+      <div class="icon-wrapper">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
+        </svg>
+      </div>
+      <span>{% trans "Badges" %}</span>
+    </a>
+    {% endif %}
+    
+    <a class="mobile-link" href="{% url 'blog:blog' %}">
+      <div class="icon-wrapper">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+        </svg>
+      </div>
+      <span>{% trans "Actualités" %}</span>
+    </a>
+    
+    <a class="mobile-link" href="{% url 'about' %}">
+      <div class="icon-wrapper">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      </div>
+      <span>{% trans "À Propos" %}</span>
+    </a>
+    
+    <a class="mobile-link" href="{% url 'contact:contact' %}">
+      <div class="icon-wrapper">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+      </div>
+      <span>{% trans "Contact" %}</span>
+    </a>
+    
+    <!-- CTA Mobile transparent -->
+    <a href="{% url 'join:join' %}#rejoindre" 
+       class="mobile-cta-button">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+      </svg>
+      <span>{% trans "Devenez Membre" %}</span>
+    </a>
+  </div>
+</div>
 
 <script>
 (function() {
   'use strict';
   
-  console.log('🚀 Initialisation du menu burger');
+  console.log('🚀 DÉMARRAGE du script menu mobile');
   
-  // Fonction pour initialiser le menu
   function initMobileMenu() {
     const burgerBtn = document.getElementById('burger-btn');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -210,52 +480,64 @@
     const closeIcon = document.getElementById('close-icon');
     const mobileLinks = document.querySelectorAll('.mobile-link');
     
+    console.log('🔍 Recherche des éléments...');
+    console.log('Burger button:', burgerBtn);
+    console.log('Mobile menu:', mobileMenu);
+    
     if (!burgerBtn || !mobileMenu) {
-      console.error('❌ Éléments du menu non trouvés');
+      console.error('❌ ERREUR: Éléments du menu non trouvés!');
       return;
     }
     
-    console.log('✅ Éléments du menu trouvés');
+    console.log('✅ Tous les éléments trouvés!');
     
-    let isOpen = false;
-    
-    // Fonction pour ouvrir le menu
     function openMenu() {
-      isOpen = true;
-      mobileMenu.style.display = 'block';
-      mobileMenu.style.position = 'fixed';
-      mobileMenu.style.top = '80px';
-      mobileMenu.style.left = '0';
-      mobileMenu.style.right = '0';
-      mobileMenu.style.bottom = '0';
-      mobileMenu.style.zIndex = '9999';
-      mobileMenu.style.overflowY = 'auto';
+      console.log('📱 OUVERTURE du menu...');
+      
+      mobileMenu.classList.remove('menu-hidden');
+      mobileMenu.classList.add('menu-visible');
+      
       burgerBtn.setAttribute('aria-expanded', 'true');
-      if (burgerIcon) burgerIcon.classList.add('hidden');
-      if (closeIcon) closeIcon.classList.remove('hidden');
+      burgerIcon.classList.add('hidden');
+      closeIcon.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
-      console.log('📱 Menu ouvert');
-      console.log('Menu style:', mobileMenu.style.cssText);
-      console.log('Menu display:', window.getComputedStyle(mobileMenu).display);
-      console.log('Menu visibility:', window.getComputedStyle(mobileMenu).visibility);
+      
+      // Animation du bouton burger
+      burgerBtn.style.transform = 'rotate(90deg)';
+      
+      console.log('✅ Menu ouvert!');
     }
     
-    // Fonction pour fermer le menu
     function closeMenu() {
-      isOpen = false;
-      mobileMenu.style.display = 'none';
+      console.log('✖️ FERMETURE du menu...');
+      
+      mobileMenu.classList.remove('menu-visible');
+      
+      // Attendre la fin de l'animation avant de cacher
+      setTimeout(() => {
+        if (!mobileMenu.classList.contains('menu-visible')) {
+          mobileMenu.classList.add('menu-hidden');
+        }
+      }, 300);
+      
       burgerBtn.setAttribute('aria-expanded', 'false');
-      if (burgerIcon) burgerIcon.classList.remove('hidden');
-      if (closeIcon) closeIcon.classList.add('hidden');
+      burgerIcon.classList.remove('hidden');
+      closeIcon.classList.add('hidden');
       document.body.style.overflow = '';
-      console.log('✖️ Menu fermé');
+      
+      // Réinitialiser la rotation du bouton
+      burgerBtn.style.transform = '';
+      
+      console.log('✅ Menu fermé!');
     }
     
-    // Toggle du menu
     burgerBtn.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      console.log('🔘 Clic sur burger, état actuel:', isOpen);
+      
+      const isOpen = mobileMenu.classList.contains('menu-visible');
+      console.log('🔘 CLIC sur burger!');
+      console.log('État actuel (ouvert?):', isOpen);
       
       if (isOpen) {
         closeMenu();
@@ -264,34 +546,64 @@
       }
     });
     
-    // Fermer le menu quand on clique sur un lien
+    // Fermer au clic sur un lien
     mobileLinks.forEach(function(link) {
-      link.addEventListener('click', function() {
-        console.log('🔗 Clic sur lien mobile');
-        closeMenu();
+      link.addEventListener('click', function(e) {
+        console.log('🔗 Clic sur lien');
+        // Empêcher la navigation immédiate pour voir l'animation
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        
+        // Ajouter une animation de clic
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+          closeMenu();
+          // Naviguer après la fermeture
+          setTimeout(() => {
+            window.location.href = href;
+          }, 300);
+        }, 150);
       });
     });
     
-    // Fermer le menu en cliquant en dehors
+    // Fermer au clic sur le bouton CTA
+    const mobileCta = document.querySelector('.mobile-cta-button');
+    if (mobileCta) {
+      mobileCta.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+          closeMenu();
+          setTimeout(() => {
+            window.location.href = href;
+          }, 300);
+        }, 150);
+      });
+    }
+    
+    // Fermer au clic en dehors du menu
     mobileMenu.addEventListener('click', function(e) {
       if (e.target === mobileMenu) {
-        console.log('👆 Clic sur overlay');
+        console.log('👆 Clic en dehors du menu');
         closeMenu();
       }
     });
     
-    // Fermer avec la touche Escape
+    // Fermer avec Escape
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && isOpen) {
-        console.log('⌨️ Touche Escape');
+      if (e.key === 'Escape' && mobileMenu.classList.contains('menu-visible')) {
+        console.log('⌨️ Touche Escape pressée');
         closeMenu();
       }
     });
     
-    console.log('✅ Menu burger initialisé avec succès');
+    console.log('✅ Menu burger initialisé avec succès!');
   }
   
-  // Fonction pour le thème
   function initTheme() {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -321,15 +633,19 @@
     console.log('✅ Thème initialisé');
   }
   
-  // Initialiser quand le DOM est prêt
+  // Initialisation
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ DOM chargé!');
       initMobileMenu();
       initTheme();
     });
   } else {
+    console.log('✅ DOM déjà chargé!');
     initMobileMenu();
     initTheme();
   }
+  
+  console.log('🏁 Script chargé complètement');
 })();
 </script>

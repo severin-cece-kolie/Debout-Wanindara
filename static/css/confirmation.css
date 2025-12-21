@@ -1,0 +1,84 @@
+/* Style spécifique pour la page de confirmation */
+@import 'membre_badge.css';
+
+/* Ajustements pour la page de confirmation */
+.confirmation-page {
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+}
+
+.confirmation-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
+
+.confirmation-title {
+    color: #4a7c59;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.confirmation-text {
+    color: #4b5563;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Centre le badge et ajoute une marge */
+.badge-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+/* Style pour les boutons d'action */
+.action-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background-color: #4a7c59;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #3d6548;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+    background-color: #f9fafb;
+}
+
+/* QR Code style */
+.qr-code {
+    width: 96px;
+    height: 96px;
+    margin: 16px auto 0;
+}
+
+.qr-code img {
+    width: 100%;
+    height: 100%;
+}

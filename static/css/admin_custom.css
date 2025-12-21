@@ -1,19 +1,228 @@
-:root {
-    --primary: #0F4C81;   /* Bleu institutionnel */
-    --secondary: #2E7D32; /* Vert ONG */
-    --accent: #C9A227;    /* Doré */
+/* static/css/admin_custom.css */
+
+/* ===== FIXES GÉNÉRAUX ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden !important;
+}
+
+/* ===== CONTENU PRINCIPAL ===== */
+.content-wrapper {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  padding: 15px !important;
+}
+
+.main-footer {
+  clear: both;
+}
+
+/* ===== TABLES RESPONSIVES ===== */
+.table-responsive {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 20px;
+}
+
+.table {
+  min-width: 600px;
+  font-size: 14px;
+}
+
+.table th {
+  white-space: nowrap;
+  background-color: #f8f9fa;
+}
+
+/* ===== FORMULAIRES ===== */
+.form-control, .select2-container {
+  max-width: 100% !important;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Réduire la largeur des champs larges */
+.field-content textarea,
+.field-description textarea {
+  max-width: 100% !important;
+  min-height: 100px;
+}
+
+/* ===== NAVIGATION ===== */
+.navbar-nav {
+  flex-wrap: wrap !important;
+}
+
+.navbar-custom-menu .navbar-nav > li {
+  margin-left: 5px;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+.nav-sidebar > .nav-item {
+  margin-bottom: 5px;
+}
+
+/* ===== CARTES ET WIDGETS ===== */
+.card {
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablettes */
+@media (max-width: 991.98px) {
+  .content-wrapper, .main-footer {
+      margin-left: 0 !important;
   }
   
-  .navbar, .sidebar {
-    background-color: var(--primary);
+  .main-sidebar {
+      transform: translateX(-100%);
   }
   
-  .btn-primary {
-    background-color: var(--secondary);
-    border-color: var(--secondary);
+  .sidebar-open .main-sidebar {
+      transform: translateX(0);
   }
   
-  a, .text-accent {
-    color: var(--accent);
+  .navbar-nav {
+      flex-direction: row;
+      flex-wrap: wrap;
+  }
+}
+
+/* Téléphones */
+@media (max-width: 767.98px) {
+  .content-wrapper {
+      padding: 10px !important;
   }
   
+  .navbar-custom-menu .navbar-nav {
+      justify-content: flex-start;
+  }
+  
+  .btn-group {
+      display: block;
+      margin-bottom: 10px;
+  }
+  
+  .btn-group .btn {
+      margin-bottom: 5px;
+      display: inline-block;
+      width: auto;
+  }
+  
+  /* Ajuster les formulaires sur mobile */
+  .form-row {
+      flex-direction: column;
+  }
+  
+  .form-row .form-group {
+      width: 100% !important;
+      margin-bottom: 10px;
+  }
+  
+  /* Réduire la taille des titres */
+  h1 {
+      font-size: 1.5rem;
+  }
+  
+  h2 {
+      font-size: 1.3rem;
+  }
+}
+
+/* Très petits écrans */
+@media (max-width: 575.98px) {
+  .container-fluid {
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+  
+  .navbar-brand {
+      font-size: 1rem;
+      max-width: 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+  }
+  
+  /* Cacher certains éléments sur mobile */
+  .d-none-mobile {
+      display: none !important;
+  }
+  
+  /* Ajuster les boutons d'action */
+  .object-tools {
+      float: none;
+      margin-bottom: 15px;
+  }
+  
+  .object-tools a {
+      display: block;
+      margin-bottom: 5px;
+      text-align: center;
+  }
+}
+
+/* ===== FIXES SPÉCIFIQUES ===== */
+
+/* Empêcher le débordement des champs Select2 */
+.select2-container {
+  width: 100% !important;
+}
+
+/* Ajuster les champs de date/heure */
+.datetime input {
+  max-width: 100px;
+}
+
+/* Fix pour les Summernote/WYSIWYG */
+.note-editor {
+  max-width: 100% !important;
+}
+
+/* Ajuster les filtres */
+.filtered {
+  overflow: visible !important;
+}
+
+/* Messages d'alerte */
+.alert {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+/* ===== IMPROVEMENTS VISUELS ===== */
+
+/* Meilleure séparation visuelle */
+.form-row {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.form-row:last-child {
+  border-bottom: none;
+}
+
+/* Améliorer la lisibilité */
+.help-block {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+}
+
+/* ===== DEBUG ===== */
+.debug {
+  border: 1px solid red !important;
+}

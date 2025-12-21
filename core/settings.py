@@ -15,9 +15,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-gbrng&khmt)48ht5+b40%p*h#n0j2r-7jp9=2+%(jj$no0x049'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'deboutwanindara.pythonanywhere.com',
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -36,6 +40,7 @@ EXTERNAL_APPS = [
 ]
 
 DJANGO_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,6 +75,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.debug',
             ],
         },
     },
@@ -164,8 +171,8 @@ DEFAULT_FROM_EMAIL = f"Debout Wanindara <{EMAIL_HOST_USER}>"
 from django.utils.translation import gettext_lazy as _
 
 LANGUAGES = [
-    ('fr', ('Français')),
-    ('en', ('English')),
+    ('fr', _('Français')),
+    ('en', _('English')),
 ]
 
 LANGUAGE_CODE = 'fr'
@@ -175,3 +182,52 @@ USE_I18N = True
 LOCALE_PATHS = [
     BASE_DIR / "locale",
 ]
+
+# Activation de la localisation
+USE_L10N = True
+
+# Fuseau horaire
+TIME_ZONE = 'Africa/Conakry'  # Ajustez selon votre localisation
+USE_TZ = True
+
+# Jazzmin configuration
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Administration - Debout Wanindara",
+    "site_header": "Debout Wanindara",
+    "site_brand": "Debout Wanindara",
+    "site_logo": "img/logo.png",
+    "site_logo_classes": "img-circle shadow-sm",
+    "site_icon": "img/favicon.png",
+    "welcome_sign": "Bienvenue dans l'administration de Debout Wanindara",
+    "copyright": "© Debout Wanindara",
+    "topmenu_links": [
+        {"name": "Accueil", "url": "admin:index"},
+        {"name": "Site public", "url": "https://deboutwanindara.pythonanywhere.com", "new_window": True},
+        {"app": "members"},
+        {"app": "projects"},
+    ],
+    "usermenu_links": [
+        {"name": "Documentation", "url": "https://docs.djangoproject.com", "new_window": True},
+        {"model": "auth.user"},
+    ],
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "order_with_respect_to": ["members", "projects", "events", "partners", "donations"],
+    "icons": {
+        "members": "fas fa-users",
+        "projects": "fas fa-tasks",
+        "events": "fas fa-calendar-alt",
+        "partners": "fas fa-handshake",
+        "donations": "fas fa-donate",
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+    "custom_css": "css/admin_custom.css",
+    "use_google_fonts_cdn": True,
+    "changeform_format": "horizontal_tabs",
+    "language_chooser": True,
+}

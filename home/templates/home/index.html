@@ -1,263 +1,445 @@
 {% extends "layouts/base.html" %}
 {% load static %}
 
-{% block title %} Debout Wanindara | Accueil{% endblock title %}
+{% block title %}Debout Wanindara | Accueil{% endblock title %}
 
 {% block stylesheets %}
 <style>
-  @keyframes bounceY {0%,100%{transform:translateY(-25%)}50%{transform:translateY(0)}}
-  .animate-bounceY{animation:bounceY 1s infinite}
+  /* ==========================================
+     ANIMATIONS
+     ========================================== */
+  @keyframes bounceY {
+    0%, 100% { transform: translateY(-25%) }
+    50% { transform: translateY(0) }
+  }
+  .animate-bounceY {
+    animation: bounceY 1s infinite;
+  }
+
+  /* ==========================================
+     HERO IMAGE RESPONSIVE
+     ========================================== */
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Mobile Portrait */
+  @media (max-width: 640px) and (orientation: portrait) {
+    .hero-image {
+      object-position: center 35%;
+    }
+  }
+
+  /* Mobile Landscape */
+  @media (max-width: 896px) and (orientation: landscape) {
+    .hero-image {
+      object-position: center center;
+    }
+  }
+
+  /* Tablette Portrait */
+  @media (min-width: 641px) and (max-width: 768px) and (orientation: portrait) {
+    .hero-image {
+      object-position: center 40%;
+    }
+  }
+
+  /* Tablette Landscape & Desktop */
+  @media (min-width: 769px) {
+    .hero-image {
+      object-position: center center;
+    }
+  }
+
+  /* ==========================================
+     OVERLAY GRADIENTS
+     ========================================== */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(124, 45, 18, 0.92),
+      rgba(154, 52, 18, 0.88),
+      rgba(21, 94, 117, 0.85)
+    );
+    transition: background 0.3s ease;
+  }
+
+  .dark .hero-overlay {
+    background: linear-gradient(
+      to right,
+      rgba(124, 45, 18, 0.95),
+      rgba(154, 52, 18, 0.92),
+      rgba(8, 51, 68, 0.92)
+    );
+  }
+
+  /* Mobile: gradient vertical */
+  @media (max-width: 640px) {
+    .hero-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(124, 45, 18, 0.85),
+        rgba(154, 52, 18, 0.90),
+        rgba(21, 94, 117, 0.88)
+      );
+    }
+    
+    .dark .hero-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(124, 45, 18, 0.92),
+        rgba(154, 52, 18, 0.94),
+        rgba(8, 51, 68, 0.92)
+      );
+    }
+  }
+
+  /* ==========================================
+     PERFORMANCE
+     ========================================== */
+  .hero-image,
+  .hero-overlay,
+  .animate-bounceY {
+    will-change: transform, opacity;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-bounceY {
+      animation: none;
+    }
+  }
 </style>
 {% endblock stylesheets %}
 
 {% block content %}
-  <main class="min-h-full bg-white text-gray-900">
+<main class="min-h-full">
+  
+  <!-- ==========================================
+       HERO SECTION
+       ========================================== -->
+  <section id="accueil" class="relative min-h-[92vh] grid place-items-center overflow-hidden">
     
-    <main id="top" class="pt-16">
-      <!-- HERO -->
-      <section id="accueil" class="relative min-h-[92vh] grid place-items-center overflow-hidden">
-        <img 
-  src="{% static 'img/hero.png' %}" 
-  alt="Communauté Debout Wanindara"
-  class="
-    absolute inset-0 h-full w-full 
-    object-cover object-center           <!-- mobile -->
-    sm:object-cover
-    md:object-cover
-    lg:object-fill                       <!-- desktop -->
-    xl:object-fill
-  " 
-  loading="eager" 
-/>
+    <!-- Image de fond -->
+    <img 
+      src="{% static 'img/hero.png' %}" 
+      alt="Communauté Debout Wanindara"
+      class="hero-image" 
+      loading="eager"
+      fetchpriority="high"
+    />
 
-        <div class="absolute inset-0 bg-gradient-to-r from-orange-900/90 via-orange-800/85 to-cyan-900/80"></div>
+    <!-- Overlay gradient -->
+    <div class="hero-overlay"></div>
 
-        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div class="max-w-3xl">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl text-white mb-6">Debout Wanindara</h1>
-            <p class="text-2xl sm:text-3xl text-orange-100 mb-6">Agir ensemble pour le développement</p>
-            <p class="text-xl text-gray-100 mb-8 max-w-2xl">
-              Une organisation de jeunes diplômés, fonctionnaires, commerçants, ouvriers et entrepreneurs engagés pour le
-              développement économique et socio-culturel de notre pays.
-            </p>
+    <!-- Contenu principal -->
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl text-white font-bold mb-6 dark:text-gray-50">
+          Debout Wanindara
+        </h1>
+        <p class="text-2xl sm:text-3xl text-orange-100 dark:text-orange-200 mb-6 font-semibold">
+          Agir ensemble pour le développement
+        </p>
+        <p class="text-xl text-gray-100 dark:text-gray-200 mb-8 max-w-2xl leading-relaxed">
+          Une organisation de jeunes diplômés, fonctionnaires, commerçants, ouvriers et entrepreneurs engagés pour le développement économique et socio-culturel de notre pays.
+        </p>
 
-            <div class="flex flex-col sm:flex-row gap-4 mb-12">
-              <a href="{% url 'join:join' %}" class="inline-flex items-center h-10 rounded-md bg-gradient-to-r from-orange-600 to-orange-700 px-6 text-white text-lg font-medium hover:from-orange-700 hover:to-orange-800 group">
-                Devenez Membre
-                <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-                </svg>
-              </a>
-              <a href="{% url 'action:action' %}" class="inline-flex items-center h-10 rounded-md border border-white/70 bg-white/10 px-6 text-white text-lg hover:bg-white/20">
-                Voir Nos Actions
-              </a>
+        <!-- Boutons CTA -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-12">
+          <a href="{% url 'join:join' %}" 
+             class="inline-flex items-center justify-center h-12 rounded-md bg-gradient-to-r from-orange-600 to-orange-700 px-6 text-white text-lg font-medium hover:from-orange-700 hover:to-orange-800 shadow-lg hover:shadow-xl transition-all duration-300 group">
+            Devenez Membre
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="{% url 'action:action' %}" 
+             class="inline-flex items-center justify-center h-12 rounded-md border-2 border-white/80 bg-white/10 backdrop-blur-sm px-6 text-white text-lg font-medium hover:bg-white/20 hover:border-white transition-all duration-300">
+            Voir Nos Actions
+          </a>
+        </div>
+
+        <!-- Statistiques -->
+        <div class="grid grid-cols-3 gap-4 sm:gap-6">
+          <!-- Membres -->
+          <div class="rounded-lg bg-white/10 dark:bg-white/5 backdrop-blur-sm p-4 text-center hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300 border border-white/20">
+            <div class="mb-2 flex justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-300 dark:text-cyan-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
             </div>
-
-            <!-- stats -->
-            <div class="grid grid-cols-3 gap-4 sm:gap-6">
-              <div class="rounded-lg bg-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/20 transition-colors">
-                <div class="mb-2 flex justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                  </svg>
-                </div>
-                <p class="text-3xl text-white">500+</p>
-                <p class="text-sm text-gray-200">Membres Actifs</p>
-              </div>
-              <div class="rounded-lg bg-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/20 transition-colors">
-                <div class="mb-2 flex justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
-                  </svg>
-                </div>
-                <p class="text-3xl text-white">10+</p>
-                <p class="text-sm text-gray-200">Projets Réalisés</p>
-              </div>
-              <div class="rounded-lg bg-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/20 transition-colors">
-                <div class="mb-2 flex justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
-                  </svg>
-                </div>
-                <p class="text-3xl text-white">350+</p>
-                <p class="text-sm text-gray-200">Bénéficiaires</p>
-              </div>
+            <p class="text-3xl sm:text-4xl font-bold text-white dark:text-gray-50">500+</p>
+            <p class="text-sm text-gray-200 dark:text-gray-300 mt-1">Membres Actifs</p>
+          </div>
+          
+          <!-- Projets -->
+          <div class="rounded-lg bg-white/10 dark:bg-white/5 backdrop-blur-sm p-4 text-center hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300 border border-white/20">
+            <div class="mb-2 flex justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-300 dark:text-cyan-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="6"/>
+                <circle cx="12" cy="12" r="2"/>
+              </svg>
             </div>
+            <p class="text-3xl sm:text-4xl font-bold text-white dark:text-gray-50">10+</p>
+            <p class="text-sm text-gray-200 dark:text-gray-300 mt-1">Projets Réalisés</p>
+          </div>
+          
+          <!-- Bénéficiaires -->
+          <div class="rounded-lg bg-white/10 dark:bg-white/5 backdrop-blur-sm p-4 text-center hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300 border border-white/20">
+            <div class="mb-2 flex justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-300 dark:text-cyan-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              </svg>
+            </div>
+            <p class="text-3xl sm:text-4xl font-bold text-white dark:text-gray-50">350+</p>
+            <p class="text-sm text-gray-200 dark:text-gray-300 mt-1">Bénéficiaires</p>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- scroll cue -->
-        <button id="scrollCue" class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounceY" aria-label="Faire défiler vers la section suivante">
-          <span class="block h-10 w-6 rounded-full border-2 border-white/90 p-2">
-            <span class="block h-3 w-1 rounded-full bg-white mx-auto"></span>
-          </span>
-        </button>
-      </section>
+    <!-- Indicateur de scroll -->
+    <button id="scrollCue" 
+            class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounceY hover:scale-110 transition-transform" 
+            aria-label="Faire défiler vers la section suivante">
+      <span class="block h-10 w-6 rounded-full border-2 border-white/90 dark:border-white/80 p-2 backdrop-blur-sm bg-white/10">
+        <span class="block h-3 w-1 rounded-full bg-white dark:bg-gray-200 mx-auto"></span>
+      </span>
+    </button>
+  </section>
 
-      <!-- 4 piliers -->
-      <section id="actions" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-16">
-            <h2 class="text-3xl sm:text-4xl font-semibold text-orange-900 mb-4">Nos 4 Piliers d'Action</h2>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Notre engagement se structure autour de quatre domaines clés pour un développement durable et inclusif.</p>
-          </div>
+  <!-- ==========================================
+       4 PILIERS D'ACTION
+       ========================================== -->
+  <section id="actions" class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-semibold text-orange-900 dark:text-orange-400 mb-4">
+          Nos 4 Piliers d'Action
+        </h2>
+        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          Notre engagement se structure autour de quatre domaines clés pour un développement durable et inclusif.
+        </p>
+      </div>
 
-          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Formation -->
-            <article class="group rounded-xl border bg-white overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
-              <div class="p-6">
-                <div class="mb-4 grid h-16 w-16 place-items-center rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 transition-transform duration-300 group-hover:scale-110">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Formation</h3>
-                <p class="text-gray-600 mb-3">Développez vos compétences professionnelles</p>
-                <a href="{% url 'action:action' %}#formation" class="inline-flex items-center text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span class="text-sm">En savoir plus</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
-              </div>
-            </article>
-
-            <!-- Éducation -->
-            <article class="group rounded-xl border bg-white overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
-              <div class="p-6">
-                <div class="mb-4 grid h-16 w-16 place-items-center rounded-lg bg-gradient-to-br from-cyan-500 to-cyan-600 transition-transform duration-300 group-hover:scale-110">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Éducation</h3>
-                <p class="text-gray-600 mb-3">Accès à l'éducation pour tous</p>
-                <a href="{% url 'action:action' %}#education" class="inline-flex items-center text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span class="text-sm">En savoir plus</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
-              </div>
-            </article>
-
-            <!-- Sensibilisation -->
-            <article class="group rounded-xl border bg-white overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
-              <div class="p-6">
-                <div class="mb-4 grid h-16 w-16 place-items-center rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 transition-transform duration-300 group-hover:scale-110">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Sensibilisation</h3>
-                <p class="text-gray-600 mb-3">Mobiliser et éveiller les consciences</p>
-                <a href="{% url 'action:action' %}#sensibilisation" class="inline-flex items-center text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span class="text-sm">En savoir plus</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
-              </div>
-            </article>
-
-            <!-- Assainissement -->
-            <article class="group rounded-xl border bg-white overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
-              <div class="p-6">
-                <div class="mb-4 grid h-16 w-16 place-items-center rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 transition-transform duration-300 group-hover:scale-110">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Assainissement</h3>
-                <p class="text-gray-600 mb-3">Pour un environnement sain et durable</p>
-                <a href="{% url 'action:action' %}#assainissement" class="inline-flex items-center text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span class="text-sm">En savoir plus</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- Pourquoi nous rejoindre -->
-      <section id="rejoindre" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-16">
-            <h2 class="text-3xl sm:text-4xl font-semibold text-orange-900 mb-4">Pourquoi Nous Rejoindre ?</h2>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Ensemble, nous créons un impact réel et durable sur nos communautés.</p>
-          </div>
-
-          <div class="grid md:grid-cols-3 gap-8">
-            <!-- carte 1 -->
-            <article class="group rounded-xl border bg-white overflow-hidden hover:shadow-2xl transition-all duration-300">
-              <div class="h-2 bg-gradient-to-r from-orange-600 to-orange-700"></div>
-              <div class="p-8">
-                <div class="mb-6 grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-orange-600 to-orange-700 transition-transform duration-300 group-hover:scale-110">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Une Communauté Engagée</h3>
-                <p class="text-gray-600 mb-6">Rejoignez plus de 500 membres actifs dédiés au développement</p>
-                <a href="{% url 'about' %}" class="inline-flex items-center text-orange-600 hover:text-orange-700 transition-colors">
-                  Découvrir notre histoire
-                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
-              </div>
-            </article>
-
-            <!-- carte 2 -->
-            <article class="group rounded-xl border bg-white overflow-hidden hover:shadow-2xl transition-all duration-300">
-              <div class="h-2 bg-gradient-to-r from-cyan-600 to-cyan-700"></div>
-              <div class="p-8">
-                <div class="mb-6 grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-cyan-600 to-cyan-700 transition-transform duration-300 group-hover:scale-110">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Des Actions Concrètes</h3>
-                <p class="text-gray-600 mb-6">10+ projets réalisés qui transforment durablement les communautés</p>
-                <a href="{% url 'action:action' %}" class="inline-flex items-center text-orange-600 hover:text-orange-700 transition-colors">
-                  Voir nos réalisations
-                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
-              </div>
-            </article>
-
-            <!-- carte 3 -->
-            <article class="group rounded-xl border bg-white overflow-hidden hover:shadow-2xl transition-all duration-300">
-              <div class="h-2 bg-gradient-to-r from-amber-600 to-amber-700"></div>
-              <div class="p-8">
-                <div class="mb-6 grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-amber-600 to-amber-700 transition-transform duration-300 group-hover:scale-110">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Devenez Membre</h3>
-                <p class="text-gray-600 mb-6">Participez activement au développement de notre pays</p>
-                <a href="{% url 'join:join' %}" class="inline-flex items-center text-orange-600 hover:text-orange-700 transition-colors">
-                  Rejoignez-nous maintenant
-                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- CTA gradient -->
-      <section id="contact" class="py-20 bg-gradient-to-r from-orange-600 via-orange-700 to-cyan-600">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mb-6 h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
-          <h2 class="text-3xl sm:text-4xl text-white font-semibold mb-6">Prêt à Faire la Différence ?</h2>
-          <p class="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
-            Rejoignez notre communauté de changeurs et contribuez activement au développement économique et socio-culturel de notre pays.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="{% url 'join:join' %}" class="inline-flex items-center h-10 rounded-md bg-white px-6 text-orange-600 text-lg font-medium hover:bg-gray-100 group">
-              Devenir Membre
-              <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </a>
-            <a href="{% url 'contact:contact' %}" class="inline-flex items-center h-10 rounded-md border border-white/80 bg-white/10 px-6 text-white text-lg hover:bg-white/20">
-              Nous Contacter
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Formation -->
+        <article class="group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
+          <div class="p-6">
+            <div class="mb-4 grid h-16 w-16 place-items-center rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 transition-transform duration-300 group-hover:scale-110 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M22 10v6"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Formation</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-3">Développez vos compétences professionnelles</p>
+            <a href="{% url 'action:action' %}#formation" class="inline-flex items-center text-orange-600 dark:text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">
+              <span class="text-sm">En savoir plus</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
             </a>
           </div>
-        </div>
-      </section>
-    </main>
-    <!-- JS minimal et fonctionnel -->
-    <script>
-      
-      // Scroll cue → section suivante
-      const scrollCue = document.getElementById("scrollCue");
-      scrollCue?.addEventListener("click", () => {
-        const next = document.querySelector("#actions");
-        next?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
+        </article>
 
-      // Année footer
-    </script>
-  </main>
+        <!-- Éducation -->
+        <article class="group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
+          <div class="p-6">
+            <div class="mb-4 grid h-16 w-16 place-items-center rounded-lg bg-gradient-to-br from-cyan-500 to-cyan-600 transition-transform duration-300 group-hover:scale-110 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v14"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Éducation</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-3">Accès à l'éducation pour tous</p>
+            <a href="{% url 'action:action' %}#education" class="inline-flex items-center text-orange-600 dark:text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">
+              <span class="text-sm">En savoir plus</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
 
+        <!-- Sensibilisation -->
+        <article class="group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
+          <div class="p-6">
+            <div class="mb-4 grid h-16 w-16 place-items-center rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 transition-transform duration-300 group-hover:scale-110 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m3 11 18-5v12L3 14v-3z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Sensibilisation</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-3">Mobiliser et éveiller les consciences</p>
+            <a href="{% url 'action:action' %}#sensibilisation" class="inline-flex items-center text-orange-600 dark:text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">
+              <span class="text-sm">En savoir plus</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Assainissement -->
+        <article class="group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
+          <div class="p-6">
+            <div class="mb-4 grid h-16 w-16 place-items-center rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 transition-transform duration-300 group-hover:scale-110 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Assainissement</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-3">Pour un environnement sain et durable</p>
+            <a href="{% url 'action:action' %}#assainissement" class="inline-flex items-center text-orange-600 dark:text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">
+              <span class="text-sm">En savoir plus</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       POURQUOI NOUS REJOINDRE
+       ========================================== -->
+  <section id="rejoindre" class="py-20 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-semibold text-orange-900 dark:text-orange-400 mb-4">
+          Pourquoi Nous Rejoindre ?
+        </h2>
+        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          Ensemble, nous créons un impact réel et durable sur nos communautés.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Carte 1 -->
+        <article class="group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden hover:shadow-2xl transition-all duration-300">
+          <div class="h-2 bg-gradient-to-r from-orange-600 to-orange-700"></div>
+          <div class="p-8">
+            <div class="mb-6 grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-orange-600 to-orange-700 transition-transform duration-300 group-hover:scale-110 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Une Communauté Engagée</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">Rejoignez plus de 500 membres actifs dédiés au développement</p>
+            <a href="{% url 'about' %}" class="inline-flex items-center text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-500 transition-colors">
+              Découvrir notre histoire
+              <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Carte 2 -->
+        <article class="group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden hover:shadow-2xl transition-all duration-300">
+          <div class="h-2 bg-gradient-to-r from-cyan-600 to-cyan-700"></div>
+          <div class="p-8">
+            <div class="mb-6 grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-cyan-600 to-cyan-700 transition-transform duration-300 group-hover:scale-110 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="6"/>
+                <circle cx="12" cy="12" r="2"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Des Actions Concrètes</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">10+ projets réalisés qui transforment durablement les communautés</p>
+            <a href="{% url 'action:action' %}" class="inline-flex items-center text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-500 transition-colors">
+              Voir nos réalisations
+              <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Carte 3 -->
+        <article class="group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden hover:shadow-2xl transition-all duration-300">
+          <div class="h-2 bg-gradient-to-r from-amber-600 to-amber-700"></div>
+          <div class="p-8">
+            <div class="mb-6 grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-amber-600 to-amber-700 transition-transform duration-300 group-hover:scale-110 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Devenez Membre</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">Participez activement au développement de notre pays</p>
+            <a href="{% url 'join:join' %}" class="inline-flex items-center text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-500 transition-colors">
+              Rejoignez-nous maintenant
+              <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CTA FINAL
+       ========================================== -->
+  <section id="contact" class="py-20 bg-gradient-to-r from-orange-600 via-orange-700 to-cyan-600 dark:from-orange-700 dark:via-orange-800 dark:to-cyan-700">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mb-6 h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+        <polyline points="16 7 22 7 22 13"/>
+      </svg>
+      <h2 class="text-3xl sm:text-4xl text-white font-semibold mb-6">Prêt à Faire la Différence ?</h2>
+      <p class="text-xl text-orange-100 dark:text-orange-200 mb-8 max-w-2xl mx-auto leading-relaxed">
+        Rejoignez notre communauté de changeurs et contribuez activement au développement économique et socio-culturel de notre pays.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="{% url 'join:join' %}" 
+           class="inline-flex items-center justify-center h-12 rounded-md bg-white px-6 text-orange-600 text-lg font-medium hover:bg-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 group">
+          Devenir Membre
+          <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="{% url 'contact:contact' %}" 
+           class="inline-flex items-center justify-center h-12 rounded-md border-2 border-white/80 bg-white/10 backdrop-blur-sm px-6 text-white text-lg hover:bg-white/20 hover:border-white transition-all duration-300">
+          Nous Contacter
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SCRIPTS
+       ========================================== -->
+  <script>
+    // Scroll vers la section actions
+    const scrollCue = document.getElementById("scrollCue");
+    scrollCue?.addEventListener("click", () => {
+      const next = document.querySelector("#actions");
+      next?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  </script>
+
+</main>
 {% endblock content %}

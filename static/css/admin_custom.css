@@ -1,0 +1,19 @@
+:root {
+    --primary: #0F4C81;   /* Bleu institutionnel */
+    --secondary: #2E7D32; /* Vert ONG */
+    --accent: #C9A227;    /* Doré */
+  }
+  
+  .navbar, .sidebar {
+    background-color: var(--primary);
+  }
+  
+  .btn-primary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+  }
+  
+  a, .text-accent {
+    color: var(--accent);
+  }
+  

@@ -32,7 +32,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
 
     # Django admin
-    path('admin/', admin.site.urls),
+    path('secure-debout-wanindara-2025/', admin.site.urls),
 
     # Home page
     path('', include('home.urls')),
@@ -51,6 +51,7 @@ urlpatterns += i18n_patterns(
 
     # Blog
     path('blog/', include('blog.urls')),
+    
 
     prefix_default_language=False, 
 )

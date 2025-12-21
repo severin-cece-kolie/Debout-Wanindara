@@ -7,9 +7,309 @@
     <title>Badge - {{ membre.nom_complet }}</title>
     <link rel="stylesheet" href="{% static 'css/badge.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .badge-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .badge-preview {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .badge-recto, .badge-verso {
+            width: 85.6mm;
+            height: 53.98mm;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            margin: 0 auto 2rem;
+        }
+        
+        .badge-recto {
+            background: linear-gradient(135deg, {{ couleur_badge }} 0%, {{ couleur_badge }}dd 100%);
+            color: white;
+            padding: 6mm;
+        }
+        
+        /* Badge de catégorie */
+        .category-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            color: {{ couleur_badge }};
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        
+        .category-icon {
+            margin-right: 4px;
+        }
+        
+        /* Statut badge */
+        .status-badge {
+            position: absolute;
+            top: 40px;
+            right: 8px;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+        
+        .status-actif { background: #10b981; color: white; }
+        .status-suspendu { background: #f59e0b; color: white; }
+        .status-expire { background: #ef4444; color: white; }
+        .status-revoque { background: #6b7280; color: white; }
+        
+        .badge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 4mm;
+        }
+        
+        .badge-org-name {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.95;
+        }
+        
+        .badge-logo {
+            width: 18mm;
+            height: 18mm;
+            background: white;
+            border-radius: 8px;
+            padding: 2mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .badge-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .badge-content {
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .badge-photo-container {
+            margin: 0 auto 10px;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .badge-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .badge-name {
+            font-size: 16px;
+            font-weight: 800;
+            margin: 8px 0 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-position {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        
+        .badge-id {
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 6px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 4px;
+            font-weight: 700;
+        }
+        
+        .badge-footer {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            right: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 9px;
+            opacity: 0.85;
+        }
+        
+        .badge-qr {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 45px;
+            height: 45px;
+            background: white;
+            padding: 3px;
+            border-radius: 6px;
+        }
+        
+        .badge-qr img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Actions */
+        .badge-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-download {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-download i {
+            font-size: 18px;
+        }
+        
+        .btn-download.primary {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+        
+        .btn-download.secondary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Verso */
+        .badge-verso {
+            background: white;
+            color: #333;
+            padding: 6mm;
+        }
+        
+        .badge-verso-header {
+            text-align: center;
+            margin-bottom: 4mm;
+            padding-bottom: 3mm;
+            border-bottom: 2px solid {{ couleur_badge }};
+        }
+        
+        .badge-verso-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: {{ couleur_badge }};
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .badge-conditions {
+            font-size: 8px;
+            line-height: 1.5;
+            color: #555;
+            margin-bottom: 4mm;
+        }
+        
+        .badge-conditions ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .badge-conditions li {
+            margin-bottom: 3px;
+            padding-left: 12px;
+            position: relative;
+        }
+        
+        .badge-conditions li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: {{ couleur_badge }};
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .badge-signature-zone {
+            margin-top: 6mm;
+            padding-top: 3mm;
+            border-top: 1px dashed #ccc;
+        }
+        
+        .badge-signature-label {
+            font-size: 8px;
+            color: #666;
+            margin-bottom: 2mm;
+            font-weight: 600;
+        }
+        
+        .badge-signature-line {
+            border-bottom: 1px solid #333;
+            height: 10mm;
+            margin-bottom: 1mm;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .badge-preview {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
@@ -24,15 +324,29 @@
             {% endfor %}
         </div>
         {% endif %}
+        
         <div class="badge-preview">
-            <h1 style="text-align: center; margin-bottom: 2rem; color: #333;">Badge Membre - Debout Wanindara</h1>
+            <h1 style="text-align: center; margin-bottom: 2rem; color: #333; font-size: 28px;">
+                Badge Membre - Debout Wanindara
+            </h1>
             
             <!-- Badge Recto -->
             <div class="badge-recto">
+                <!-- Badge de catégorie -->
+                <div class="category-badge">
+                    <i class="fas {{ icone_categorie }} category-icon"></i>
+                    {{ membre.get_categorie_display }}
+                </div>
+                
+                <!-- Statut -->
+                {% if membre.statut != 'ACTIF' %}
+                <div class="status-badge status-{{ membre.statut|lower }}">
+                    {{ membre.get_statut_display }}
+                </div>
+                {% endif %}
+                
                 <div class="badge-header">
-                    <div>
-                        <div class="badge-org-name">Debout Wanindara</div>
-                    </div>
+                    <div class="badge-org-name">Debout Wanindara</div>
                     <div class="badge-logo">
                         <img src="{% static 'img/logo.png' %}" alt="Logo" onerror="this.style.display='none'">
                     </div>
@@ -45,23 +359,23 @@
                     </div>
                     {% endif %}
                     
-                    <div class="badge-info">
-                        <div class="badge-name">{{ membre.nom_complet }}</div>
-                        {% if membre.position %}
-                        <div class="badge-position">{{ membre.position }}</div>
-                        {% endif %}
-                        <div class="badge-id">ID: {{ membre.numero_id }}</div>
-                    </div>
+                    <div class="badge-name">{{ membre.nom_complet }}</div>
                     
-                    <!-- QR Code pour authentification -->
-                    <div class="badge-qr">
-                        <img src="{% url 'join:badge_qr' membre.id %}" alt="QR Code Authentification">
-                    </div>
+                    {% if membre.position %}
+                    <div class="badge-position">{{ membre.position }}</div>
+                    {% endif %}
+                    
+                    <div class="badge-id">ID: {{ membre.numero_id }}</div>
                 </div>
                 
                 <div class="badge-footer">
                     <div>Membre depuis {{ date_emission }}</div>
-                    <div>Valide</div>
+                    <div>{{ membre.get_niveau_acces_display }}</div>
+                </div>
+                
+                <!-- QR Code -->
+                <div class="badge-qr">
+                    <img src="{% url 'join:badge_qr' membre.id %}" alt="QR Code">
                 </div>
             </div>
             
@@ -78,19 +392,23 @@
                         <li>En cas de perte, veuillez contacter immédiatement l'administration.</li>
                         <li>Le badge reste la propriété de Debout Wanindara.</li>
                         <li>Toute utilisation frauduleuse est passible de sanctions.</li>
+                        <li>Niveau d'accès: <strong>{{ membre.get_niveau_acces_display }}</strong></li>
+                        {% if membre.date_expiration %}
+                        <li>Date d'expiration: <strong>{{ membre.date_expiration|date:"d/m/Y" }}</strong></li>
+                        {% endif %}
                     </ul>
                 </div>
                 
                 <div class="badge-signature-zone">
                     <div class="badge-signature-label">Signature du membre</div>
                     <div class="badge-signature-line"></div>
-                    <div class="badge-signature-date">Date: _______________</div>
+                    <div style="font-size: 8px; color: #999; margin-top: 4px;">Date: _______________</div>
                 </div>
             </div>
         </div>
         
         <div class="badge-actions">
-            <a href="{% url 'join:badge_pdf' membre.id %}" class="btn-download">
+            <a href="{% url 'join:badge_pdf' membre.id %}" class="btn-download primary">
                 <i class="fas fa-file-pdf"></i>
                 Télécharger en PDF
             </a>
@@ -102,4 +420,3 @@
     </div>
 </body>
 </html>
-

@@ -1,57 +1,335 @@
-{% load static %}
-    <header class="fixed inset-x-0 top-0 z-50 bg-white/100 backdrop-blur border-b">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex h-24 items-center justify-between">
-          <a href="#top" class="inline-flex items-center gap-3">
-            <img src="{% static 'img/logo.png' %}" alt="Debout Wanindara" class="h-14 w-auto" />
-          </a>
-          <form action="/i18n/setlang/" method="post">
-            {% csrf_token %}
-            <select name="language" onchange="this.form.submit()">
-                <option value="fr" {% if LANGUAGE_CODE == 'fr' %}selected{% endif %}>FR</option>
-                <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>EN</option>
-            </select>
-          </form>
-        <button id="theme-toggle" class="p-2 rounded bg-gray-200 dark:bg-gray-700"></button>
+{% load static i18n %}
+<header class="fixed inset-x-0 top-0 z-50 bg-white/10 dark:bg-gray-900/10 backdrop-blur-2xl border-b border-white/5 dark:border-gray-700/10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex h-20 items-center justify-between">
+      <!-- Logo -->
+      <a href="{% url 'index' %}" class="inline-flex items-center gap-3 flex-shrink-0 group">
+        <img src="{% static 'img/logo.png' %}" alt="Debout Wanindara" class="h-14 w-auto transition-all duration-300 group-hover:scale-110 filter drop-shadow-2xl" />
+      </a>
 
-          <!-- Nav desktop -->
-          <nav class="hidden md:flex items-center gap-6">
-            <a href="{% url 'index' %}" class="{% if request.path == '/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Accueil</a>
-            <a href="{% url 'action:action' %}" class="{% if request.path == '/actions/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Nos Actions</a>
-            <a href="{% url 'join:join' %}" class="{% if request.path == '/join-us/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Rejoignez-Nous</a>
-            {% if user.is_authenticated and user.is_staff %}
-            <a href="{% url 'join:badge_list' %}" class="{% if request.path == '/join-us/badges/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Badges</a>
-            {% endif %}
-            <a href="{% url 'blog:blog' %}" class="{% if request.path == '/blog/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Actualités</a>
-            <a href="{% url 'about' %}" class="{% if request.path == '/about/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">À Propos</a>
-            <a href="{% url 'contact:contact' %}" class="{% if request.path == '/contact/'%} {{'text-orange-600'}} {% else %} {{'text-gray-700 '}} {% endif %} hover:text-orange-600 transition-colors">Contact</a>
-            <a href="#rejoindre" class="inline-flex items-center h-9 rounded-md bg-gradient-to-r from-orange-600 to-orange-700 px-4 text-white text-sm font-medium hover:from-orange-700 hover:to-orange-800 transition-colors">
-              Devenez Membre
-            </a>
-          </nav>
+      <!-- Nav desktop -->
+      <nav class="hidden md:flex items-center gap-1 flex-1 justify-center">
+        <a href="{% url 'index' %}" 
+           class="{% if request.path == '/' %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+          {% trans "Accueil" %}
+        </a>
+        <a href="{% url 'action:action' %}" 
+           class="{% if '/actions/' in request.path %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+          {% trans "Nos Actions" %}
+        </a>
+        <a href="{% url 'join:join' %}" 
+           class="{% if '/join-us/' in request.path %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+          {% trans "Rejoignez-Nous" %}
+        </a>
+        {% if user.is_authenticated and user.is_staff %}
+        <a href="{% url 'join:badge_list' %}" 
+           class="{% if '/badges/' in request.path %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+          {% trans "Badges" %}
+        </a>
+        {% endif %}
+        <a href="{% url 'blog:blog' %}" 
+           class="{% if '/blog/' in request.path %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+          {% trans "Actualités" %}
+        </a>
+        <a href="{% url 'about' %}" 
+           class="{% if '/about/' in request.path %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+          {% trans "À Propos" %}
+        </a>
+        <a href="{% url 'contact:contact' %}" 
+           class="{% if '/contact/' in request.path %}text-white bg-white/10{% else %}text-gray-800 dark:text-gray-200{% endif %} hover:text-white hover:bg-white/10 transition-all duration-200 px-5 py-3 rounded-full backdrop-blur-md font-medium">
+          {% trans "Contact" %}
+        </a>
+      </nav>
 
-          <!-- Burger -->
-          <button id="btnMenu" class="md:hidden p-2 rounded-lg hover:bg-gray-100" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      <!-- Desktop Right Side -->
+      <div class="hidden md:flex items-center gap-4 flex-shrink-0">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" 
+                class="relative w-12 h-6 bg-white/20 dark:bg-gray-800/20 backdrop-blur-lg rounded-full transition-all hover:bg-white/30 dark:hover:bg-gray-800/30 border border-white/20 dark:border-gray-700/20 shadow-sm"
+                aria-label="{% trans 'Changer le thème' %}">
+          <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white dark:bg-gray-900 rounded-full shadow-lg transform transition-transform dark:translate-x-6 flex items-center justify-center">
+            <svg class="w-3 h-3 text-gray-700 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+              <path class="dark:hidden" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+              <path class="hidden dark:block" d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
             </svg>
-          </button>
-        </div>
+          </div>
+        </button>
+
+        <!-- CTA Button -->
+        <a href="{% url 'join:join' %}#rejoindre" 
+           class="inline-flex items-center h-10 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 dark:from-orange-400 dark:to-orange-500 px-6 text-white text-sm font-semibold hover:from-orange-600 hover:to-orange-700 dark:hover:from-orange-500 dark:hover:to-orange-600 transition-all shadow-lg hover:shadow-xl hover:scale-105 border border-orange-400/30 backdrop-blur-sm">
+          {% trans "Devenez Membre" %}
+        </a>
       </div>
 
-      <!-- Nav mobile -->
-      <div id="mobileMenu" class="md:hidden hidden border-t bg-white">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 grid gap-2">
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'index' %}">Accueil</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'action:action' %}">Nos Actions</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'join:join' %}">Rejoignez-Nous</a>
-          {% if user.is_authenticated and user.is_staff %}
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'join:badge_list' %}">Badges</a>
-          {% endif %}
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'blog:blog' %}">Actualités</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'about' %}">À Propos</a>
-          <a class="py-2 text-gray-700 hover:text-orange-600" href="{% url 'contact:contact' %}">Contact</a>
-          <a class="mt-2 inline-flex items-center justify-center h-10 rounded-md bg-gradient-to-r from-orange-600 to-orange-700 px-4 text-white font-medium hover:from-orange-700 hover:to-orange-800" href="#rejoindre">Devenez Membre</a>
-        </nav>
+      <!-- Mobile Right Side -->
+      <div class="flex md:hidden items-center gap-4">
+        <!-- Theme Toggle Mobile -->
+        <button id="theme-toggle-mobile" 
+                class="relative w-12 h-6 bg-white/20 dark:bg-gray-800/20 backdrop-blur-lg rounded-full transition-all hover:bg-white/30 dark:hover:bg-gray-800/30 border border-white/20 dark:border-gray-700/20 shadow-sm"
+                aria-label="{% trans 'Changer le thème' %}">
+          <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white dark:bg-gray-900 rounded-full shadow-lg transform transition-transform dark:translate-x-6 flex items-center justify-center">
+            <svg class="w-3 h-3 text-gray-700 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+              <path class="dark:hidden" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+              <path class="hidden dark:block" d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+            </svg>
+          </div>
+        </button>
+
+        <!-- Burger Button -->
+        <button id="burger-btn" 
+                type="button"
+                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/20 dark:bg-gray-800/20 backdrop-blur-lg hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all border border-white/20 dark:border-gray-700/20 shadow-sm" 
+                aria-label="{% trans 'Menu de navigation' %}" 
+                aria-expanded="false">
+          <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" 
+               class="h-5 w-5 text-gray-800 dark:text-gray-200" 
+               fill="none" 
+               viewBox="0 0 24 24" 
+               stroke="currentColor">
+            <path stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  stroke-width="2.5" 
+                  d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" 
+               class="h-5 w-5 text-gray-800 dark:text-gray-200 hidden" 
+               fill="none" 
+               viewBox="0 0 24 24" 
+               stroke="currentColor">
+            <path stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  stroke-width="2.5" 
+                  d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
       </div>
-    </header>
+    </div>
+  </div>
+
+  <!-- Nav mobile -->
+  <div id="mobile-menu" 
+       style="display: none; position: fixed; top: 80px; left: 0; right: 0; bottom: 0; z-index: 9999; background: linear-gradient(135deg, rgba(234, 88, 12, 0.98) 0%, rgba(249, 115, 22, 0.98) 50%, rgba(6, 182, 212, 0.98) 100%);"
+       class="md:hidden overflow-y-auto">
+    <nav class="w-full px-6 py-8 space-y-4">
+      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
+         href="{% url 'index' %}" style="display: flex !important;">
+        <div class="w-12 h-12 rounded-full bg-orange-300/40 flex items-center justify-center" style="background-color: rgba(251, 146, 60, 0.4) !important;">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+        </div>
+        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "Accueil" %}</span>
+      </a>
+      
+      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
+         href="{% url 'action:action' %}" style="display: flex !important;">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(59, 130, 246, 0.4) !important;">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
+          </svg>
+        </div>
+        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "Nos Actions" %}</span>
+      </a>
+      
+      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
+         href="{% url 'join:join' %}" style="display: flex !important;">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(34, 197, 94, 0.4) !important;">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+        </div>
+        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "Rejoignez-Nous" %}</span>
+      </a>
+      
+      {% if user.is_authenticated and user.is_staff %}
+      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
+         href="{% url 'join:badge_list' %}" style="display: flex !important;">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(168, 85, 247, 0.4) !important;">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
+          </svg>
+        </div>
+        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "Badges" %}</span>
+      </a>
+      {% endif %}
+      
+      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
+         href="{% url 'blog:blog' %}" style="display: flex !important;">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(234, 179, 8, 0.4) !important;">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+          </svg>
+        </div>
+        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "Actualités" %}</span>
+      </a>
+      
+      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
+         href="{% url 'about' %}" style="display: flex !important;">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(6, 182, 212, 0.4) !important;">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "À Propos" %}</span>
+      </a>
+      
+      <a class="mobile-link flex items-center gap-4 py-4 px-6 text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-200 backdrop-blur-sm" 
+         href="{% url 'contact:contact' %}" style="display: flex !important;">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(236, 72, 153, 0.4) !important;">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: white !important;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <span class="font-semibold text-lg text-white" style="color: white !important;">{% trans "Contact" %}</span>
+      </a>
+      
+      <!-- CTA Mobile -->
+      <a class="flex items-center justify-center gap-4 mt-8 py-5 px-6 bg-white text-orange-600 font-bold rounded-2xl hover:bg-gray-50 transition-all duration-200 shadow-2xl" 
+         href="{% url 'join:join' %}#rejoindre" style="display: flex !important; background-color: white !important; color: #ea580c !important;">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #ea580c !important;">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+        </svg>
+        <span class="text-xl" style="color: #ea580c !important;">{% trans "Devenez Membre" %}</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+(function() {
+  'use strict';
+  
+  console.log('🚀 Initialisation du menu burger');
+  
+  // Fonction pour initialiser le menu
+  function initMobileMenu() {
+    const burgerBtn = document.getElementById('burger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const burgerIcon = document.getElementById('burger-icon');
+    const closeIcon = document.getElementById('close-icon');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    
+    if (!burgerBtn || !mobileMenu) {
+      console.error('❌ Éléments du menu non trouvés');
+      return;
+    }
+    
+    console.log('✅ Éléments du menu trouvés');
+    
+    let isOpen = false;
+    
+    // Fonction pour ouvrir le menu
+    function openMenu() {
+      isOpen = true;
+      mobileMenu.style.display = 'block';
+      mobileMenu.style.position = 'fixed';
+      mobileMenu.style.top = '80px';
+      mobileMenu.style.left = '0';
+      mobileMenu.style.right = '0';
+      mobileMenu.style.bottom = '0';
+      mobileMenu.style.zIndex = '9999';
+      mobileMenu.style.overflowY = 'auto';
+      burgerBtn.setAttribute('aria-expanded', 'true');
+      if (burgerIcon) burgerIcon.classList.add('hidden');
+      if (closeIcon) closeIcon.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      console.log('📱 Menu ouvert');
+      console.log('Menu style:', mobileMenu.style.cssText);
+      console.log('Menu display:', window.getComputedStyle(mobileMenu).display);
+      console.log('Menu visibility:', window.getComputedStyle(mobileMenu).visibility);
+    }
+    
+    // Fonction pour fermer le menu
+    function closeMenu() {
+      isOpen = false;
+      mobileMenu.style.display = 'none';
+      burgerBtn.setAttribute('aria-expanded', 'false');
+      if (burgerIcon) burgerIcon.classList.remove('hidden');
+      if (closeIcon) closeIcon.classList.add('hidden');
+      document.body.style.overflow = '';
+      console.log('✖️ Menu fermé');
+    }
+    
+    // Toggle du menu
+    burgerBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('🔘 Clic sur burger, état actuel:', isOpen);
+      
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+    
+    // Fermer le menu quand on clique sur un lien
+    mobileLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        console.log('🔗 Clic sur lien mobile');
+        closeMenu();
+      });
+    });
+    
+    // Fermer le menu en cliquant en dehors
+    mobileMenu.addEventListener('click', function(e) {
+      if (e.target === mobileMenu) {
+        console.log('👆 Clic sur overlay');
+        closeMenu();
+      }
+    });
+    
+    // Fermer avec la touche Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && isOpen) {
+        console.log('⌨️ Touche Escape');
+        closeMenu();
+      }
+    });
+    
+    console.log('✅ Menu burger initialisé avec succès');
+  }
+  
+  // Fonction pour le thème
+  function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      document.documentElement.classList.add('dark');
+    }
+    
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      console.log('🌓 Thème changé:', isDark ? 'sombre' : 'clair');
+    }
+    
+    const themeToggles = [
+      document.getElementById('theme-toggle'),
+      document.getElementById('theme-toggle-mobile')
+    ];
+    
+    themeToggles.forEach(function(btn) {
+      if (btn) {
+        btn.addEventListener('click', toggleTheme);
+      }
+    });
+    
+    console.log('✅ Thème initialisé');
+  }
+  
+  // Initialiser quand le DOM est prêt
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initMobileMenu();
+      initTheme();
+    });
+  } else {
+    initMobileMenu();
+    initTheme();
+  }
+})();
+</script>

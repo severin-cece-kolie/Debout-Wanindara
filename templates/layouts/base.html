@@ -1,6 +1,6 @@
-{% load static%}
+{% load static i18n %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ LANGUAGE_CODE }}" class="{% if request.COOKIES.theme == 'dark' %}dark{% endif %}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,68 +10,736 @@
 
     <!-- Script tailwind css-->
     <script src="https://cdn.tailwindcss.com"></script>
-    {% comment %} <link rel="stylesheet" href="{% static 'front/output.css' %}"> {% endcomment %}
+    <script>
+        // Configuration Tailwind pour le dark mode
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
     <!-- font-Awesome pour les icones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&amp;display=swap" rel="stylesheet">
-    <title>{% block title %}Debout Wanindara {% now "Y" %} {% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <title>{% block title %}{% trans "Debout Wanindara" %} {% now "Y" %}{% endblock %}</title>
+
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        /* ==================== DARK MODE VARIABLES ==================== */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --bg-tertiary: #f3f4f6;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --text-tertiary: #4b5563;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --input-bg: #ffffff;
+            --card-bg: #ffffff;
+        }
+        
+        .dark {
+            --bg-primary: #111827;
+            --bg-secondary: #1f2937;
+            --bg-tertiary: #374151;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --text-tertiary: #9ca3af;
+            --border-color: #4b5563;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+            --input-bg: #1f2937;
+            --card-bg: #1f2937;
+        }
+        
+        /* Application des variables */
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* ==================== CORRECTIONS GÉNÉRALES DARK MODE ==================== */
+        .dark .text-gray-800,
+        .dark .text-gray-900 {
+            color: var(--text-primary) !important;
+        }
+        
+        .dark .text-gray-600,
+        .dark .text-gray-700 {
+            color: var(--text-secondary) !important;
+        }
+        
+        .dark .text-gray-500 {
+            color: var(--text-tertiary) !important;
+        }
+        
+        /* Correction pour les textes sur fond clair qui deviennent invisibles */
+        .dark .bg-white,
+        .dark .bg-gray-50,
+        .dark .bg-gray-100 {
+            background-color: var(--bg-secondary) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        .dark .bg-gray-200 {
+            background-color: var(--bg-tertiary) !important;
+        }
+        
+        /* ==================== CORRECTION DES FORMULAIRES ==================== */
+        .dark input,
+        .dark textarea,
+        .dark select {
+            background-color: var(--input-bg) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        .dark input::placeholder,
+        .dark textarea::placeholder,
+        .dark select::placeholder {
+            color: var(--text-tertiary) !important;
+            opacity: 0.8 !important;
+        }
+        
+        .dark input:focus,
+        .dark textarea:focus,
+        .dark select:focus {
+            border-color: #f97316 !important;
+            background-color: var(--input-bg) !important;
+            color: var(--text-primary) !important;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2) !important;
+        }
+        
+        /* Labels de formulaire */
+        .dark label,
+        .dark .form-label,
+        .dark .field-label {
+            color: var(--text-secondary) !important;
+            font-weight: 500 !important;
+        }
+        
+        /* Correction spécifique pour les champs de formulaire */
+        .dark [class*="form-"],
+        .dark [class*="contact-"],
+        .dark [class*="message-"] {
+            color: var(--text-primary) !important;
+        }
+        
+        /* ==================== CORRECTION DES CARTES ET SECTIONS ==================== */
+        .dark .card,
+        .dark .section-card,
+        .dark .stats-card {
+            background-color: var(--card-bg) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        /* Sections avec bordures */
+        .dark .border,
+        .dark .border-2,
+        .dark .border-gray-200,
+        .dark .border-gray-300 {
+            border-color: var(--border-color) !important;
+        }
+        
+        /* ==================== CORRECTION DES STATISTIQUES ==================== */
+        .dark .stat-item,
+        .dark .counter,
+        .dark .stat-number,
+        .dark .stat-title {
+            color: var(--text-primary) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* ==================== CORRECTION DES BOUTONS ==================== */
+        .dark .btn-primary,
+        .dark .bg-orange-500,
+        .dark .bg-orange-600 {
+            background-color: #f97316 !important;
+            color: white !important;
+        }
+        
+        .dark .btn-secondary {
+            background-color: var(--bg-tertiary) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--border-color) !important;
+        }
+        
+        /* ==================== CORRECTION DES LIENS ==================== */
+        .dark a:not(.btn):not(.button) {
+            color: #60a5fa !important;
+        }
+        
+        .dark a:hover:not(.btn):not(.button) {
+            color: #93c5fd !important;
+        }
+        
+        /* ==================== CORRECTION DES DIVISEURS ==================== */
+        .dark hr,
+        .dark .divider,
+        .dark .separator {
+            border-color: var(--border-color) !important;
+            opacity: 0.5 !important;
+        }
+        
+        /* ==================== CORRECTION SPÉCIFIQUE POUR LES ÉLÉMENTS DE VOS SCREENSHOTS ==================== */
+        
+        /* 1. Pour les sections "Personnes formées", "Élèves soutenus", etc. */
+        .dark .stats-grid,
+        .dark .counter-grid {
+            background-color: transparent !important;
+        }
+        
+        .dark .stat-box {
+            background-color: var(--bg-secondary) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        /* 2. Pour les formulaires de contact */
+        .dark .contact-form-container {
+            background-color: var(--bg-secondary) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        .dark .contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 3. Pour les étapes de formulaire */
+        .dark .form-step,
+        .dark .step-indicator {
+            color: var(--text-secondary) !important;
+        }
+        
+        .dark .step-active {
+            color: #f97316 !important;
+            font-weight: 600;
+        }
+        
+        /* 4. Correction pour les textes en gris clair qui disparaissent */
+        .dark [class*="text-gray-"]:not(.text-gray-900):not(.text-gray-800) {
+            opacity: 0.9 !important;
+        }
+        
+        /* ==================== AMÉLIORATION DE LA LISIBILITÉ ==================== */
+        .dark p,
+        .dark span,
+        .dark div:not(.btn):not(button):not(input):not(textarea):not(select) {
+            color: var(--text-primary) !important;
+        }
+        
+        /* Augmenter le contraste pour les textes importants */
+        .dark h1,
+        .dark h2,
+        .dark h3,
+        .dark h4,
+        .dark .heading {
+            color: var(--text-primary) !important;
+            font-weight: 600 !important;
+        }
+        
+        /* ==================== MENU MOBILE ANIMATION ==================== */
+        #mobileMenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+        
+        #mobileMenu.show {
+            max-height: 800px;
+            opacity: 1;
+        }
+        
+        /* Animation de l'icône burger */
+        .burger-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .burger-icon.active {
+            transform: rotate(90deg);
+        }
+        
+        /* ==================== THEME TOGGLE ANIMATION ==================== */
+        .theme-toggle-btn {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .theme-toggle-btn .toggle-circle {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .dark .theme-toggle-btn .toggle-circle {
+            transform: translateX(30px);
+        }
+        
+        /* ==================== LANGUAGE SELECTOR STYLE ==================== */
+        .language-selector {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-lg);
+            min-width: 150px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 50;
+        }
+        
+        .language-selector:hover .language-dropdown,
+        .language-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .language-option {
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .language-option:hover {
+            background: var(--bg-secondary);
+        }
+        
+        .language-option.active {
+            background: #fff7ed;
+            color: #ea580c;
+            font-weight: 600;
+        }
+        
+        .dark .language-option.active {
+            background: #7c2d12;
+            color: #fed7aa;
+        }
+        
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        #mobileMenu.show nav a {
+            animation: slideDown 0.3s ease forwards;
+        }
+        
+        #mobileMenu.show nav a:nth-child(1) { animation-delay: 0.05s; }
+        #mobileMenu.show nav a:nth-child(2) { animation-delay: 0.1s; }
+        #mobileMenu.show nav a:nth-child(3) { animation-delay: 0.15s; }
+        #mobileMenu.show nav a:nth-child(4) { animation-delay: 0.2s; }
+        #mobileMenu.show nav a:nth-child(5) { animation-delay: 0.25s; }
+        #mobileMenu.show nav a:nth-child(6) { animation-delay: 0.3s; }
+        #mobileMenu.show nav a:nth-child(7) { animation-delay: 0.35s; }
+        #mobileMenu.show nav a:nth-child(8) { animation-delay: 0.4s; }
+        
+        /* ==================== SMOOTH TRANSITIONS ==================== */
+        a, button, .transition-all {
+            transition: all 0.3s ease;
+        }
+        
+        /* ==================== RESPONSIVE IMPROVEMENTS ==================== */
+        @media (max-width: 640px) {
+            .max-w-7xl {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            /* Amélioration de la lisibilité sur mobile en dark mode */
+            .dark .text-sm,
+            .dark .text-xs {
+                font-size: 0.9rem !important;
+            }
+        }
+        
+        /* ==================== DARK MODE SPECIFIC STYLES ==================== */
+        .dark .bg-white {
+            background-color: var(--bg-secondary) !important;
+        }
+        
+        .dark .text-gray-900 {
+            color: var(--text-primary) !important;
+        }
+        
+        .dark .text-gray-700 {
+            color: var(--text-secondary) !important;
+        }
+        
+        .dark .border-gray-200,
+        .dark .border-gray-300 {
+            border-color: var(--border-color) !important;
+        }
+        
+        /* Gradient fixes pour dark mode */
+        .dark .from-orange-600 {
+            --tw-gradient-from: #ea580c !important;
+        }
+        
+        .dark .to-cyan-600 {
+            --tw-gradient-to: #0891b2 !important;
+        }
+        
+        /* ==================== FORCE TEXT VISIBILITY (solution d'urgence) ==================== */
+        /* Si certains textes restent invisibles, utilisez ces règles */
+        .dark-mode-text-fix {
+            color: #ffffff !important;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* Classe à ajouter aux éléments problématiques si nécessaire */
+        .force-white-text {
+            color: #ffffff !important;
+        }
+        
+        .force-dark-bg {
+            background-color: #1f2937 !important;
+        }
+    </style>
 
     {% block stylesheets %}{% endblock stylesheets %}
 
 </head>
-<body>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
     {% include "layouts/_nav.html" %}
+    
     {% block content %}
       
     {% endblock content %}
+    
     {% include "layouts/_footer.html" %}
 
+    <!-- ==================== JAVASCRIPT PRINCIPAL ==================== -->
     <script>
-      // Burger menu
-      const btnMenu = document.getElementById("btnMenu");
-      const mobileMenu = document.getElementById("mobileMenu");
-      btnMenu?.addEventListener("click", () => {
-        const isOpen = !mobileMenu.classList.contains("hidden");
-        mobileMenu.classList.toggle("hidden");
-        btnMenu.setAttribute("aria-expanded", String(!isOpen));
-      });
-      // Fermer le menu au clic sur un lien
-      mobileMenu?.querySelectorAll("a").forEach(a => {
-        a.addEventListener("click", () => {
-          mobileMenu.classList.add("hidden");
-          btnMenu.setAttribute("aria-expanded", "false");
-        });
+      // ==================== INITIALISATION ==================== 
+      document.addEventListener("DOMContentLoaded", function() {
+          initTheme();
+          initLanguage();
+          initMobileMenu();
+          initScrollBehavior();
+          updateYear();
       });
 
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-      
+      // ==================== GESTION DU THÈME ==================== 
+      function initTheme() {
           const html = document.documentElement;
-          const toggle = document.getElementById("theme-toggle");
-      
+          const themeToggleDesktop = document.getElementById("theme-toggle");
+          const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+          
           // Charger le thème sauvegardé
           const savedTheme = localStorage.getItem("theme");
-          if (savedTheme === "dark") {
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          
+          // Appliquer le thème (priorité: saved > system preference)
+          if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
               html.classList.add("dark");
+              updateThemeIcons(true);
+          } else {
+              html.classList.remove("dark");
+              updateThemeIcons(false);
           }
-      
-          if (!toggle) return;
-      
-          toggle.addEventListener("click", function () {
-              html.classList.toggle("dark");
-      
-              // Sauvegarde
-              if (html.classList.contains("dark")) {
-                  localStorage.setItem("theme", "dark");
-              } else {
-                  localStorage.setItem("theme", "light");
+          
+          // Event listeners pour les boutons de thème
+          [themeToggleDesktop, themeToggleMobile].forEach(toggle => {
+              if (toggle) {
+                  toggle.addEventListener("click", toggleTheme);
               }
           });
+      }
+      
+      function toggleTheme() {
+          const html = document.documentElement;
+          const isDark = html.classList.toggle("dark");
+          
+          // Sauvegarder la préférence
+          localStorage.setItem("theme", isDark ? "dark" : "light");
+          
+          // Mettre à jour les icônes
+          updateThemeIcons(isDark);
+          
+          // Animation de transition douce
+          document.body.style.transition = "background-color 0.3s ease, color 0.3s ease";
+      }
+      
+      function updateThemeIcons(isDark) {
+          const iconHTML = isDark 
+              ? '<i class="fas fa-sun text-yellow-400"></i>' 
+              : '<i class="fas fa-moon text-gray-600 dark:text-gray-400"></i>';
+          
+          const themeToggleDesktop = document.getElementById("theme-toggle");
+          const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+          
+          if (themeToggleDesktop) {
+              themeToggleDesktop.querySelector('.toggle-circle').innerHTML = iconHTML;
+          }
+          if (themeToggleMobile) {
+              themeToggleMobile.querySelector('.toggle-circle').innerHTML = iconHTML;
+          }
+      }
+
+      // ==================== GESTION DES LANGUES ==================== 
+      function initLanguage() {
+          const languageBtns = document.querySelectorAll(".language-btn");
+          const currentLang = document.documentElement.lang || 'fr';
+          
+          // Marquer la langue active
+          languageBtns.forEach(btn => {
+              if (btn.dataset.lang === currentLang) {
+                  btn.classList.add("active");
+              }
+              
+              btn.addEventListener("click", function(e) {
+                  e.preventDefault();
+                  changeLanguage(this.dataset.lang);
+              });
+          });
+      }
+      
+      function changeLanguage(lang) {
+          // Créer et soumettre un formulaire pour changer la langue
+          const form = document.createElement("form");
+          form.method = "POST";
+          form.action = "/i18n/setlang/";
+          
+          const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]")?.value;
+          
+          form.innerHTML = `
+              <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
+              <input type="hidden" name="language" value="${lang}">
+              <input type="hidden" name="next" value="${window.location.pathname}">
+          `;
+          
+          document.body.appendChild(form);
+          form.submit();
+      }
+
+      // ==================== MENU MOBILE ==================== 
+      function initMobileMenu() {
+          const btnMenu = document.getElementById("btnMenu");
+          const mobileMenu = document.getElementById("mobileMenu");
+          const burgerIcon = btnMenu?.querySelector("svg");
+          
+          if (!btnMenu || !mobileMenu) return;
+          
+          btnMenu.addEventListener("click", () => {
+              toggleMobileMenu(mobileMenu, btnMenu, burgerIcon);
+          });
+          
+          // Fermer au clic sur un lien
+          mobileMenu.querySelectorAll("a").forEach(link => {
+              link.addEventListener("click", () => {
+                  closeMobileMenu(mobileMenu, btnMenu, burgerIcon);
+              });
+          });
+          
+          // Fermer au clic en dehors
+          document.addEventListener("click", (e) => {
+              if (mobileMenu.classList.contains("show") && 
+                  !mobileMenu.contains(e.target) && 
+                  !btnMenu.contains(e.target)) {
+                  closeMobileMenu(mobileMenu, btnMenu, burgerIcon);
+              }
+          });
+          
+          // Fermer lors du redimensionnement
+          let resizeTimer;
+          window.addEventListener("resize", () => {
+              clearTimeout(resizeTimer);
+              resizeTimer = setTimeout(() => {
+                  if (window.innerWidth >= 768 && mobileMenu.classList.contains("show")) {
+                      closeMobileMenu(mobileMenu, btnMenu, burgerIcon);
+                  }
+              }, 250);
+          });
+      }
+      
+      function toggleMobileMenu(menu, btn, icon) {
+          const isOpen = menu.classList.contains("show");
+          
+          if (isOpen) {
+              closeMobileMenu(menu, btn, icon);
+          } else {
+              openMobileMenu(menu, btn, icon);
+          }
+      }
+      
+      function openMobileMenu(menu, btn, icon) {
+          menu.classList.add("show");
+          btn.setAttribute("aria-expanded", "true");
+          icon?.classList.add("active");
+          document.body.style.overflow = "hidden";
+      }
+      
+      function closeMobileMenu(menu, btn, icon) {
+          menu.classList.remove("show");
+          btn.setAttribute("aria-expanded", "false");
+          icon?.classList.remove("active");
+          document.body.style.overflow = "";
+      }
+
+      // ==================== SCROLL BEHAVIOR ==================== 
+      function initScrollBehavior() {
+          // Smooth scroll pour les ancres
+          document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+              anchor.addEventListener("click", function (e) {
+                  const href = this.getAttribute("href");
+                  if (href === "#" || href === "#top") {
+                      e.preventDefault();
+                      window.scrollTo({
+                          top: 0,
+                          behavior: "smooth"
+                      });
+                  } else if (href.startsWith("#")) {
+                      const target = document.querySelector(href);
+                      if (target) {
+                          e.preventDefault();
+                          target.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start"
+                          });
+                      }
+                  }
+              });
+          });
+          
+          // Highlight du lien actif
+          highlightActiveLink();
+      }
+      
+      function highlightActiveLink() {
+          const currentPath = window.location.pathname;
+          const navLinks = document.querySelectorAll("nav a[href]");
+          
+          navLinks.forEach(link => {
+              const linkPath = new URL(link.href, window.location.origin).pathname;
+              if (currentPath === linkPath || (linkPath !== "/" && currentPath.startsWith(linkPath))) {
+                  link.classList.add("text-orange-600", "font-semibold");
+                  link.classList.remove("text-gray-700", "dark:text-gray-300");
+              }
+          });
+      }
+
+      // ==================== UTILITAIRES ==================== 
+      function updateYear() {
+          const yearElement = document.getElementById("year");
+          if (yearElement) {
+              yearElement.textContent = new Date().getFullYear();
+          }
+      }
+      
+      // Détecter les changements de préférence système
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+          const savedTheme = localStorage.getItem("theme");
+          if (!savedTheme) {
+              const html = document.documentElement;
+              if (e.matches) {
+                  html.classList.add("dark");
+                  updateThemeIcons(true);
+              } else {
+                  html.classList.remove("dark");
+                  updateThemeIcons(false);
+              }
+          }
       });
+
+      // Ajoutez cette fonction à votre script existant
+        function fixDarkModeTextIssues() {
+            if (!document.documentElement.classList.contains('dark')) return;
+            
+            // Détecter les textes avec faible contraste
+            const elements = document.querySelectorAll('p, span, div, h1, h2, h3, h4, h5, h6, label, li, td, th');
+            
+            elements.forEach(el => {
+                const computedStyle = window.getComputedStyle(el);
+                const bgColor = computedStyle.backgroundColor;
+                const textColor = computedStyle.color;
+                
+                // Si le texte est presque invisible (gris très clair sur fond sombre)
+                if (textColor.includes('rgba') || textColor.includes('#f') || textColor.includes('#e')) {
+                    const rgb = textColor.match(/\d+/g);
+                    if (rgb && rgb.length >= 3) {
+                        const r = parseInt(rgb[0]);
+                        const g = parseInt(rgb[1]);
+                        const b = parseInt(rgb[2]);
+                        
+                        // Détecter les couleurs claires (gris clair, presque blanc)
+                        if (r > 200 && g > 200 && b > 200 && r < 250 && g < 250 && b < 250) {
+                            el.classList.add('dark-mode-text-fix');
+                        }
+                    }
+                }
+            });
+        }
+
+        // Appelez cette fonction après le chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(fixDarkModeTextIssues, 500);
+        });
     </script>
       
 </body>
